@@ -1,0 +1,73 @@
+---
+const { title } = Astro.props;
+---
+
+<header>
+    <div
+        class="bg-base-200 w-full rounded-md shadow-sm max-lg:collapse lg:mb-48"
+    >
+        <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
+        <label
+            for="navbar-1-toggle"
+            class="fixed inset-0 hidden max-lg:peer-checked:block"></label>
+        <div class="collapse-title navbar">
+            <div class="navbar-start">
+                <button class="btn btn-ghost text-xl">
+                    <a href="/">Personal Website: {title}</a>
+                </button>
+            </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                    <li>
+                        <details>
+                            <summary>Inforamtik</summary>
+                            <ul class="bg-base-100 z-1 w-40 p-2">
+                                <li><button>Interessen</button></li>
+                                <li><button>Kenntnisse</button></li>
+                                <li><button>Projekte</button></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>Anomaly</summary>
+                            <ul class="bg-base-100 z-1 w-40 p-2">
+                                <li><button>Worldbuilding</button></li>
+                                <li><button>Settings</button></li>
+                                <li><button>Storys</button></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>Games</summary>
+                            <ul class="bg-base-100 z-1 w-40 p-2">
+                                <li><button>Warframe</button></li>
+                                <li><button>Satisfactory</button></li>
+                                <li><button>Factorio</button></li>
+                                <li><button>League of Legends</button></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>DND</summary>
+                            <ul class="bg-base-100 z-1 w-40 p-2">
+                                <li><button>Campains</button></li>
+                                <li><button>Third Party Content</button></li>
+                                <li><button>Surviving Dice</button></li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-end">
+                <input
+                    type="text"
+                    placeholder="Search"
+                    class="input input-bordered w-64 lg:w-auto"
+                />
+            </div>
+        </div>
+    </div>
+</header>

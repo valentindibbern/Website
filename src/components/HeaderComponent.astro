@@ -1,5 +1,5 @@
 ---
-
+const { title } = Astro.props;
 ---
 
 <header>
@@ -7,57 +7,173 @@
         class="bg-base-200 w-full rounded-md shadow-sm max-lg:collapse lg:mb-48"
     >
         <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
-        <label
-            for="navbar-1-toggle"
-            class="fixed inset-0 hidden max-lg:peer-checked:block"></label>
         <div class="collapse-title navbar">
             <div class="navbar-start">
                 <button class="btn btn-ghost text-xl">
-                    <a href="/">Personal Website</a>
+                    <a href="/">Personal Website: {title}</a>
                 </button>
             </div>
-            <div class="navbar-center hidden lg:flex">
+            <div class="navbar-center lg:flex">
                 <ul class="menu menu-horizontal px-1">
                     <li>
-                        <details>
-                            <summary>Inforamtik</summary>
-                            <ul class="bg-base-100 z-1 w-40 p-2">
-                                <li><button>Interessen</button></li>
-                                <li><button>Kenntnisse</button></li>
-                                <li><button>Projekte</button></li>
-                            </ul>
-                        </details>
+                        <div
+                            @mouseenter="clearTimeout(timeout); open = true"
+                            @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                            x-data="{ open: false, timeout: null }"
+                            class="group relative flex w-40 justify-center text-center"
+                        >
+                            <a
+                                href="/inforamtik"
+                                class="w-full rounded-md bg-blue-500 px-4 py-2 text-white shadow"
+                            >
+                                Inforamtik
+                            </a>
+                            <div
+                                @mouseenter="clearTimeout(timeout); open = true"
+                                @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                                x-show="open"
+                                class="absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md bg-white shadow-lg"
+                            >
+                                <a
+                                    href="/inforamtik/interessen"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Interessen
+                                </a>
+                                <a
+                                    href="/inforamtik/kenntnisse"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Kenntnisse
+                                </a>
+                                <a
+                                    href="/inforamtik/projekte"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Projekte
+                                </a>
+                            </div>
+                        </div>
                     </li>
                     <li>
-                        <details>
-                            <summary>Anomaly</summary>
-                            <ul class="bg-base-100 z-1 w-40 p-2">
-                                <li><button>Worldbuilding</button></li>
-                                <li><button>Settings</button></li>
-                                <li><button>Storys</button></li>
-                            </ul>
-                        </details>
+                        <div
+                            @mouseenter="clearTimeout(timeout); open = true"
+                            @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                            x-data="{ open: false, timeout: null }"
+                            class="group relative flex w-40 justify-center text-center"
+                        >
+                            <a
+                                href="/anomaly"
+                                class="w-full rounded-md bg-blue-500 px-4 py-2 text-white shadow"
+                            >
+                                Anomaly
+                            </a>
+                            <div
+                                @mouseenter="clearTimeout(timeout); open = true"
+                                @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                                x-show="open"
+                                class="absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md bg-white shadow-lg"
+                            >
+                                <a
+                                    href="/worldbuilding"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Worldbuilding
+                                </a>
+                                <a
+                                    href="/settings"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Settings
+                                </a>
+                                <a
+                                    href="/storys"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Storys
+                                </a>
+                            </div>
+                        </div>
                     </li>
                     <li>
-                        <details>
-                            <summary>Games</summary>
-                            <ul class="bg-base-100 z-1 w-40 p-2">
-                                <li><button>Warframe</button></li>
-                                <li><button>Satisfactory</button></li>
-                                <li><button>Factorio</button></li>
-                                <li><button>League of Legends</button></li>
-                            </ul>
-                        </details>
+                        <div
+                            @mouseenter="clearTimeout(timeout); open = true"
+                            @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                            x-data="{ open: false, timeout: null }"
+                            class="group relative flex w-40 justify-center text-center"
+                        >
+                            <a
+                                href="/anomaly"
+                                class="w-full rounded-md bg-blue-500 px-4 py-2 text-white shadow"
+                            >
+                                Games
+                            </a>
+                            <div
+                                @mouseenter="clearTimeout(timeout); open = true"
+                                @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                                x-show="open"
+                                class="absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md bg-white shadow-lg"
+                            >
+                                <a
+                                    href="/worldbuilding"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Warframe
+                                </a>
+                                <a
+                                    href="/settings"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Satisfactory
+                                </a>
+                                <a
+                                    href="/storys"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Factorio
+                                </a>
+                            </div>
+                        </div>
                     </li>
                     <li>
-                        <details>
-                            <summary>DND</summary>
-                            <ul class="bg-base-100 z-1 w-40 p-2">
-                                <li><button>Campains</button></li>
-                                <li><button>Third Party Content</button></li>
-                                <li><button>Surviving Dice</button></li>
-                            </ul>
-                        </details>
+                        <div
+                            @mouseenter="clearTimeout(timeout); open = true"
+                            @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                            x-data="{ open: false, timeout: null }"
+                            class="group relative flex w-40 justify-center text-center"
+                        >
+                            <a
+                                href="/anomaly"
+                                class="w-full rounded-md bg-blue-500 px-4 py-2 text-white shadow"
+                            >
+                                DND
+                            </a>
+                            <div
+                                @mouseenter="clearTimeout(timeout); open = true"
+                                @mouseleave="timeout = setTimeout(() => open = false, 100)"
+                                x-show="open"
+                                class="absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md bg-white shadow-lg"
+                            >
+                                <a
+                                    href="/worldbuilding"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Campaigns
+                                </a>
+                                <a
+                                    href="/settings"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Third Party Conetet
+                                </a>
+                                <a
+                                    href="/storys"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    Surviving Dice
+                                </a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>

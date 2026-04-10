@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+const { title } = Astro.props;
 ---
 
 <html lang="en" data-theme="dark">
@@ -8,7 +9,7 @@ import "@/styles/global.css";
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <script is:inline src="/srcipts/htmx.min.js"></script>
-        <title>Persönliche Website</title>
+        <title>Persönliche Website: {title}</title>
     </head>
     <body>
         <slot />
