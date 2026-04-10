@@ -12,16 +12,33 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^6.0.1",
+    "@astrojs/alpinejs": "^0.5.0",
+    "@astrojs/markdoc": "^1.0.3",
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/ts-plugin": "^1.10.7",
     "@tailwindcss/vite": "^4.2.2",
+    "@types/alpinejs": "^3.13.11",
+    "@typescript-eslint/parser": "^8.58.1",
+    "alpinejs": "^3.15.11",
     "astro": "^6.1.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "daisyui": "^5.5.19",
     "effect": "^3.21.0",
-    "solid-js": "^1.9.12",
+    "eslint": "^10.2.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "prettier-plugin-astro": "^0.14.1",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
     "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/css": "^1.1.0",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.2.0",
+    "@eslint/markdown": "^8.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.2"
   }
 }

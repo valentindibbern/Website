@@ -3,15 +3,21 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "compilerOptions": {
-      "strict": true,
-    },
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/styles/*": ["./src/styles/*"],
     },
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin",
+      },
+    ],
   },
 }
