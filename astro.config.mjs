@@ -7,11 +7,11 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.example.com",
+    site: "https://www.example.com",
 
-  integrations: [alpinejs(), markdoc(), mdx()],
+    integrations: [alpinejs(), markdoc(), mdx()],
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+    vite: {
+        plugins: [tailwindcss()],
+    },
 });
