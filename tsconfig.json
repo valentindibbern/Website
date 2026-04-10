@@ -10,12 +10,13 @@
             "@components/*": ["./src/components/*"],
             "@layouts/*": ["./src/layouts/*"],
             "@/pages/*": ["./src/pages/*"],
-            "@/styles/*": ["./src/styles/*"]
+            "@/styles/*": ["./src/styles/*"],
+            "@/scripts/*": ["./src/scripts/*"],
         },
         "plugins": [
             {
-                "name": "@astrojs/ts-plugin"
-            }
-        ]
-    }
+                "name": "@astrojs/ts-plugin",
+            },
+        ],
+    },
 }
