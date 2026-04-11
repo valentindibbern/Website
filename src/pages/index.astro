@@ -2,12 +2,13 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ComponentHeader from "@/components/HeaderComponent.astro";
 import ComponentFooter from "@/components/FooterComponent.astro";
+import ComponentHeading from "@/components/HeadingComponent.astro";
 
 const title = "Home";
 ---
 
 <BaseLayout title={title}>
     <ComponentHeader title={title} />
-    <p>Content</p>
+    <ComponentHeading level={1} class=""> Some deep Heading </ComponentHeading>
     <ComponentFooter />
 </BaseLayout>
