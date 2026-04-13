@@ -1,5 +1,11 @@
 ---
 import "@/styles/global.css";
+import "@/styles/starwind.css";
+
+interface Props {
+    title: string;
+}
+
 const { title } = Astro.props;
 ---
 
@@ -11,7 +17,9 @@ const { title } = Astro.props;
         <script is:inline src="/srcipts/htmx.min.js"></script>
         <title>Persönliche Website: {title}</title>
     </head>
-    <body class="bg-[url('/assets/Banner.JPG')] bg-cover bg-center bg-no-repeat">
+    <body
+        class="bg-[url('/assets/Banner.JPG')] bg-cover bg-center bg-no-repeat"
+    >
         <slot />
     </body>
 </html>
