@@ -1,5 +1,7 @@
 ---
 import "@/styles/global.css";
+import HeaderComponent from "~/components/HeaderComponent.astro";
+import FooterComponent from "~/components/FooterComponent.astro";
 const { title } = Astro.props;
 ---
 
@@ -7,11 +9,14 @@ const { title } = Astro.props;
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
         <script is:inline src="/srcipts/htmx.min.js"></script>
         <title>Persönliche Website: {title}</title>
     </head>
-    <body class="bg-[url('/assets/Banner.JPG')] bg-cover bg-center bg-no-repeat">
+    <body
+        class="bg-[url('/assets/Banner.JPG')] bg-cover bg-center bg-no-repeat"
+    >
+        <HeaderComponent title={title} />
         <slot />
+        <FooterComponent />
     </body>
 </html>
