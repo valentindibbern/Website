@@ -2,6 +2,12 @@
 import "@/styles/global.css";
 import HeaderComponent from "~/components/HeaderComponent.astro";
 import FooterComponent from "~/components/FooterComponent.astro";
+import "@/styles/starwind.css";
+
+interface Props {
+    title: string;
+}
+
 const { title } = Astro.props;
 ---
 
