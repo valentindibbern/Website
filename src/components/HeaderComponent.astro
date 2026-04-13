@@ -61,10 +61,10 @@ const { title } = Astro.props;
                             class="group relative flex w-40 justify-center text-center"
                         >
                             <a
-                                href="/anomaly"
+                                href="/worldbuilding"
                                 class="w-full rounded-md bg-blue-500 px-4 py-2 text-white shadow"
                             >
-                                Anomaly
+                                Worldbuilding
                             </a>
                             <div
                                 @mouseenter="clearTimeout(timeout); open = true"
@@ -73,19 +73,19 @@ const { title } = Astro.props;
                                 class="absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md bg-white shadow-lg"
                             >
                                 <a
-                                    href="/anomaly/worldbuilding"
+                                    href="/worldbuilding/anomaly"
                                     class="block px-4 py-2 text-gray-800 first:rounded-t-md last:rounded-b-md hover:bg-gray-200"
                                 >
-                                    Worldbuilding
+                                    Anomaly
                                 </a>
                                 <a
-                                    href="/anomaly/settings"
+                                    href="/worldbuilding/settings"
                                     class="block px-4 py-2 text-gray-800 first:rounded-t-md last:rounded-b-md hover:bg-gray-200"
                                 >
                                     Settings
                                 </a>
                                 <a
-                                    href="/anomaly/storys"
+                                    href="/worldbuilding/storys"
                                     class="block px-4 py-2 text-gray-800 first:rounded-t-md last:rounded-b-md hover:bg-gray-200"
                                 >
                                     Storys
@@ -165,7 +165,7 @@ const { title } = Astro.props;
                                     Third Party Conetet
                                 </a>
                                 <a
-                                    href="/anomaly/surviving-dice"
+                                    href="/worldbuilding/surviving-dice"
                                     class="block px-4 py-2 text-gray-800 first:rounded-t-md last:rounded-b-md hover:bg-gray-200"
                                 >
                                     Surviving Dice
