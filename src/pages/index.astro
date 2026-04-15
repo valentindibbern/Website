@@ -1,14 +1,21 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import ComponentHeader from "@/components/HeaderComponentOld.astro";
-import ComponentFooter from "@/components/FooterComponent.astro";
 import ComponentHeading from "@/components/HeadingComponent.astro";
 
 const title = "Home";
 ---
 
 <BaseLayout title={title}>
-    <ComponentHeader title={title} />
     <ComponentHeading level={1} class=""> Some deep Heading </ComponentHeading>
-    <ComponentFooter />
+    <section>
+        <p class="wrap-break-words mx-auto max-w-xs p-2">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+            faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
+            pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
+            tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
+            Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
+            hendrerit semper vel class aptent taciti sociosqu. Ad litora
+            torquent per conubia nostra inceptos himenaeos.
+        </p>
+    </section>
 </BaseLayout>
