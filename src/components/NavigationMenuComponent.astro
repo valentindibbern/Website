@@ -1,0 +1,189 @@
+---
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuIndicator,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "@/bejamas/navigation-menu";
+
+interface Props {
+    links: Array<{ href: string; label: string }>;
+}
+
+const { links } = Astro.props;
+---
+
+<NavigationMenu>
+    <NavigationMenuList>
+        <NavigationMenuItem value="products">
+            <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+            <NavigationMenuContent>
+                <div class="w-380px grid grid-cols-2 gap-2 p-2">
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">
+                                Analytics
+                            </div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Real-time insights
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">
+                                Automation
+                            </div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Workflow builders
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Security</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Enterprise-grade
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">
+                                Integrations
+                            </div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Connect tools
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                </div>
+            </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem value="solutions">
+            <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
+            <NavigationMenuContent align="center">
+                <div class="w-380px grid grid-cols-2 gap-2 p-2">
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Startups</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Move fast
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">
+                                Enterprise
+                            </div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Scale securely
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Agencies</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Client delivery
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">
+                                E-commerce
+                            </div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Sell online
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                </div>
+            </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem value="resources">
+            <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+            <NavigationMenuContent align="center">
+                <div class="w-520px grid grid-cols-3 gap-2 p-2">
+                    <NavigationMenuLink href="/docs">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Docs</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Get started
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Blog</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Latest updates
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Support</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Get help
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Events</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Upcoming webinars
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Guides</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Best practices
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Contact</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Talk to us
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                </div>
+            </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem value="company">
+            <NavigationMenuTrigger>Company</NavigationMenuTrigger>
+            <NavigationMenuContent align="end">
+                <div class="w-180px p-2">
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">About</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Our story
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                        <div class="flex flex-col gap-1">
+                            <div class="leading-none font-medium">Careers</div>
+                            <div class="text-muted-foreground line-clamp-2">
+                                Join the team
+                            </div>
+                        </div>
+                    </NavigationMenuLink>
+                </div>
+            </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuIndicator />
+    </NavigationMenuList>
+</NavigationMenu>

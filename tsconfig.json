@@ -12,6 +12,10 @@
             "@/pages/*": ["./src/pages/*"],
             "@/styles/*": ["./src/styles/*"],
             "@/scripts/*": ["./src/scripts/*"],
+            "@/assets/*": ["./src/assets/*"],
+            "@/bejamas/*": ["./src/components/imported/bejamas/*"],
+            "@/starwind/*": ["./src/components/imported/starwind/*"],
+            "@/imported/*": ["./src/components/imported/*"],
         },
         "plugins": [
             {
