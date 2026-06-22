@@ -3,6 +3,7 @@ import figlet from "figlet";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalOutput from "@components/TerminalOutput.astro";
 import { inputNotes, linksJson, profile, projects, references } from "@config/portfolio.ts";
+import { withBase } from "@/utils/url";
 
 const title = "Home";
 const asciiName = figlet.textSync("Valentin Dibbern", { font: "Big" });
@@ -22,8 +23,8 @@ const firstReference = references[0];
             </p>
 
             <div class="terminal-actions" aria-label="Primary actions">
-                <a class="terminal-button" href="/projects">&gt; view projects</a>
-                <a class="terminal-button" href="/links">$ contact routes</a>
+                <a class="terminal-button" href={withBase("/projects")}>&gt; view projects</a>
+                <a class="terminal-button" href={withBase("/links")}>$ contact routes</a>
             </div>
         </section>
 
@@ -46,7 +47,7 @@ const firstReference = references[0];
                 />
             </div>
             <p class="input-needed">{inputNotes.aboutText}</p>
-            <a class="terminal-link" href="/about">open /about --all</a>
+            <a class="terminal-link" href={withBase("/about")}>open /about --all</a>
         </section>
 
         <section id="projects" class="terminal-section" aria-labelledby="projects-title">
@@ -61,7 +62,7 @@ const firstReference = references[0];
                 <TerminalOutput path="/projects" command={firstProject.command} body={firstProject.body} />
             </div>
             <p class="input-needed">{inputNotes.projectDetails}</p>
-            <a class="terminal-link" href="/projects">open /projects --all</a>
+            <a class="terminal-link" href={withBase("/projects")}>open /projects --all</a>
         </section>
 
         <section id="links" class="terminal-section" aria-labelledby="links-title">
@@ -77,7 +78,7 @@ const firstReference = references[0];
                 <pre class="output-body">{linksJson}</pre>
             </article>
             <p class="input-needed">{inputNotes.contact}</p>
-            <a class="terminal-link" href="/links">open /links --all</a>
+            <a class="terminal-link" href={withBase("/links")}>open /links --all</a>
         </section>
 
         <section id="references" class="terminal-section" aria-labelledby="references-title">
@@ -96,7 +97,7 @@ const firstReference = references[0];
                 />
             </div>
             <p class="input-needed">{inputNotes.referencesPublic}</p>
-            <a class="terminal-link" href="/references">open /references --all</a>
+            <a class="terminal-link" href={withBase("/references")}>open /references --all</a>
         </section>
 
         <p class="cursor" aria-label="Terminal cursor">visitor@portfolio:~$ _</p>

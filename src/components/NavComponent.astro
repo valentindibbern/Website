@@ -1,5 +1,6 @@
 ---
 import { navLists } from "@config/navigation.ts";
+import { withBase } from "@/utils/url";
 
 interface Props {
     navList: keyof typeof navLists;
@@ -8,7 +9,11 @@ interface Props {
 const { navList } = Astro.props;
 const navItems = navLists[navList];
 
-const pathname = Astro.url.pathname;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pathname =
+    basePath && Astro.url.pathname.startsWith(basePath)
+        ? Astro.url.pathname.slice(basePath.length) || "/"
+        : Astro.url.pathname;
 ---
 
 <nav class="site-nav" aria-label={`${navList} navigation`}>
@@ -17,7 +22,7 @@ const pathname = Astro.url.pathname;
             const isCurrent = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
             return (
-                <a href={item.href} class:list={["nav-link", { "is-current": isCurrent }]}>
+                <a href={withBase(item.href)} class:list={["nav-link", { "is-current": isCurrent }]}>
                     <span aria-hidden="true">{isCurrent ? ">" : "$"}</span>
                     {item.label}
                 </a>
