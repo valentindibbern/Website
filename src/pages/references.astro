@@ -7,23 +7,23 @@ const title = "References";
 ---
 
 <BaseLayout title={title}>
-  <div class="terminal-page terminal-subpage">
-    <section class="terminal-section first-section" aria-labelledby="references-title">
-      <p class="prompt">visitor@portfolio:~$ cd /references</p>
-      <h1 id="references-title" class="section-heading">references.md</h1>
-      <p class="section-intro">
-        Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die Inhalte bleiben bewusst ruhig
-        und textbasiert.
-      </p>
+    <div class="terminal-page terminal-subpage">
+        <section class="terminal-section first-section" aria-labelledby="references-title">
+            <p class="prompt">visitor@portfolio:~$ cd /references</p>
+            <h1 id="references-title" class="section-heading">references.md</h1>
+            <p class="section-intro">
+                Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die Inhalte bleiben bewusst ruhig
+                und textbasiert.
+            </p>
 
-      <div class="terminal-list">
-        {
-          references.map((entry) => (
-            <TerminalOutput path="/references" command={entry.command} body={entry.body} />
-          ))
-        }
-      </div>
-      <p class="input-needed">{inputNotes.referencesPublic}</p>
-    </section>
-  </div>
+            <div class="terminal-list">
+                {
+                    references.map((entry) => (
+                        <TerminalOutput path="/references" command={entry.command} body={entry.body} />
+                    ))
+                }
+            </div>
+            <p class="input-needed">{inputNotes.referencesPublic}</p>
+        </section>
+    </div>
 </BaseLayout>

@@ -7,19 +7,19 @@ const title = "Links";
 ---
 
 <BaseLayout title={title}>
-  <div class="terminal-page terminal-subpage">
-    <section class="terminal-section first-section" aria-labelledby="links-title">
-      <p class="prompt">visitor@portfolio:~$ cd /links</p>
-      <h1 id="links-title" class="section-heading">links.json</h1>
-      <p class="section-intro">
-        Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs können in
-        <code>src/config/portfolio.ts</code> ersetzt werden.
-      </p>
+    <div class="terminal-page terminal-subpage">
+        <section class="terminal-section first-section" aria-labelledby="links-title">
+            <p class="prompt">visitor@portfolio:~$ cd /links</p>
+            <h1 id="links-title" class="section-heading">links.json</h1>
+            <p class="section-intro">
+                Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs können in
+                <code>src/config/portfolio.ts</code> ersetzt werden.
+            </p>
 
-      <div class="terminal-list">
-        <TerminalOutput path="/links" command="cat links.json" body={linksJson} />
-      </div>
-      <p class="input-needed">{inputNotes.contact}</p>
-    </section>
-  </div>
+            <div class="terminal-list">
+                <TerminalOutput path="/links" command="cat links.json" body={linksJson} />
+            </div>
+            <p class="input-needed">{inputNotes.contact}</p>
+        </section>
+    </div>
 </BaseLayout>

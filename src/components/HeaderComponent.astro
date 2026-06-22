@@ -2,20 +2,15 @@
 import NavComponent from "@components/NavComponent.astro";
 
 interface Props {
-  title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <header class="site-header" aria-label="Site header">
-  <div class="terminal-titlebar" aria-hidden="true">
-    <span>[x]</span>
-    <span>[_]</span>
-    <span>[ ]</span>
-  </div>
-  <a class="site-title" href="/" aria-label="Go to home">
-    valentin@portfolio:~/{title.toLowerCase()}
-  </a>
-  <NavComponent navList="header" />
+    <a class="site-title" href="/" aria-label="Go to home">
+        valentin@portfolio:~/{title.toLowerCase()}
+    </a>
+    <NavComponent navList="header" />
 </header>

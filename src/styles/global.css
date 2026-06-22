@@ -1,262 +1,262 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  --terminal-bg: #020403;
-  --terminal-panel: #050906;
-  --terminal-text: #c8dcc8;
-  --terminal-muted: #6f8c72;
-  --terminal-dim: #3b523f;
-  --terminal-green: #62f078;
-  --terminal-line: #123019;
-  --terminal-red: #ff4d5d;
-  --terminal-max: 74rem;
+    color-scheme: dark;
+    --terminal-bg: #020403;
+    --terminal-panel: #050906;
+    --terminal-text: #c8dcc8;
+    --terminal-muted: #6f8c72;
+    --terminal-dim: #3b523f;
+    --terminal-green: #62f078;
+    --terminal-line: #123019;
+    --terminal-red: #ff4d5d;
+    --terminal-max: 74rem;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh;
-  margin: 0;
-  background:
-    linear-gradient(rgba(98, 240, 120, 0.025) 1px, transparent 1px),
-    var(--terminal-bg);
-  background-size: 100% 2.5rem;
-  color: var(--terminal-text);
-  font-family:
-    "JetBrains Mono", "IBM Plex Mono", "Roboto Mono", "SFMono-Regular", Consolas, monospace;
+    min-height: 100vh;
+    margin: 0;
+    background:
+        linear-gradient(rgba(98, 240, 120, 0.025) 1px, transparent 1px),
+        var(--terminal-bg);
+    background-size: 100% 2.5rem;
+    color: var(--terminal-text);
+    font-family:
+        "JetBrains Mono", "IBM Plex Mono", "Roboto Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 body::selection {
-  background: var(--terminal-green);
-  color: var(--terminal-bg);
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
 }
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.75rem 1.5rem;
-  align-items: center;
-  border-bottom: 1px solid var(--terminal-line);
-  background: color-mix(in srgb, var(--terminal-bg) 92%, transparent);
-  padding: 0.9rem clamp(1rem, 4vw, 3.5rem);
-  backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--terminal-line);
+    background: color-mix(in srgb, var(--terminal-bg) 92%, transparent);
+    padding: 0.9rem clamp(1rem, 4vw, 3.5rem);
+    backdrop-filter: blur(10px);
 }
 
 .terminal-titlebar {
-  display: flex;
-  gap: 0.5rem;
-  color: var(--terminal-muted);
-  font-size: 0.85rem;
+    display: flex;
+    gap: 0.5rem;
+    color: var(--terminal-muted);
+    font-size: 0.85rem;
 }
 
 .site-title {
-  color: var(--terminal-muted);
-  font-size: 0.95rem;
-  text-decoration: none;
+    color: var(--terminal-muted);
+    font-size: 0.95rem;
+    text-decoration: none;
 }
 
 .site-nav {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.4rem;
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
 }
 
 .nav-link {
-  display: inline-flex;
-  gap: 0.4rem;
-  color: var(--terminal-muted);
-  text-decoration: none;
+    display: inline-flex;
+    gap: 0.4rem;
+    color: var(--terminal-muted);
+    text-decoration: none;
 }
 
 .nav-link:is(:hover, :focus-visible),
 .nav-link.is-current {
-  color: var(--terminal-green);
+    color: var(--terminal-green);
 }
 
 .terminal-page {
-  max-width: var(--terminal-max);
-  margin: 0 auto;
-  padding: clamp(0.75rem, 2vw, 1.75rem) clamp(1rem, 4vw, 2rem) 5rem;
+    max-width: var(--terminal-max);
+    margin: 0 auto;
+    padding: clamp(0.75rem, 2vw, 1.75rem) clamp(1rem, 4vw, 2rem) 5rem;
 }
 
 .terminal-hero,
 .terminal-section {
-  padding-block: clamp(1.75rem, 4.5vw, 3.5rem);
+    padding-block: clamp(1.75rem, 4.5vw, 3.5rem);
 }
 
 .home-page .terminal-section {
-  padding-block: clamp(1.5rem, 4vw, 3rem);
+   padding-block: clamp(1.5rem, 4vw, 3rem);
 }
 
 .terminal-section {
-  border-top: 1px solid var(--terminal-line);
+    border-top: 1px solid var(--terminal-line);
 }
 
 .first-section {
-  border-top: 0;
+    border-top: 0;
 }
 
 .prompt {
-  color: var(--terminal-green);
-  font-weight: 700;
+    color: var(--terminal-green);
+    font-weight: 700;
 }
 
 .ascii-logo {
-  overflow-x: auto;
-  margin: 0 0 1.25rem;
-  color: var(--terminal-green);
-  font-size: clamp(0.78rem, 2.2vw, 1.5rem);
-  line-height: 1.15;
+    overflow-x: auto;
+    margin: 0 0 1.25rem;
+    color: var(--terminal-green);
+    font-size: clamp(0.78rem, 2.2vw, 1.5rem);
+    line-height: 1.15;
 }
 
 .terminal-heading {
-  max-width: 14ch;
-  margin: 1.25rem 0;
-  color: var(--terminal-green);
-  font-size: clamp(2.55rem, 7.2vw, 5.4rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
+    max-width: 14ch;
+    margin: 1.25rem 0;
+    color: var(--terminal-green);
+    font-size: clamp(2.55rem, 7.2vw, 5.4rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
 }
 
 .terminal-lede {
-  max-width: 64rem;
-  color: var(--terminal-text);
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-  line-height: 1.75;
+    max-width: 64rem;
+    color: var(--terminal-text);
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    line-height: 1.75;
 }
 
 .terminal-output {
-  max-width: 58rem;
-  margin-top: 2rem;
+    max-width: 58rem;
+    margin-top: 2rem;
 }
 
 .terminal-output + .terminal-output {
-  margin-top: 4.5rem;
+    margin-top: 4.5rem;
 }
 
 .output-body {
-  margin: 1rem 0 0;
-  white-space: pre-wrap;
-  color: var(--terminal-text);
-  font-size: clamp(0.95rem, 2vw, 1.08rem);
-  line-height: 1.8;
+    margin: 1rem 0 0;
+    white-space: pre-wrap;
+    color: var(--terminal-text);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+    line-height: 1.8;
 }
 
 .section-heading {
-  margin: 0.75rem 0 1.25rem;
-  color: var(--terminal-green);
-  font-size: clamp(2rem, 6vw, 4.25rem);
-  line-height: 1;
+    margin: 0.75rem 0 1.25rem;
+    color: var(--terminal-green);
+    font-size: clamp(2rem, 6vw, 4.25rem);
+    line-height: 1;
 }
 
 .section-intro {
-  max-width: 56rem;
-  color: var(--terminal-text);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.75;
+    max-width: 56rem;
+    color: var(--terminal-text);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.75;
 }
 
 .terminal-list {
-  display: grid;
-  gap: 1.5rem;
-  margin-top: 2rem;
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .terminal-entry {
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--terminal-line);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--terminal-line);
 }
 
 .entry-meta {
-  color: var(--terminal-muted);
+    color: var(--terminal-muted);
 }
 
 .terminal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
 }
 
 .terminal-button {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  border: 1px solid var(--terminal-dim);
-  padding: 0.65rem 1rem;
-  color: var(--terminal-green);
-  text-decoration: none;
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border: 1px solid var(--terminal-dim);
+    padding: 0.65rem 1rem;
+    color: var(--terminal-green);
+    text-decoration: none;
 }
 
 .terminal-button:is(:hover, :focus-visible) {
-  background: var(--terminal-green);
-  color: var(--terminal-bg);
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
 }
 
 .terminal-link {
-  display: inline-flex;
-  margin-top: 0.8rem;
-  color: var(--terminal-green);
-  text-decoration: none;
+    display: inline-flex;
+    margin-top: 0.8rem;
+    color: var(--terminal-green);
+    text-decoration: none;
 }
 
 .terminal-link::before {
-  content: "$ ";
-  color: var(--terminal-muted);
+    content: "$ ";
+    color: var(--terminal-muted);
 }
 
 .terminal-link:is(:hover, :focus-visible) {
-  background: var(--terminal-green);
-  color: var(--terminal-bg);
-  outline: 0;
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
+    outline: 0;
 }
 
 .terminal-link:is(:hover, :focus-visible)::before {
-  color: var(--terminal-bg);
+    color: var(--terminal-bg);
 }
 
 .cursor {
-  color: var(--terminal-green);
+    color: var(--terminal-green);
 }
 
 .about-copy {
-  max-width: 62rem;
-  margin-top: 2rem;
-  color: var(--terminal-text);
-  font-size: clamp(1rem, 2vw, 1.18rem);
-  line-height: 1.85;
+    max-width: 62rem;
+    margin-top: 2rem;
+    color: var(--terminal-text);
+    font-size: clamp(1rem, 2vw, 1.18rem);
+    line-height: 1.85;
 }
 
 .about-copy p {
-  margin: 0;
+    margin: 0;
 }
 
 .input-needed {
-  max-width: 62rem;
-  margin: 1rem 0 0;
-  color: var(--terminal-red);
-  font-weight: 700;
-  line-height: 1.55;
+    max-width: 62rem;
+    margin: 1rem 0 0;
+    color: var(--terminal-red);
+    font-weight: 700;
+    line-height: 1.55;
 }
 
 @media (max-width: 680px) {
-  .site-header {
-    position: static;
-  }
+    .site-header {
+        position: static;
+    }
 
-  .terminal-page {
-    padding-top: 1rem;
-  }
+    .terminal-page {
+        padding-top: 1rem;
+    }
 }
