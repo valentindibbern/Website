@@ -1,29 +1,38 @@
 ---
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { inputNotes, references } from "@config/portfolio.ts";
+import { getReferences, getSnippets } from "@/utils/content";
 
 const title = "References";
+const references = await getReferences();
+const snippets = await getSnippets();
 ---
 
 <BaseLayout title={title}>
     <div class="terminal-page terminal-subpage">
-        <section class="terminal-section first-section" aria-labelledby="references-title">
+        <section
+            class="terminal-section first-section"
+            aria-labelledby="references-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /references</p>
             <h1 id="references-title" class="section-heading">references.md</h1>
             <p class="section-intro">
-                Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die Inhalte bleiben bewusst ruhig
-                und textbasiert.
+                Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die
+                Inhalte bleiben bewusst ruhig und textbasiert.
             </p>
 
             <div class="terminal-list">
                 {
                     references.map((entry) => (
-                        <TerminalOutput path="/references" command={entry.command} body={entry.body} />
+                        <TerminalOutput
+                            path="/references"
+                            command={entry.data.command}
+                            body={entry.data.body}
+                        />
                     ))
                 }
             </div>
-            <p class="input-needed">{inputNotes.referencesPublic}</p>
+            <p class="input-needed">{snippets["input.referencesPublic"]}</p>
         </section>
     </div>
 </BaseLayout>

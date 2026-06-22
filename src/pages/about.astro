@@ -2,56 +2,80 @@
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
-    education,
-    experience,
-    hobbies,
-    inputNotes,
-    languages,
-    profile,
-    skills,
-} from "@config/portfolio.ts";
+    formatProfileTerminalBody,
+    getProfileContent,
+    getSnippets,
+    getTerminalEntries,
+    toStringList,
+} from "@/utils/content";
 
 const title = "About";
+const { profile, Content } = await getProfileContent();
+const education = await getTerminalEntries("education");
+const experience = await getTerminalEntries("experience");
+const snippets = await getSnippets();
+const skills = toStringList(snippets.skills);
+const languages = toStringList(snippets.languages);
+const hobbies = toStringList(snippets.hobbies);
 ---
 
 <BaseLayout title={title}>
     <div class="terminal-page terminal-subpage">
-        <section class="terminal-section first-section" aria-labelledby="about-title">
+        <section
+            class="terminal-section first-section"
+            aria-labelledby="about-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /about</p>
             <h1 id="about-title" class="section-heading">about.md</h1>
             <p class="section-intro">
-                Diese Seite ist für einen öffentlichen Fliesstext über mich vorbereitet. Der aktuelle Text
-                ist ein Platzhalter.
+                Diese Seite ist für einen öffentlichen Fliesstext über mich
+                vorbereitet. Der aktuelle Text ist ein Platzhalter.
             </p>
 
             <article class="about-copy">
-                <p>{profile.aboutDraft}</p>
+                <Content />
             </article>
-            <p class="input-needed">{inputNotes.aboutText}</p>
+            <p class="input-needed">{snippets["input.aboutText"]}</p>
 
             <div class="terminal-list">
                 <TerminalOutput
                     path="/about"
                     command="cat public-profile.txt"
-                    body={`name: ${profile.name}
-                        role: ${profile.role}
-                        education: ${profile.education}
-                        interests: ${profile.interests}
-                        working style: ${profile.workingStyle}`}
+                    body={formatProfileTerminalBody(profile.data, true)}
                 />
-                <TerminalOutput path="/about" command="cat skills.txt" body={skills.join("\n")} />
+                <TerminalOutput
+                    path="/about"
+                    command="cat skills.txt"
+                    body={skills.join("\n")}
+                />
                 {
                     education.map((entry) => (
-                        <TerminalOutput path="/about" command={entry.command} body={entry.body} />
+                        <TerminalOutput
+                            path="/about"
+                            command={entry.data.command}
+                            body={entry.data.body}
+                        />
                     ))
                 }
                 {
                     experience.map((entry) => (
-                        <TerminalOutput path="/about" command={entry.command} body={entry.body} />
+                        <TerminalOutput
+                            path="/about"
+                            command={entry.data.command}
+                            body={entry.data.body}
+                        />
                     ))
                 }
-                <TerminalOutput path="/about" command="cat languages.txt" body={languages.join("\n")} />
-                <TerminalOutput path="/about" command="cat hobbies.txt" body={hobbies.join("\n")} />
+                <TerminalOutput
+                    path="/about"
+                    command="cat languages.txt"
+                    body={languages.join("\n")}
+                />
+                <TerminalOutput
+                    path="/about"
+                    command="cat hobbies.txt"
+                    body={hobbies.join("\n")}
+                />
             </div>
         </section>
     </div>

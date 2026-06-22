@@ -1,25 +1,34 @@
 ---
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { inputNotes, linksJson } from "@config/portfolio.ts";
+import { formatLinksJson, getSnippets } from "@/utils/content";
 
 const title = "Links";
+const snippets = await getSnippets();
+const linksJson = formatLinksJson(snippets.links);
 ---
 
 <BaseLayout title={title}>
     <div class="terminal-page terminal-subpage">
-        <section class="terminal-section first-section" aria-labelledby="links-title">
+        <section
+            class="terminal-section first-section"
+            aria-labelledby="links-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /links</p>
             <h1 id="links-title" class="section-heading">links.json</h1>
             <p class="section-intro">
-                Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs können in
-                <code>src/config/portfolio.ts</code> ersetzt werden.
+                Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs
+                können in den Markdown-Inhalten ersetzt werden.
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput path="/links" command="cat links.json" body={linksJson} />
+                <TerminalOutput
+                    path="/links"
+                    command="cat links.json"
+                    body={linksJson}
+                />
             </div>
-            <p class="input-needed">{inputNotes.contact}</p>
+            <p class="input-needed">{snippets["input.contact"]}</p>
         </section>
     </div>
 </BaseLayout>

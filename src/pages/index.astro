@@ -2,104 +2,149 @@
 import figlet from "figlet";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalOutput from "@components/TerminalOutput.astro";
-import { inputNotes, linksJson, profile, projects, references } from "@config/portfolio.ts";
+import {
+    formatLinksJson,
+    formatProfileTerminalBody,
+    formatProjectTerminalBody,
+    getProfile,
+    getProjects,
+    getReferences,
+    getSnippets,
+} from "@/utils/content";
 import { withBase } from "@/utils/url";
 
 const title = "Home";
 const asciiName = figlet.textSync("Valentin Dibbern", { font: "Big" });
+const profile = await getProfile();
+const projects = await getProjects();
+const references = await getReferences();
+const snippets = await getSnippets();
 const firstProject = projects[0];
 const firstReference = references[0];
+const linksJson = formatLinksJson(snippets.links);
 ---
 
 <BaseLayout title={title}>
     <div class="terminal-page home-page">
         <section class="terminal-hero" aria-label="Valentin Dibbern">
-            <pre class="ascii-logo" aria-label="Valentin Dibbern">{asciiName}</pre>
+            <pre
+                class="ascii-logo"
+                aria-label="Valentin Dibbern">{asciiName}</pre>
 
             <p class="prompt">visitor@portfolio:~$ ./introduce.sh</p>
             <p class="terminal-lede">
-                {profile.role}. Ich baue gerne einfache, verständliche Software und interessiere mich
-                besonders für Webentwicklung, Datenbanken, Automatisierung und Entwicklungswerkzeuge.
+                {profile.data.role}. {snippets["home.lede"]}
             </p>
 
             <div class="terminal-actions" aria-label="Primary actions">
-                <a class="terminal-button" href={withBase("/projects")}>&gt; view projects</a>
-                <a class="terminal-button" href={withBase("/links")}>$ contact routes</a>
+                <a class="terminal-button" href={withBase("/projects")}
+                    >&gt; view projects</a
+                >
+                <a class="terminal-button" href={withBase("/links")}
+                    >$ contact routes</a
+                >
             </div>
         </section>
 
-        <section id="about" class="terminal-section" aria-labelledby="about-title">
+        <section
+            id="about"
+            class="terminal-section"
+            aria-labelledby="about-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /about</p>
             <h2 id="about-title" class="section-heading">about.md</h2>
             <p class="section-intro">
-                Der erste Eintrag aus der About-Seite. Die Unterseite ist für einen öffentlichen Fliesstext
-                über mich vorbereitet.
+                Der erste Eintrag aus der About-Seite. Die Unterseite ist für
+                einen öffentlichen Fliesstext über mich vorbereitet.
             </p>
 
             <div class="terminal-list">
                 <TerminalOutput
                     path="/about"
                     command="whoami"
-                    body={`name: ${profile.name}
-                        role: ${profile.role}
-                        interests: ${profile.interests}
-                        working style: ${profile.workingStyle}`}
+                    body={formatProfileTerminalBody(profile.data)}
                 />
             </div>
-            <p class="input-needed">{inputNotes.aboutText}</p>
-            <a class="terminal-link" href={withBase("/about")}>open /about --all</a>
+            <p class="input-needed">{snippets["input.aboutText"]}</p>
+            <a class="terminal-link" href={withBase("/about")}
+                >open /about --all</a
+            >
         </section>
 
-        <section id="projects" class="terminal-section" aria-labelledby="projects-title">
+        <section
+            id="projects"
+            class="terminal-section"
+            aria-labelledby="projects-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /projects</p>
             <h2 id="projects-title" class="section-heading">projects/</h2>
             <p class="section-intro">
-                Der erste Projekt-Eintrag aus GitHub. Die vollständige Projektliste liegt auf der
-                Projects-Seite.
+                Der erste Projekt-Eintrag aus GitHub. Die vollständige
+                Projektliste liegt auf der Projects-Seite.
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput path="/projects" command={firstProject.command} body={firstProject.body} />
+                <TerminalOutput
+                    path="/projects"
+                    command={firstProject.data.command}
+                    body={formatProjectTerminalBody(firstProject.data)}
+                />
             </div>
-            <p class="input-needed">{inputNotes.projectDetails}</p>
-            <a class="terminal-link" href={withBase("/projects")}>open /projects --all</a>
+            <p class="input-needed">{snippets["input.projectDetails"]}</p>
+            <a class="terminal-link" href={withBase("/projects")}
+                >open /projects --all</a
+            >
         </section>
 
-        <section id="links" class="terminal-section" aria-labelledby="links-title">
+        <section
+            id="links"
+            class="terminal-section"
+            aria-labelledby="links-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /links</p>
             <h2 id="links-title" class="section-heading">links.json</h2>
             <p class="section-intro">
-                Der erste Link-Output. Downloads bleiben bewusst deaktiviert; hier stehen nur Kontakt- und
-                Profilrouten.
+                Der erste Link-Output. Downloads bleiben bewusst deaktiviert;
+                hier stehen nur Kontakt- und Profilrouten.
             </p>
 
             <article class="terminal-output">
                 <p class="prompt">visitor@portfolio:/links$ cat links.json</p>
                 <pre class="output-body">{linksJson}</pre>
             </article>
-            <p class="input-needed">{inputNotes.contact}</p>
-            <a class="terminal-link" href={withBase("/links")}>open /links --all</a>
+            <p class="input-needed">{snippets["input.contact"]}</p>
+            <a class="terminal-link" href={withBase("/links")}
+                >open /links --all</a
+            >
         </section>
 
-        <section id="references" class="terminal-section" aria-labelledby="references-title">
+        <section
+            id="references"
+            class="terminal-section"
+            aria-labelledby="references-title"
+        >
             <p class="prompt">visitor@portfolio:~$ cd /references</p>
             <h2 id="references-title" class="section-heading">references.md</h2>
             <p class="section-intro">
-                Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier vorhanden, werden aber
-                aktuell nicht als Download angeboten.
+                Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier
+                vorhanden, werden aber aktuell nicht als Download angeboten.
             </p>
 
             <div class="terminal-list">
                 <TerminalOutput
                     path="/references"
-                    command={firstReference.command}
-                    body={firstReference.body}
+                    command={firstReference.data.command}
+                    body={firstReference.data.body}
                 />
             </div>
-            <p class="input-needed">{inputNotes.referencesPublic}</p>
-            <a class="terminal-link" href={withBase("/references")}>open /references --all</a>
+            <p class="input-needed">{snippets["input.referencesPublic"]}</p>
+            <a class="terminal-link" href={withBase("/references")}
+                >open /references --all</a
+            >
         </section>
 
-        <p class="cursor" aria-label="Terminal cursor">visitor@portfolio:~$ _</p>
+        <p class="cursor" aria-label="Terminal cursor">
+            visitor@portfolio:~$ _
+        </p>
     </div>
 </BaseLayout>
