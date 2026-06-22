@@ -5,7 +5,8 @@ import alpinejs from "@astrojs/alpinejs";
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://www.example.com",
+    site: "https://valentindibbern.github.io./",
+    base: "/website",
 
     integrations: [alpinejs()],
 
