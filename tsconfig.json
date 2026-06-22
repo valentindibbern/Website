@@ -9,10 +9,11 @@
             "@/*": ["./src/*"],
             "@components/*": ["./src/components/*"],
             "@layouts/*": ["./src/layouts/*"],
-            "@/pages/*": ["./src/pages/*"],
-            "@/styles/*": ["./src/styles/*"],
-            "@/scripts/*": ["./src/scripts/*"],
-            "@/assets/*": ["./src/assets/*"],
+            "@pages/*": ["./src/pages/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@scripts/*": ["./src/scripts/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@config/*": ["./src/config/*"],
         },
         "plugins": [
             {

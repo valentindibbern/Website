@@ -1,0 +1,58 @@
+---
+import TerminalOutput from "@components/TerminalOutput.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  education,
+  experience,
+  hobbies,
+  inputNotes,
+  languages,
+  profile,
+  skills,
+} from "@config/portfolio.ts";
+
+const title = "About";
+---
+
+<BaseLayout title={title}>
+  <div class="terminal-page terminal-subpage">
+    <section class="terminal-section first-section" aria-labelledby="about-title">
+      <p class="prompt">visitor@portfolio:~$ cd /about</p>
+      <h1 id="about-title" class="section-heading">about.md</h1>
+      <p class="section-intro">
+        Diese Seite ist für einen öffentlichen Fliesstext über mich vorbereitet. Der aktuelle Text
+        ist ein Platzhalter.
+      </p>
+
+      <article class="about-copy">
+        <p>{profile.aboutDraft}</p>
+      </article>
+      <p class="input-needed">{inputNotes.aboutText}</p>
+
+      <div class="terminal-list">
+        <TerminalOutput
+          path="/about"
+          command="cat public-profile.txt"
+          body={`name: ${profile.name}
+role: ${profile.role}
+education: ${profile.education}
+interests: ${profile.interests}
+working style: ${profile.workingStyle}`}
+        />
+        <TerminalOutput path="/about" command="cat skills.txt" body={skills.join("\n")} />
+        {
+          education.map((entry) => (
+            <TerminalOutput path="/about" command={entry.command} body={entry.body} />
+          ))
+        }
+        {
+          experience.map((entry) => (
+            <TerminalOutput path="/about" command={entry.command} body={entry.body} />
+          ))
+        }
+        <TerminalOutput path="/about" command="cat languages.txt" body={languages.join("\n")} />
+        <TerminalOutput path="/about" command="cat hobbies.txt" body={hobbies.join("\n")} />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

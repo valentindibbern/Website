@@ -1,0 +1,14 @@
+---
+interface Props {
+  command: string;
+  body: string;
+  path?: string;
+}
+
+const { command, body, path = "~" } = Astro.props;
+---
+
+<article class="terminal-entry">
+  <p class="prompt">visitor@portfolio:{path}$ {command}</p>
+  <pre class="output-body">{body}</pre>
+</article>

@@ -1,0 +1,29 @@
+---
+import TerminalOutput from "@components/TerminalOutput.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { inputNotes, projects } from "@config/portfolio.ts";
+
+const title = "Projects";
+---
+
+<BaseLayout title={title}>
+  <div class="terminal-page terminal-subpage">
+    <section class="terminal-section first-section" aria-labelledby="projects-title">
+      <p class="prompt">visitor@portfolio:~$ cd /projects</p>
+      <h1 id="projects-title" class="section-heading">projects/</h1>
+      <p class="section-intro">
+        Projektübersicht als vertikale Log-Liste. Jede Ausgabe kann später zu einer eigenen
+        Projektseite erweitert werden.
+      </p>
+
+      <div class="terminal-list">
+        {
+          projects.map((entry) => (
+            <TerminalOutput path="/projects" command={entry.command} body={entry.body} />
+          ))
+        }
+      </div>
+      <p class="input-needed">{inputNotes.projectDetails}</p>
+    </section>
+  </div>
+</BaseLayout>

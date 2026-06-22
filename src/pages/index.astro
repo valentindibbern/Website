@@ -1,8 +1,104 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import figlet from "figlet";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import TerminalOutput from "@components/TerminalOutput.astro";
+import { inputNotes, linksJson, profile, projects, references } from "@config/portfolio.ts";
 
 const title = "Home";
+const asciiName = figlet.textSync("Valentin Dibbern", { font: "Small" });
+const firstProject = projects[0];
+const firstReference = references[0];
 ---
 
 <BaseLayout title={title}>
+  <div class="terminal-page home-page">
+    <section class="terminal-hero" aria-label="Valentin Dibbern">
+      <pre class="ascii-logo" aria-label="Valentin Dibbern">{asciiName}</pre>
+
+      <p class="prompt">visitor@portfolio:~$ ./introduce.sh</p>
+      <p class="terminal-lede">
+        {profile.role}. Ich baue gerne einfache, verständliche Software und interessiere mich
+        besonders für Webentwicklung, Datenbanken, Automatisierung und Entwicklungswerkzeuge.
+      </p>
+
+      <div class="terminal-actions" aria-label="Primary actions">
+        <a class="terminal-button" href="/projects">&gt; view projects</a>
+        <a class="terminal-button" href="/links">$ contact routes</a>
+      </div>
+    </section>
+
+    <section id="about" class="terminal-section" aria-labelledby="about-title">
+      <p class="prompt">visitor@portfolio:~$ cd /about</p>
+      <h2 id="about-title" class="section-heading">about.md</h2>
+      <p class="section-intro">
+        Der erste Eintrag aus der About-Seite. Die Unterseite ist für einen öffentlichen Fliesstext
+        über mich vorbereitet.
+      </p>
+
+      <div class="terminal-list">
+        <TerminalOutput
+          path="/about"
+          command="whoami"
+          body={`name: ${profile.name}
+role: ${profile.role}
+interests: ${profile.interests}
+working style: ${profile.workingStyle}`}
+        />
+      </div>
+      <p class="input-needed">{inputNotes.aboutText}</p>
+      <a class="terminal-link" href="/about">open /about --all</a>
+    </section>
+
+    <section id="projects" class="terminal-section" aria-labelledby="projects-title">
+      <p class="prompt">visitor@portfolio:~$ cd /projects</p>
+      <h2 id="projects-title" class="section-heading">projects/</h2>
+      <p class="section-intro">
+        Der erste Projekt-Eintrag aus GitHub. Die vollständige Projektliste liegt auf der
+        Projects-Seite.
+      </p>
+
+      <div class="terminal-list">
+        <TerminalOutput path="/projects" command={firstProject.command} body={firstProject.body} />
+      </div>
+      <p class="input-needed">{inputNotes.projectDetails}</p>
+      <a class="terminal-link" href="/projects">open /projects --all</a>
+    </section>
+
+    <section id="links" class="terminal-section" aria-labelledby="links-title">
+      <p class="prompt">visitor@portfolio:~$ cd /links</p>
+      <h2 id="links-title" class="section-heading">links.json</h2>
+      <p class="section-intro">
+        Der erste Link-Output. Downloads bleiben bewusst deaktiviert; hier stehen nur Kontakt- und
+        Profilrouten.
+      </p>
+
+      <article class="terminal-output">
+        <p class="prompt">visitor@portfolio:/links$ cat links.json</p>
+        <pre class="output-body">{linksJson}</pre>
+      </article>
+      <p class="input-needed">{inputNotes.contact}</p>
+      <a class="terminal-link" href="/links">open /links --all</a>
+    </section>
+
+    <section id="references" class="terminal-section" aria-labelledby="references-title">
+      <p class="prompt">visitor@portfolio:~$ cd /references</p>
+      <h2 id="references-title" class="section-heading">references.md</h2>
+      <p class="section-intro">
+        Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier vorhanden, werden aber
+        aktuell nicht als Download angeboten.
+      </p>
+
+      <div class="terminal-list">
+        <TerminalOutput
+          path="/references"
+          command={firstReference.command}
+          body={firstReference.body}
+        />
+      </div>
+      <p class="input-needed">{inputNotes.referencesPublic}</p>
+      <a class="terminal-link" href="/references">open /references --all</a>
+    </section>
+
+    <p class="cursor" aria-label="Terminal cursor">visitor@portfolio:~$ _</p>
+  </div>
 </BaseLayout>
