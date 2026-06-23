@@ -221,7 +221,7 @@ a {
     padding-right: 0;
 }
 
-.terminal-table tbody .terminal-table-cell:first-child {
+.terminal-table tbody .terminal-table-cell {
     color: var(--terminal-green);
 }
 
