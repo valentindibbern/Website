@@ -1,11 +1,7 @@
 ---
-import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalBlock from "@components/TerminalBlock.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import {
-    getReferenceRows,
-    getReferences,
-    getSnippets,
-} from "@/utils/content";
+import { getBlocks, getReferences, getSnippets } from "@/utils/content";
 
 const title = "References";
 const references = await getReferences();
@@ -27,14 +23,11 @@ const snippets = await getSnippets();
 
             <div class="terminal-list">
                 {
-                    references.map((entry) => (
-                        <TerminalOutput
-                            path="/references"
-                            command={entry.data.command}
-                            body=""
-                            rows={getReferenceRows(entry.data)}
-                        />
-                    ))
+                    references.flatMap((entry) =>
+                        getBlocks(entry.data).map((block) => (
+                            <TerminalBlock path="/references" block={block} />
+                        )),
+                    )
                 }
             </div>
             <p class="input-needed">{snippets["input.referencesPublic"]}</p>

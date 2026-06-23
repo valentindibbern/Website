@@ -12,7 +12,7 @@ Dieses Projekt ist eine einzelne Astro-Site ohne Monorepo-Struktur. Die Website 
 - `src/layouts/`
   - Enthält den globalen Rahmen mit Header, `<head>`-Metadaten und Basis-Markup.
 - `src/components/`
-  - Wiederverwendbare UI-Bausteine für Terminal-Ausgaben, Navigation und Header.
+  - Wiederverwendbare UI-Bausteine für Terminal-Blöcke, Terminal-Ausgaben, Tabellen, Navigation und Header.
 - `src/content/`
   - Markdown-basierte redaktionelle Inhalte für Profil, Projekte, Referenzen, Terminaltexte und Snippets.
 - `src/utils/`
@@ -26,9 +26,9 @@ Dieses Projekt ist eine einzelne Astro-Site ohne Monorepo-Struktur. Die Website 
 
 1. Content wird in `src/content/*` als Markdown gepflegt.
 2. `src/content.config.ts` definiert Collections und validiert Frontmatter.
-3. `src/utils/content.ts` lädt Collections, sortiert Einträge und formatiert Ausgabe.
+3. `src/utils/content.ts` lädt Collections, sortiert Einträge und Blöcke und formatiert Ausgabe.
 4. Seiten wie `src/pages/index.astro` holen die Daten zur Build-Zeit.
-5. Komponenten wie `TerminalOutput.astro` rendern die Ausgabe in einem konsistenten Terminal-Look.
+5. `TerminalBlock.astro` delegiert Blöcke an `TerminalOutput.astro` oder `TerminalTable.astro`.
 6. Astro erzeugt statische HTML-Dateien für Deployment und Preview.
 
 ## Routing Model
@@ -50,6 +50,7 @@ Dieses Projekt ist eine einzelne Astro-Site ohne Monorepo-Struktur. Die Website 
 
 - Inhalt und Darstellung sind getrennt.
 - Wiederverwendbare Inhalte leben in Content Collections statt in JSX/TS-Objekten.
+- Wiederholbare Terminal-Inhalte sollen als Content-Blöcke gepflegt werden, nicht als hartkodierte Row-Arrays in Seiten.
 - Die Terminal-Optik ist bewusst konsistent, damit neue Inhalte ohne Layout-Bruch ergänzt werden können.
 - Statische Generierung ist die Standardannahme, nicht SSR.
 - GitHub-Pages-Kompatibilität ist Teil der Architekturannahme.

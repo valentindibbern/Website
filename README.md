@@ -57,10 +57,10 @@ Lokale Vorschau:
 
 - `src/pages/*.astro` definiert die Routen der Website.
 - `src/layouts/BaseLayout.astro` kapselt den globalen Rahmen, Meta-Tags und das Basis-Markup.
-- `src/components/*` enthält wiederverwendbare UI-Bausteine wie den Terminal-Output.
-- `src/content/*` speichert redaktionelle Inhalte als Markdown-Dateien.
+- `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Block, Terminal-Output und Tabellen.
+- `src/content/*` speichert redaktionelle Inhalte als Markdown-Dateien mit flexiblen Content-Blöcken.
 - `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
-- `src/utils/content.ts` bündelt Lade-, Sortier- und Formatierungslogik für Content.
+- `src/utils/content.ts` bündelt Lade-, Sortier-, Block- und Formatierungslogik für Content.
 - `src/styles/global.css` enthält das globale Styling und Tailwind v4.
 
 ## Documentation

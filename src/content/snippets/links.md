@@ -1,7 +1,10 @@
 ---
 key: "links"
 value:
-    - "github=github.com/valentindibbern"
-    - "portfolio=valentindibbern.github.io"
-    - "contact=contact route not public yet"
+    - key: "github"
+      value: "github.com/valentindibbern"
+    - key: "portfolio"
+      value: "valentindibbern.github.io"
+    - key: "contact"
+      value: "contact route not public yet"
 ---

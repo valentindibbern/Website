@@ -14,7 +14,8 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 ## Add Or Change Content
 
 - Inhalt in `src/content/*` bearbeiten.
-- Schema in `src/content.config.ts` prüfen, wenn Frontmatter-Felder geändert werden.
+- Bestehende `blocks`, `rows`, `items`, `entries` oder Tabellenzeilen ändern, wenn nur Inhalte angepasst werden.
+- Schema in `src/content.config.ts` nur ändern, wenn ein neuer Blocktyp oder eine neue strukturelle Form nötig ist.
 - Formatierung in `src/utils/content.ts` anpassen, wenn sich die Ausgabeform ändert.
 - Betroffene Seite in `src/pages/*` prüfen.
 - Dokumentation in `docs/Content-System.md` aktualisieren.

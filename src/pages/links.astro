@@ -1,11 +1,11 @@
 ---
-import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalBlock from "@components/TerminalBlock.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { formatLinksJson, getSnippets } from "@/utils/content";
+import { createLinksBlock, getSnippets } from "@/utils/content";
 
 const title = "Links";
 const snippets = await getSnippets();
-const linksJson = formatLinksJson(snippets.links);
+const linksBlock = createLinksBlock(snippets.links);
 ---
 
 <BaseLayout title={title}>
@@ -22,11 +22,7 @@ const linksJson = formatLinksJson(snippets.links);
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/links"
-                    command="cat links.json"
-                    body={linksJson}
-                />
+                <TerminalBlock path="/links" block={linksBlock} />
             </div>
             <p class="input-needed">{snippets["input.contact"]}</p>
         </section>

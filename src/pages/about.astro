@@ -1,15 +1,13 @@
 ---
-import TerminalTable from "@components/TerminalTable.astro";
-import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalBlock from "@components/TerminalBlock.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
+    createListBlock,
+    createSkillTableBlock,
+    getBlocks,
     getProfileContent,
-    getProfileRows,
     getSnippets,
-    getTerminalRows,
     getTerminalEntries,
-    toSkillGroups,
-    toStringList,
 } from "@/utils/content";
 
 const title = "About";
@@ -17,25 +15,12 @@ const { profile, Content } = await getProfileContent();
 const education = await getTerminalEntries("education");
 const experience = await getTerminalEntries("experience");
 const snippets = await getSnippets();
-const skillGroups = toSkillGroups(snippets.skills);
-const skillColumns = skillGroups.map((group) => ({
-    key: group.category,
-    label: group.category,
-}));
-const skillRowCount = Math.max(
-    0,
-    ...skillGroups.map((group) => group.items.length),
-);
-const skillRows = Array.from({ length: skillRowCount }, (_, index) =>
-    Object.fromEntries(
-        skillGroups.map((group) => [
-            group.category,
-            group.items[index] ?? "",
-        ]),
-    ),
-);
-const languages = toStringList(snippets.languages);
-const hobbies = toStringList(snippets.hobbies);
+const profileBlocks = getBlocks(profile.data);
+const educationBlocks = education.flatMap((entry) => getBlocks(entry.data));
+const experienceBlocks = experience.flatMap((entry) => getBlocks(entry.data));
+const skillBlock = createSkillTableBlock(snippets.skills);
+const languageBlock = createListBlock(snippets.languages, "cat languages.txt");
+const hobbyBlock = createListBlock(snippets.hobbies, "cat hobbies.txt");
 ---
 
 <BaseLayout title={title}>
@@ -57,48 +42,24 @@ const hobbies = toStringList(snippets.hobbies);
             <p class="input-needed">{snippets["input.aboutText"]}</p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/about"
-                    command="cat public-profile.txt"
-                    body=""
-                    rows={getProfileRows(profile.data, true)}
-                />
-                <TerminalTable
-                    path="/about"
-                    command="cat skills.txt"
-                    columns={skillColumns}
-                    rows={skillRows}
-                />
                 {
-                    education.map((entry) => (
-                        <TerminalOutput
-                            path="/about"
-                            command={entry.data.command}
-                            body=""
-                            rows={getTerminalRows(entry.data)}
-                        />
+                    profileBlocks.map((block) => (
+                        <TerminalBlock path="/about" block={block} />
+                    ))
+                }
+                <TerminalBlock path="/about" block={skillBlock} />
+                {
+                    educationBlocks.map((block) => (
+                        <TerminalBlock path="/about" block={block} />
                     ))
                 }
                 {
-                    experience.map((entry) => (
-                        <TerminalOutput
-                            path="/about"
-                            command={entry.data.command}
-                            body=""
-                            rows={getTerminalRows(entry.data)}
-                        />
+                    experienceBlocks.map((block) => (
+                        <TerminalBlock path="/about" block={block} />
                     ))
                 }
-                <TerminalOutput
-                    path="/about"
-                    command="cat languages.txt"
-                    body={languages.join("\n")}
-                />
-                <TerminalOutput
-                    path="/about"
-                    command="cat hobbies.txt"
-                    body={hobbies.join("\n")}
-                />
+                <TerminalBlock path="/about" block={languageBlock} />
+                <TerminalBlock path="/about" block={hobbyBlock} />
             </div>
         </section>
     </div>

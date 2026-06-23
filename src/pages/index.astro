@@ -1,15 +1,13 @@
 ---
 import figlet from "figlet";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalBlock from "@components/TerminalBlock.astro";
 import {
-    formatLinksJson,
+    createLinksBlock,
+    getFirstBlock,
     getProfile,
-    getProfileRows,
     getProjects,
-    getProjectRows,
     getReferences,
-    getReferenceRows,
     getSnippets,
 } from "@/utils/content";
 
@@ -21,7 +19,12 @@ const references = await getReferences();
 const snippets = await getSnippets();
 const firstProject = projects[0];
 const firstReference = references[0];
-const linksJson = formatLinksJson(snippets.links);
+const profileBlock = getFirstBlock(profile.data);
+const projectBlock = firstProject ? getFirstBlock(firstProject.data) : undefined;
+const referenceBlock = firstReference
+    ? getFirstBlock(firstReference.data)
+    : undefined;
+const linksBlock = createLinksBlock(snippets.links);
 ---
 
 <BaseLayout title={title}>
@@ -46,12 +49,7 @@ const linksJson = formatLinksJson(snippets.links);
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/about"
-                    command="whoami"
-                    body=""
-                    rows={getProfileRows(profile.data)}
-                />
+                {profileBlock && <TerminalBlock path="/about" block={profileBlock} />}
             </div>
         </section>
 
@@ -63,12 +61,7 @@ const linksJson = formatLinksJson(snippets.links);
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/projects"
-                    command={firstProject.data.command}
-                    body=""
-                    rows={getProjectRows(firstProject.data)}
-                />
+                {projectBlock && <TerminalBlock path="/projects" block={projectBlock} />}
             </div>
         </section>
 
@@ -79,10 +72,9 @@ const linksJson = formatLinksJson(snippets.links);
                 hier stehen nur Kontakt- und Profilrouten.
             </p>
 
-            <article class="terminal-output">
-                <p class="prompt">visitor@portfolio:/links$ cat links.json</p>
-                <pre class="output-body">{linksJson}</pre>
-            </article>
+            <div class="terminal-list">
+                <TerminalBlock path="/links" block={linksBlock} />
+            </div>
         </section>
 
         <section id="references" class="terminal-section">
@@ -93,12 +85,11 @@ const linksJson = formatLinksJson(snippets.links);
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/references"
-                    command={firstReference.data.command}
-                    body=""
-                    rows={getReferenceRows(firstReference.data)}
-                />
+                {
+                    referenceBlock && (
+                        <TerminalBlock path="/references" block={referenceBlock} />
+                    )
+                }
             </div>
         </section>
 

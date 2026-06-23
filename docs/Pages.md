@@ -11,8 +11,8 @@ Datei: `src/pages/index.astro`
   - `projects`
   - `references`
   - `snippets`
-- Der About-Vorspann und die Profilzeilen kommen direkt aus `src/content/profile/main.md`.
-- Die kompakten Vorschauen auf Home verwenden die Row-Helper aus `src/utils/content.ts`, damit Label und Value separat gestylt werden können.
+- Der About-Vorspann und die Profilblöcke kommen direkt aus `src/content/profile/main.md`.
+- Die kompakten Vorschauen auf Home verwenden pro Bereich den ersten sortierten Block.
 - Zweck:
   - schneller Überblick über das Projekt und die wichtigsten Unterseiten
 
@@ -23,8 +23,8 @@ Datei: `src/pages/about.astro`
 - Zeigt den Fließtext aus der Profil-Content-Schicht.
 - Nutzt denselben Intro-Text und dieselbe strukturierte Detail-Liste aus `src/content/profile/main.md`.
 - Ergänzt Terminal-Ausgaben für Profil, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
-- Die Profil-, Ausbildungs- und Erfahrungseinträge werden als Rows gerendert; die Values erhalten dabei die Akzentfarbe.
-- Skills werden als terminalartige Tabelle mit den Spalten `Sprachen`, `Tools` und `Konzepte` ausgegeben.
+- Profil-, Ausbildungs- und Erfahrungseinträge werden als sortierte Blöcke gerendert.
+- Skills werden aus Content-Gruppen als terminalartige Tabelle ausgegeben; Kategorien und Einträge sind nicht im Code hartkodiert.
 - Nutzt:
   - `profile`
   - `terminal`
@@ -35,7 +35,7 @@ Datei: `src/pages/about.astro`
 Datei: `src/pages/projects.astro`
 
 - Listet alle Projekte in sortierter Reihenfolge.
-- Jede Ausgabe wird über `TerminalOutput` mit strukturierten Rows gerendert.
+- Jede Ausgabe wird über `TerminalBlock` aus den Projekt-Blöcken gerendert.
 - Nutzt:
   - `projects`
   - `snippets`
@@ -45,7 +45,7 @@ Datei: `src/pages/projects.astro`
 Datei: `src/pages/references.astro`
 
 - Zeigt alle Referenzen und Nachweise als Terminal-Archiv.
-- Die Einträge werden ebenfalls als Rows ausgegeben, damit Labels und Values getrennt adressierbar bleiben.
+- Die Einträge werden über `TerminalBlock` aus den Referenz-Blöcken gerendert.
 - Nutzt:
   - `references`
   - `snippets`
@@ -55,6 +55,7 @@ Datei: `src/pages/references.astro`
 Datei: `src/pages/links.astro`
 
 - Zeigt Kontakt- und Profilrouten als JSON-artige Terminalausgabe.
+- Die JSON-Einträge kommen strukturiert aus `src/content/snippets/links.md`.
 - Nutzt:
   - `snippets`
 
@@ -63,6 +64,7 @@ Datei: `src/pages/links.astro`
 - Jede Seite setzt auf denselben globalen Layout-Rahmen.
 - Inhalte werden zur Build-Zeit geladen, nicht im Browser zusammengesetzt.
 - Die Terminal-Optik bleibt auf allen Seiten konsistent.
+- Seiten sollen Content-Blöcke rendern und keine einzelnen redaktionellen Row-Felder kennen.
 - Neue Seiten brauchen einen Eintrag in `src/config/navigation.ts`, wenn sie in der Navigation erscheinen sollen.
 - Interne Links müssen Base-URL-kompatibel bleiben.
 
