@@ -243,40 +243,6 @@ a {
     margin: 0;
 }
 
-.profile-details {
-    display: grid;
-    gap: 0.75rem;
-    max-width: 62rem;
-    margin: 2rem 0 0;
-}
-
-.profile-details-inline {
-    margin-top: 0;
-}
-
-.profile-detail,
-.profile-line {
-    display: grid;
-    grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
-    gap: 0.75rem 1.5rem;
-    margin: 0;
-}
-
-.profile-line {
-    align-items: baseline;
-}
-
-.profile-detail-label {
-    color: var(--terminal-green);
-    font-weight: 700;
-    text-transform: lowercase;
-}
-
-.profile-detail-value {
-    margin: 0;
-    color: var(--terminal-text);
-}
-
 .input-needed {
     max-width: 62rem;
     margin: 1rem 0 0;

@@ -62,17 +62,15 @@ export function formatProfileTerminalBody(
     profile: ProfileEntry["data"],
     includeEducation = false,
 ) {
-    const details = includeEducation
-        ? profile.details
-        : profile.details.filter((entry) => entry.label !== "education");
-
-    return details
-        .map((entry) => `${entry.label}: ${entry.value}`)
+    return [
+        `name: ${profile.name}`,
+        `role: ${profile.role}`,
+        includeEducation ? `education: ${profile.education}` : undefined,
+        `interests: ${profile.interests}`,
+        `working style: ${profile.workingStyle}`,
+    ]
+        .filter(Boolean)
         .join("\n");
-}
-
-export function formatProfileDetails(profile: ProfileEntry["data"]) {
-    return profile.details;
 }
 
 export function formatProjectTerminalBody(project: ProjectEntry["data"]) {

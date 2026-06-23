@@ -2,6 +2,7 @@
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
+    formatProfileTerminalBody,
     getProfileContent,
     getSnippets,
     getTerminalEntries,
@@ -27,7 +28,8 @@ const hobbies = toStringList(snippets.hobbies);
             <p class="prompt">visitor@portfolio:~$ cd /about</p>
             <h1 id="about-title" class="section-heading">about.md</h1>
             <p class="section-intro">
-                {profile.data.intro}
+                Diese Seite ist für einen öffentlichen Fliesstext über mich
+                vorbereitet. Der aktuelle Text ist ein Platzhalter.
             </p>
 
             <article class="about-copy">
@@ -35,16 +37,12 @@ const hobbies = toStringList(snippets.hobbies);
             </article>
             <p class="input-needed">{snippets["input.aboutText"]}</p>
 
-            <section class="profile-details" aria-label="Profilangaben">
-                {profile.data.details.map((entry) => (
-                    <dl class="profile-detail">
-                        <dt class="profile-detail-label">{entry.label}</dt>
-                        <dd class="profile-detail-value">{entry.value}</dd>
-                    </dl>
-                ))}
-            </section>
-
             <div class="terminal-list">
+                <TerminalOutput
+                    path="/about"
+                    command="cat public-profile.txt"
+                    body={formatProfileTerminalBody(profile.data, true)}
+                />
                 <TerminalOutput
                     path="/about"
                     command="cat skills.txt"

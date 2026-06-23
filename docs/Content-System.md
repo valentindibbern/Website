@@ -7,7 +7,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 ## Collections
 
 - `profile`
-  - Ein einzelner Profil-Eintrag mit Name, Rolle, Ausbildung, Interessen, Arbeitsweise, Intro-Text und einer strukturierten Detail-Liste.
+  - Ein einzelner Profil-Eintrag mit Name, Rolle, Ausbildung, Interessen und Arbeitsweise.
 - `projects`
   - Mehrere Projekt-Einträge mit Titel, Command, Reihenfolge, Quelle, Typ, Stack und Summary.
 - `references`
@@ -47,8 +47,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 
 - `src/content/profile/main.md`
   - Enthält den zentralen Profil-Datensatz.
-  - Frontmatter: `name`, `role`, `education`, `interests`, `workingStyle`, `intro`, `details`.
-  - `details` ist eine Liste aus `label`/`value`-Objekten und steuert die zeilenweise Ausgabe.
+  - Frontmatter: `name`, `role`, `education`, `interests`, `workingStyle`.
   - Markdown-Body: öffentlicher About-Fließtext.
   - Genutzt von `index.astro` und `about.astro`.
 - `src/content/projects/*.md`
@@ -78,7 +77,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 
 - Strukturelle Daten gehören in Frontmatter.
 - Längere Fließtexte gehören in den Markdown-Body.
-- Wenn ein Block zeilenweise und getrennt per CSS gestylt werden soll, gehört er als strukturierte Liste ins Frontmatter.
+
 - Wiederverwendbare Texte werden als Snippets gepflegt, nicht doppelt in Seiten kopiert.
 - Sortierung erfolgt explizit über `order`, nicht über Dateinamen.
 - Neue Felder müssen zuerst im jeweiligen Schema in `src/content.config.ts` ergänzt werden.
@@ -92,10 +91,6 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Numerische Sortierung innerhalb einer Collection.
 - `body`
   - Textausgabe für terminalartige Einträge.
-- `intro`
-  - Kurzer Einleitungstext für Profilbereiche.
-- `details`
-  - Liste aus Objekten mit `label` und `value`, wenn die Ausgabe in separat stilisierbare Zeilen aufgeteilt werden soll.
 - `key` und `value`
   - Snippet-Struktur für kleine Texte oder Listen; `value` darf auch ein Array von Strings sein.
 
