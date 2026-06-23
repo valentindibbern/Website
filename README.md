@@ -1,43 +1,89 @@
-# Astro Starter Kit: Minimal
+# Personal Website
+
+Terminal-inspirierte Astro-Website mit Content Collections, Markdown-Inhalten und einem schlanken Komponenten-Setup.
+
+## Quick Start
 
 ```sh
-bun create astro@latest -- --template minimal
+bun install
+bun dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Lokale Vorschau:
 
-## 🚀 Project Structure
+- Dev-Server: `http://localhost:4321`
+- Production Build: `bun build`
+- Preview des Builds: `bun preview`
+- Astro-Checks: `bun astro check`
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Overview
 
 ```text
 /
-├── public/
+├── docs/
+│   ├── Stack.md
+│   ├── Architecture.md
+│   ├── Content-System.md
+│   ├── Components.md
+│   ├── Pages.md
+│   ├── Workflows.md
+│   ├── Deployment.md
+│   └── Agent-Reference.md
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── pages/
+│   ├── layouts/
+│   ├── components/
+│   ├── config/
+│   ├── content/
+│   ├── utils/
+│   └── styles/
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### How it works
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `src/pages/*.astro` definiert die Routen der Website.
+- `src/layouts/BaseLayout.astro` kapselt den globalen Rahmen, Meta-Tags und das Basis-Markup.
+- `src/components/*` enthält wiederverwendbare UI-Bausteine wie den Terminal-Output.
+- `src/content/*` speichert redaktionelle Inhalte als Markdown-Dateien.
+- `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
+- `src/utils/content.ts` bündelt Lade-, Sortier- und Formatierungslogik für Content.
+- `src/styles/global.css` enthält das globale Styling und Tailwind v4.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Documentation Map
 
-## 🧞 Commands
+- [Stack](./docs/Stack.md): verwendete Technologien, Tools und Libraries
+- [Architecture](./docs/Architecture.md): Projektaufbau und Datenfluss
+- [Content System](./docs/Content-System.md): Content Collections und Content-Ladung
+- [Components](./docs/Components.md): wichtige UI-Bausteine
+- [Pages](./docs/Pages.md): was jede Seite rendert und welche Daten sie nutzt
+- [Workflows](./docs/Workflows.md): typische Änderungen und wo sie umgesetzt werden
+- [Deployment](./docs/Deployment.md): Build, Preview und Base-URL-Verhalten
+- [Agent Reference](./docs/Agent-Reference.md): kompakter Einstieg für Agents und andere KI-Systeme
 
-All commands are run from the root of the project, from a terminal:
+## Source Of Truth
 
-| Command               | Action                                           |
-| :-------------------- | :----------------------------------------------- |
-| `bun install`         | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+- `package.json`
+- `astro.config.mjs`
+- `tsconfig.json`
+- `eslint.config.js`
+- `.prettierrc.mjs`
+- `bun.lock`
 
-## 👀 Want to learn more?
+## Commands
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Alle Befehle werden aus dem Repository-Root ausgeführt.
+
+| Command | Purpose |
+| --- | --- |
+| `bun install` | Dependencies installieren |
+| `bun dev` | Lokalen Dev-Server starten |
+| `bun build` | Production Build erzeugen |
+| `bun preview` | Production Build lokal prüfen |
+| `bun astro check` | Astro- und TypeScript-Checks ausführen |
+| `bun astro -- --help` | Astro-CLI-Hilfe anzeigen |
+
+## Notes
+
+- Keine Änderungen an `dist/`, `.astro/` oder `node_modules/`.
+- Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/`.
