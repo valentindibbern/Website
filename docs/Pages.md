@@ -4,72 +4,57 @@
 
 Datei: `src/pages/index.astro`
 
-- Zeigt den ASCII-Namen, die kurze Einführung und die wichtigsten Einstiege.
-- Die Home-Abschnitte bleiben bewusst kompakt: keine Hero-Aktionsbuttons, keine großen Abschnittsüberschriften und keine roten Content-Hinweise.
+- Zeigt ASCII-Namen, Einführung und kompakte Vorschauen.
 - Nutzt:
-  - `profile`
-  - `projects`
-  - `references`
-  - `snippets`
-- Der About-Vorspann und die Profilblöcke kommen direkt aus `src/content/profile/main.md`.
-- Die kompakten Vorschauen auf Home verwenden pro Bereich den ersten sortierten Block.
-- Zweck:
-  - schneller Überblick über das Projekt und die wichtigsten Unterseiten
+  - `text/home-lede.md`
+  - `data/profile.yaml`
+  - erster Eintrag aus `data/projects.yaml`
+  - `data/links.yaml`
+  - erster Eintrag aus `data/references.yaml`
 
 ## About
 
 Datei: `src/pages/about.astro`
 
-- Zeigt den Fließtext aus der Profil-Content-Schicht.
-- Nutzt denselben Intro-Text und dieselbe strukturierte Detail-Liste aus `src/content/profile/main.md`.
-- Ergänzt Terminal-Ausgaben für Profil, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
-- Profil-, Ausbildungs- und Erfahrungseinträge werden als sortierte Blöcke gerendert.
-- Skills werden aus Content-Gruppen als terminalartige Tabelle ausgegeben; Kategorien und Einträge sind nicht im Code hartkodiert.
+- Zeigt den About-Fließtext und strukturierte persönliche Daten.
 - Nutzt:
-  - `profile`
-  - `terminal`
-  - `snippets`
+  - `text/abouttext.md`
+  - `data/profile.yaml`
+  - `data/skills.yaml`
+  - `data/terminal.yaml`
+  - `data/languages.yaml`
+  - `data/hobbies.yaml`
+  - `data/note-about-text.yaml`
 
 ## Projects
 
 Datei: `src/pages/projects.astro`
 
-- Listet alle Projekte in sortierter Reihenfolge.
-- Jede Ausgabe wird über `TerminalBlock` aus den Projekt-Blöcken gerendert.
-- Nutzt:
-  - `projects`
-  - `snippets`
+- Listet alle Projekte aus `data/projects.yaml`.
+- Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
+- Nutzt zusätzlich `data/note-project-details.yaml`.
 
 ## References
 
 Datei: `src/pages/references.astro`
 
-- Zeigt alle Referenzen und Nachweise als Terminal-Archiv.
-- Die Einträge werden über `TerminalBlock` aus den Referenz-Blöcken gerendert.
-- Nutzt:
-  - `references`
-  - `snippets`
+- Zeigt Referenzen und Nachweise aus `data/references.yaml`.
+- Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
+- Nutzt zusätzlich `data/note-references-public.yaml`.
 
 ## Links
 
 Datei: `src/pages/links.astro`
 
-- Zeigt Kontakt- und Profilrouten als JSON-artige Terminalausgabe.
-- Die JSON-Einträge kommen strukturiert aus `src/content/snippets/links.md`.
+- Zeigt Kontakt- und Profilrouten als Liste.
 - Nutzt:
-  - `snippets`
+  - `data/links.yaml`
+  - `data/note-contact.yaml`
 
 ## Page Conventions
 
-- Jede Seite setzt auf denselben globalen Layout-Rahmen.
-- Inhalte werden zur Build-Zeit geladen, nicht im Browser zusammengesetzt.
-- Die Terminal-Optik bleibt auf allen Seiten konsistent.
-- Seiten sollen Content-Blöcke rendern und keine einzelnen redaktionellen Row-Felder kennen.
-- Neue Seiten brauchen einen Eintrag in `src/config/navigation.ts`, wenn sie in der Navigation erscheinen sollen.
+- Jede Seite verwendet `BaseLayout`.
+- Seiten setzen `TerminalCommand` explizit vor der passenden Output-Komponente.
+- Output-Komponenten erhalten ihre Content-Quelle über `src`.
 - Interne Links müssen Base-URL-kompatibel bleiben.
-
-## Missing Route Notes
-
-- `src/config/navigation.ts` enthält aktuell einen Footer-Link auf `/impressum`.
-- Es gibt derzeit keine dokumentierte `src/pages/impressum.astro`.
-- Wenn die Seite ergänzt wird, sollten `Pages.md`, Navigation und Content-Quellen gemeinsam aktualisiert werden.
+- Neue Seiten brauchen bei Bedarf einen Eintrag in `src/config/navigation.ts`.

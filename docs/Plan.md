@@ -1,105 +1,399 @@
-# Content-Pipeline Mit Flexiblen Blöcken
+# Refactoring-Plan: Content-Pipeline und Terminal-Komponenten
 
 ## Summary
 
-Das aktuelle Problem entsteht, weil Content-Schemas und Render-Helper noch an feste Frontmatter-Felder gebunden sind, z. B. `workingStyle` in `profile`. Astro Content Collections validieren Frontmatter per Zod-Schema und brechen korrekt ab, wenn ein Pflichtfeld fehlt; genau das passiert aktuell mit `src/content/profile/main.md`. Siehe Astro-Doku zu [Content Collections](https://docs.astro.build/en/guides/content-collections/).
+Die Website soll eine verständlichere Pipeline bekommen, bei der Content-Dateien direkt und nachvollziehbar von Terminal-Komponenten gelesen werden. Die aktuelle Struktur mit vielen Content-Subdirectories, großen Frontmatter-Blöcken und generischen Terminal-Blöcken wird ersetzt.
 
-Der Umbau sollte deinen Slot-/Block-Ansatz übernehmen: Seiten definieren nur noch, welche Content-Blöcke sie in welcher Reihenfolge laden. Die Inhalte innerhalb eines Blocks, also Listenzeilen, Tabellenzeilen oder Key-Value-Rows, werden vollständig aus Markdown-Frontmatter gelesen und können ohne Codeänderung ergänzt, entfernt oder umsortiert werden.
+Neuer Grundfluss:
 
-## Key Changes
+`src/content/text/*.md` oder `src/content/data/*.yaml` -> Astro Content Collections via `glob()` -> kleine Loader-/Parser-Helfer -> Terminal-Komponente wählt Quelle über `src` -> HTML-Ausgabe.
 
-- Feste Felder wie `workingStyle`, `interests`, `source`, `stack`, `summary` werden nicht mehr direkt von Seiten oder Helpern erwartet.
-- Content-Dateien bekommen flexible `blocks` oder blockartige Felder mit `type`, `command`, `order` und typabhängigen Daten.
-- Renderer wählen anhand von `type`, wie ein Block dargestellt wird:
-  - `rows`: Label-/Value-Liste
-  - `table`: Tabelle mit dynamischen Spalten und Zeilen
-  - `list`: einfache Zeilenliste
-  - `json`: JSON-artige Terminalausgabe
-  - `text`: freier Textblock
-- Home lädt pro Bereich nur den ersten passenden Block oder ersten Collection-Eintrag.
-- Unterseiten laden alle passenden Blöcke in definierter Reihenfolge.
-- Schemas validieren nur die Blockstruktur, nicht mehr konkrete redaktionelle Feldnamen wie `workingStyle`.
+Leitentscheidungen:
 
-## Implementation Plan
+- Markdown wird nur für freie Texte verwendet.
+- YAML wird für Listen, Tabellen, Key-Value-Daten und bisher JSON-artige Inhalte verwendet.
+- Content liegt in genau zwei Unterordnern:
+  - `src/content/text/`
+  - `src/content/data/`
+- Terminal-Komponenten wählen ihre Quelle selbst über ein `src`-Prop.
+- Keine großen Inhaltsdaten im Markdown-Frontmatter.
+- JSON-Ausgaben werden in Listen überführt.
+- Terminal-Ausgaben werden aus klaren Komponenten aufgebaut:
+  - `TerminalCommand`
+  - `TerminalText`
+  - `TerminalDictionary`
+  - `TerminalTable`
+  - `TerminalList`
 
-- Content-Schema umbauen:
-  - `src/content.config.ts` bekommt gemeinsame Block-Schemas.
-  - `profile` benötigt nur noch stabile Seitendaten wie `name`, `role` und optional `blocks`.
-  - `projects`, `references`, `terminal` und `snippets` werden so angepasst, dass wiederholbare Inhalte als flexible Blöcke oder blockfähige Einträge beschrieben werden.
-  - Pflichtfelder bleiben nur dort Pflicht, wo Code sie wirklich braucht, z. B. `title`, `command`, `order`, `type`.
+## Content-Struktur
 
-- Content-Modelle vereinheitlichen:
-  - `rows` enthält beliebig viele `{ label, value, kind? }`.
-  - `table` enthält `columns: [{ key, label }]` und `rows: Record<string, string>[]`.
-  - `list` enthält `items: string[]`.
-  - `text` enthält `body` oder nutzt den Markdown-Body.
-  - `json` enthält `entries: [{ key, value }]`.
-  - Skills werden als `table` oder tabellarischer Block modelliert, sodass Kategorien und Einträge frei im Content geändert werden können.
+Die neue Content-Struktur wird:
 
-- Helper in `src/utils/content.ts` ersetzen:
-  - Alte Feld-Mapper wie `getProfileRows(profile.data)` und `getProjectRows(project.data)` werden entfernt oder nur noch als Kompatibilitätsfallback behalten.
-  - Neue Helper laden Blöcke generisch:
-    - `getBlocksForPage(pageKey)`
-    - `getFirstBlockForSection(sectionKey)`
-    - `normalizeBlock(entry)`
-    - `sortByOrder(entries)`
-  - Helper dürfen nicht mehr konkrete Content-Feldnamen wie `workingStyle`, `summary` oder `stack` kennen.
+```text
+src/content/
+  text/
+    abouttext.md
+    home-lede.md
+  data/
+    profile.yaml
+    projects.yaml
+    references.yaml
+    terminal.yaml
+    skills.yaml
+    links.yaml
+    languages.yaml
+    hobbies.yaml
+```
 
-- Komponenten vereinheitlichen:
-  - `TerminalOutput` rendert weiterhin `text` und `rows`.
-  - `TerminalTable` rendert beliebige Tabellen aus Content-Spalten und Content-Zeilen.
-  - Optional wird eine kleine `TerminalBlock.astro`-Komponente eingeführt, die anhand von `block.type` zu `TerminalOutput`, `TerminalTable` oder JSON/List-Rendering delegiert.
-  - Seiten rendern dann nur noch Blocklisten, statt selbst Tabellenzeilen oder Row-Arrays zusammenzubauen.
+Markdown-Regeln:
 
-- Seiten umbauen:
-  - `about.astro` lädt die für About vorgesehenen Blöcke in Reihenfolge.
-  - `index.astro` lädt pro Bereich nur den ersten Block bzw. ersten sortierten Eintrag.
-  - `projects.astro` und `references.astro` rendern vollständige Collections generisch.
-  - `links.astro` bleibt JSON-artig, aber bekommt eine strukturierte Content-Quelle statt `key=value`-String-Splitting.
+- `.md` wird für freie Textinhalte genutzt.
+- Der sichtbare Text steht im Markdown-Body.
+- Der Refactor setzt keine Attribute im Markdown-Frontmatter voraus.
+- Falls Astro technisch leeres Frontmatter verlangt, wird nur ein leerer Header verwendet, keine inhaltlichen Metadaten.
 
-- Content-Migration:
-  - `profile/main.md` bekommt z. B. einen `rows`-Block für Profilangaben.
-  - Wenn `working style` entfernt wird, verschwindet die Zeile automatisch.
-  - Wenn `interests` umbenannt oder umsortiert wird, wird genau diese Änderung gerendert.
-  - Projekte speichern ihre sichtbaren Details als `rows`, nicht mehr als hartkodierte Felder.
-  - Skills speichern ihre Kategorien und Einträge als Tabelle, komplett contentgetrieben.
+YAML-Regeln:
 
-- Dokumentation aktualisieren:
-  - `docs/Content-System.md` beschreibt die neue Blockstruktur.
-  - `docs/Pages.md` erklärt, welche Seiten welche Blockgruppen laden.
-  - `docs/Components.md` beschreibt `TerminalBlock`, `TerminalOutput` und `TerminalTable`.
-  - `README.md` nur ändern, wenn sich die redaktionelle Arbeitsweise für Nutzer sichtbar ändert.
+- `.yaml` wird für strukturierte Inhalte genutzt.
+- Listen bleiben echte YAML-Listen.
+- Key-Value-Daten werden als YAML-Listen mit `label` und `value` modelliert.
+- Tabellen werden als `columns` plus `rows` modelliert.
+- Bisher JSON-artige Inhalte, z. B. Links, werden in eine Liste umgewandelt.
+- Die sichtbare Reihenfolge innerhalb einer YAML-Datei entspricht der Reihenfolge der YAML-Liste. Kein `order`-Feld im ersten Refactor.
 
-## Critical Notes
+Beispiel für Dictionary-Daten:
 
-- Dein Slot-/Block-Ansatz ist passend, weil er die richtige Grenze zieht: Code kontrolliert Layout und Reihenfolge von Bereichen, Content kontrolliert Einträge innerhalb dieser Bereiche.
-- Der Ansatz sollte nicht so weit gehen, dass Markdown beliebige Komponenten auswählt. Die erlaubten `type`-Werte müssen begrenzt bleiben, damit das öffentliche Repo robust und typprüfbar bleibt.
-- Zod-Schemas sollten weiterhin genutzt werden, aber auf Blockformen statt auf konkrete Inhalte. Das erhält Astro-Checks und verhindert kaputte Daten, ohne redaktionelle Änderungen unnötig zu blockieren.
-- `z.record()` oder flexible Arrays sind sinnvoller als viele einzelne Pflichtfelder, solange die Renderer mit fehlenden/zusätzlichen Einträgen umgehen können.
-- Bestehende Collections müssen nicht zwingend zu einer einzigen Collection verschmolzen werden. Besser ist ein gemeinsamer Block-Vertrag über mehrere Collections hinweg, damit `projects`, `references`, `terminal` und `profile` ihre fachliche Trennung behalten.
+```yaml
+rows:
+  - label: name
+    value: Valentin Dibbern
+  - label: role
+    value: Informatikschüler
+```
+
+Beispiel für Listen-Daten:
+
+```yaml
+items:
+  - GitHub
+  - LinkedIn
+  - Email
+```
+
+Beispiel für Tabellen-Daten:
+
+```yaml
+columns:
+  - key: language
+    label: Sprachen
+  - key: tool
+    label: Tools
+rows:
+  - language: Python
+    tool: Git
+  - language: Java
+    tool: GitHub
+```
+
+## Astro Collections und Loader
+
+`src/content.config.ts` wird auf zwei Collections vereinfacht:
+
+- `text`
+  - lädt `src/content/text/**/*.md`
+  - erwartet keine verpflichtenden Frontmatter-Felder
+  - stellt Markdown-Body zum Rendern bereit
+- `data`
+  - lädt `src/content/data/**/*.yaml`
+  - validiert grob unterstützte Datenformen für Listen, Dictionaries und Tabellen
+
+Der Refactor soll keinen großen eigenen Dateisystem-Parser bauen. Astro übernimmt weiterhin das Laden und Basis-Parsen über `glob()`.
+
+Zusätzlich entstehen kleine Utility-Funktionen, z. B. in `src/utils/content.ts` oder aufgeteilt nach Bedarf:
+
+- `getTextContent(src: string)`
+  - lädt `src/content/text/${src}.md`
+  - rendert Markdown über Astro
+- `getDataContent(src: string)`
+  - lädt `src/content/data/${src}.yaml`
+  - gibt validierte YAML-Daten zurück
+- `getListContent(src: string)`
+  - gibt `items` zurück
+- `getDictionaryContent(src: string)`
+  - gibt `rows` zurück
+- `getTableContent(src: string)`
+  - gibt `columns` und `rows` zurück
+
+Die Komponenten erhalten keine Dateipfade, sondern logische Quellen:
+
+```astro
+<TerminalText src="abouttext" />
+<TerminalList src="links" />
+<TerminalDictionary src="profile" />
+<TerminalDictionary src="projects" entry="website" />
+<TerminalTable src="skills" />
+```
+
+Dabei gilt:
+
+- `TerminalText src="abouttext"` referenziert `src/content/text/abouttext.md`.
+- `TerminalList src="links"` referenziert `src/content/data/links.yaml`.
+- `TerminalDictionary src="profile"` referenziert `src/content/data/profile.yaml`.
+- `TerminalDictionary src="projects" entry="website"` referenziert den Eintrag `website` in `src/content/data/projects.yaml`.
+- `TerminalTable src="skills"` referenziert `src/content/data/skills.yaml`.
+
+## Terminal-Komponenten
+
+Die Terminal-Komponenten werden klar nach Ausgabeform getrennt.
+
+### TerminalCommand
+
+Zweck:
+
+- rendert nur die Bash-artige Prompt-/Command-Zeile.
+
+Props:
+
+```ts
+interface Props {
+    path?: string;
+    command: string;
+}
+```
+
+Ausgabeformat:
+
+```text
+visitor@portfolio:~/about$ cat abouttext.md
+```
+
+Regeln:
+
+- Der Prompt folgt dem Linux-/Bash-Stil:
+  - `user@host:path$ command`
+- Standardwerte:
+  - `user`: `visitor`
+  - `host`: `portfolio`
+  - `path`: `~`
+- Wenn `path="/about"` übergeben wird, soll die Ausgabe konsistent und bash-artig sein, z. B.:
+  - `visitor@portfolio:~/about$ cat profile.yaml`
+- `TerminalCommand` lädt keinen Content.
+
+### TerminalText
+
+Zweck:
+
+- rendert Markdown-Text aus `src/content/text/*.md`.
+
+Props:
+
+```ts
+interface Props {
+    src: string;
+}
+```
+
+Regeln:
+
+- `src` ist der Dateiname ohne `.md`.
+- `TerminalText` nimmt keinen `body`-Prop.
+- Der Content kommt vollständig aus der referenzierten Markdown-Datei.
+- Die Komponente macht keine eigene Textformatierungslogik.
+- Umbrüche und Flussverhalten übernimmt der Browser/CSS.
+- Markdown wird nur so weit gerendert, wie Astro es standardmäßig rendert.
+
+### TerminalDictionary
+
+Zweck:
+
+- rendert Key-Value-/Label-Value-Daten aus `src/content/data/*.yaml`.
+
+Props:
+
+```ts
+interface Props {
+    src: string;
+    entry?: string;
+}
+```
+
+Regeln:
+
+- `src` ist der Dateiname ohne `.yaml`.
+- Erwartet YAML mit `rows` oder einen passenden Eintrag unter `entries`.
+- Rendert semantisch als `dl`.
+- Keine zusätzlichen Props für `rows` im ersten Refactor.
+- Die Größe der Ausgabe ergibt sich aus dem geladenen Content.
+
+### TerminalTable
+
+Zweck:
+
+- rendert Tabellen aus `src/content/data/*.yaml`.
+
+Props:
+
+```ts
+interface Props {
+    src: string;
+}
+```
+
+Regeln:
+
+- `src` ist der Dateiname ohne `.yaml`.
+- Erwartet YAML mit `columns` und `rows`.
+- Keine zusätzlichen Props für `columns` oder `rows` im ersten Refactor.
+- Die Größe der Tabelle ergibt sich aus dem geladenen Content.
+
+### TerminalList
+
+Zweck:
+
+- rendert einfache Listen aus `src/content/data/*.yaml`.
+
+Props:
+
+```ts
+interface Props {
+    src: string;
+}
+```
+
+Regeln:
+
+- `src` ist der Dateiname ohne `.yaml`.
+- Erwartet YAML mit `items`.
+- Bisher JSON-artige Inhalte wie Links werden hier als Liste ausgegeben.
+- Keine zusätzliche JSON-Komponente.
+
+## Seitenstruktur und Verwendung
+
+Seiten komponieren Terminal-Ausgaben explizit:
+
+```astro
+<TerminalCommand path="/about" command="cat abouttext.md" />
+<TerminalText src="abouttext" />
+
+<TerminalCommand path="/about" command="cat profile.yaml" />
+<TerminalDictionary src="profile" />
+
+<TerminalCommand path="/about" command="cat skills.yaml" />
+<TerminalTable src="skills" />
+
+<TerminalCommand path="/links" command="cat links.yaml" />
+<TerminalList src="links" />
+```
+
+Regeln:
+
+- Seiten kennen die gewünschten Quellen und die Ausgabeform.
+- Komponenten laden ihre eigenen Inhalte über `src`.
+- Seiten übergeben im ersten Refactor keine `rows`, `columns`, `items` oder `body`.
+- Bestehende generische Block-Renderer werden entfernt.
+- Die alte Logik `blockToBody()` entfällt.
+- Falls während der Migration eine Übergangsschicht nötig ist, wird sie temporär gehalten und nach Umstellung aller Seiten entfernt.
+
+## Migration
+
+Bestehende Inhalte werden wie folgt übertragen:
+
+- `src/content/profile/main.md`
+  - Markdown-Body -> `src/content/text/abouttext.md`
+  - Profil-Rows -> `src/content/data/profile.yaml`
+- `src/content/snippets/home-lede.md`
+  - Body/Textwert -> `src/content/text/home-lede.md`
+- `src/content/projects/*.md`
+  - Projektlisten -> `src/content/data/projects.yaml`
+- `src/content/references/*.md`
+  - Referenzlisten -> `src/content/data/references.yaml`
+- `src/content/terminal/*.md`
+  - Ausbildungs- und Erfahrungsdaten -> `src/content/data/terminal.yaml`
+- `src/content/snippets/skills.md`
+  - Skill-Tabelle -> `src/content/data/skills.yaml`
+- `src/content/snippets/languages.md`
+  - Sprachenliste -> `src/content/data/languages.yaml`
+- `src/content/snippets/hobbies.md`
+  - Hobbyliste -> `src/content/data/hobbies.yaml`
+- `src/content/snippets/links.md`
+  - bisher JSON-artige Links -> `src/content/data/links.yaml` als Liste
+
+Die sichtbare Website soll nach der Migration inhaltlich möglichst gleich bleiben. Die einzige bewusste Änderung ist, dass JSON-artige Darstellung durch Listen ersetzt wird.
+
+## Styling
+
+`src/styles/global.css` bleibt zentrale Styling-Datei.
+
+Bestehende Klassen werden nach Möglichkeit weiterverwendet:
+
+- `.prompt` für `TerminalCommand`
+- `.output-body` oder eine passende Textklasse für `TerminalText`
+- `.output-pairs`, `.output-label`, `.output-value` für `TerminalDictionary`
+- `.terminal-table-*` für `TerminalTable`
+- neue Listenklasse für `TerminalList`, z. B. `.terminal-output-list`
+
+`TerminalText` selbst entscheidet nicht über Textformatierung. Falls Umbruchverhalten angepasst werden muss, passiert das ausschließlich über CSS.
+
+## Dokumentation
+
+Folgende Dokumente werden aktualisiert:
+
+- `README.md`
+  - Projektübersicht und Content-Bearbeitung.
+- `docs/Content-System.md`
+  - neue Ordner `src/content/text` und `src/content/data`.
+  - Markdown-vs-YAML-Regeln.
+  - `src`-basierte Content-Auswahl.
+- `docs/Components.md`
+  - `TerminalCommand`
+  - `TerminalText`
+  - `TerminalDictionary`
+  - `TerminalTable`
+  - `TerminalList`
+- `docs/Pages.md`
+  - welche Seite welche Terminal-Komponenten und Content-Quellen nutzt.
+- `docs/Architecture.md`
+  - neuer Datenfluss von Datei zu Komponente zu HTML.
+- `docs/Workflows.md`
+  - wie Texte, Listen, Dictionaries und Tabellen bearbeitet werden.
+
+Dokumentation bleibt öffentlich lesbar und enthält keine privaten Arbeitsnotizen.
 
 ## Test Plan
 
-- `bun astro check` muss nach Entfernen von `workingStyle` fehlerfrei laufen.
-- `bun run build` muss alle 5 Seiten bauen.
-- Manuelle Content-Tests:
-  - Profilzeile in `profile/main.md` entfernen.
-  - Profilzeile hinzufügen.
-  - Profilzeilen umsortieren.
-  - Skill-Tabellenspalte erweitern oder Eintrag entfernen.
-  - Projekt-Row hinzufügen und ohne Codeänderung auf `projects` sehen.
-  - Reference-Body mit Zeilenumbrüchen prüfen.
-- Browser-Prüfung:
-  - Home zeigt nur den ersten Block je Bereich.
-  - About zeigt alle zugeordneten Blöcke.
-  - Projects und References behalten vollständige Listen.
-  - Tabellen bleiben mobil scrollbar.
-  - Keine roten Content-Hinweise oder entfernten Home-Elemente kehren zurück.
+Nach Umsetzung ausführen:
+
+```sh
+bun astro check
+bun run build
+```
+
+Manuell prüfen:
+
+- `/`
+- `/about`
+- `/projects`
+- `/links`
+- `/references`
+
+Akzeptanzkriterien:
+
+- Content liegt nur noch unter `src/content/text` und `src/content/data`.
+- Markdown-Texte setzen keine inhaltlichen Frontmatter-Attribute voraus.
+- YAML-Daten ersetzen strukturierte Frontmatter-Blöcke.
+- Terminal-Komponenten laden Inhalte per `src`.
+- `TerminalCommand` rendert bash-artige Prompt-Ausgaben.
+- `TerminalText` rendert Text aus Markdown-Dateien ohne eigene Formatierungslogik.
+- `TerminalDictionary`, `TerminalTable` und `TerminalList` bestimmen ihre Größe durch den geladenen Content.
+- JSON-artige Inhalte sind zu Listen migriert.
+- Alte generische Terminal-Block-Logik ist entfernt.
+- Doku beschreibt den neuen Stand.
 
 ## Assumptions
 
-- Seitenstruktur und Navigation bleiben gleich.
-- Reihenfolge wird weiterhin über `order` gesteuert.
-- Layout-Typen sind bewusst begrenzt auf `text`, `rows`, `table`, `list` und `json`.
-- Content-Dateien dürfen Einträge innerhalb dieser Typen frei ergänzen, entfernen und umsortieren.
-- Änderungen an Content sollen weiterhin durch Astro validiert werden, aber nur gegen generische Blockformen.
+- Astro kann Markdown-Dateien ohne verpflichtende Frontmatter-Felder in einer Collection laden. Falls die konkrete Konfiguration leeres Frontmatter benötigt, wird nur leeres Frontmatter verwendet.
+- YAML wird für strukturierte redaktionelle Daten gewählt, weil es lesbarer für Listen und verschachtelte Inhalte ist als TOML.
+- Reihenfolge innerhalb einer YAML-Liste ist die sichtbare Reihenfolge.
+- Zusätzliche Props wie `rows`, `columns`, `items` oder manuelle Größensteuerung werden nicht Teil dieses Refactors.
+- Erweiterungen für optionale Props können später ergänzt werden.
+- Arbeit erfolgt bei späterer Umsetzung auf `agent-changes`, mit Dokumentationsupdate, Commit und Push gemäß Projektregeln.

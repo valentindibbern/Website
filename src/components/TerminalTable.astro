@@ -1,49 +1,39 @@
 ---
-export type TerminalTableColumn = {
-    key: string;
-    label: string;
-};
-
-type TerminalTableRow = Record<string, string>;
+import { getTableContent } from "@/utils/content";
 
 interface Props {
-    command: string;
-    columns: TerminalTableColumn[];
-    rows: TerminalTableRow[];
-    path?: string;
+    src: string;
 }
 
-const { command, columns, rows, path = "~" } = Astro.props;
+const { src } = Astro.props;
+const { columns, rows } = await getTableContent(src);
 ---
 
-<article class="terminal-entry">
-    <p class="prompt">visitor@portfolio:{path}$ {command}</p>
-    <div class="terminal-table-wrap">
-        <table class="terminal-table">
-            <thead class="terminal-table-head">
-                <tr class="terminal-table-row">
-                    {
-                        columns.map((column) => (
-                            <th class="terminal-table-cell" scope="col">
-                                {column.label}
-                            </th>
-                        ))
-                    }
-                </tr>
-            </thead>
-            <tbody>
+<div class="terminal-table-wrap">
+    <table class="terminal-table">
+        <thead class="terminal-table-head">
+            <tr class="terminal-table-row">
                 {
-                    rows.map((row) => (
-                        <tr class="terminal-table-row">
-                            {columns.map((column) => (
-                                <td class="terminal-table-cell">
-                                    {row[column.key]}
-                                </td>
-                            ))}
-                        </tr>
+                    columns.map((column) => (
+                        <th class="terminal-table-cell" scope="col">
+                            {column.label}
+                        </th>
                     ))
                 }
-            </tbody>
-        </table>
-    </div>
-</article>
+            </tr>
+        </thead>
+        <tbody>
+            {
+                rows.map((row) => (
+                    <tr class="terminal-table-row">
+                        {columns.map((column) => (
+                            <td class="terminal-table-cell">
+                                {row[column.key]}
+                            </td>
+                        ))}
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+</div>

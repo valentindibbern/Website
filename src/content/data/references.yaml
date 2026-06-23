@@ -1,0 +1,37 @@
+entries:
+  - id: "delf-b1"
+    command: "cat delf-b1.txt"
+    rows:
+      - label: "title"
+        value: "DELF B1"
+      - label: "command"
+        value: "cat delf-b1.txt"
+      - label: "body"
+        value: |
+          DELF B1
+          Französisch-Zertifikat, bestanden 2025
+          Hinweis: Dokument ist vorhanden, aber aktuell nicht als Download verlinkt
+  - id: "school-records"
+    command: "cat school-records.txt"
+    rows:
+      - label: "title"
+        value: "Schulische Nachweise"
+      - label: "command"
+        value: "cat school-records.txt"
+      - label: "body"
+        value: |
+          Schulische Nachweise
+          Modulnotenübersicht und Zeugnisse sind im Bewerbungsdossier vorhanden.
+          Aktuell werden keine Dateien zum Download angeboten.
+  - id: "references"
+    command: "cat references.txt"
+    rows:
+      - label: "title"
+        value: "Referenzen"
+      - label: "command"
+        value: "cat references.txt"
+      - label: "body"
+        value: |
+          Referenzen
+          Referenzpersonen sind im privaten Bewerbungsdossier vorhanden.
+          Namen und Kontaktdaten werden auf der öffentlichen Website nicht angezeigt.

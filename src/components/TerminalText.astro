@@ -1,0 +1,14 @@
+---
+import { getTextContent } from "@/utils/content";
+
+interface Props {
+    src: string;
+}
+
+const { src } = Astro.props;
+const { Content } = await getTextContent(src);
+---
+
+<div class="output-body">
+    <Content />
+</div>

@@ -1,0 +1,9 @@
+rows:
+  - label: "name"
+    value: "Valentin Dibbern"
+  - label: "role"
+    value: "Informatikschüler"
+  - label: "education"
+    value: "-"
+  - label: "interests"
+    value: "Dynamische Probleme, Backend"

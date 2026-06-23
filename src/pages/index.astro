@@ -1,30 +1,16 @@
 ---
 import figlet from "figlet";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TerminalBlock from "@components/TerminalBlock.astro";
-import {
-    createLinksBlock,
-    getFirstBlock,
-    getProfile,
-    getProjects,
-    getReferences,
-    getSnippets,
-} from "@/utils/content";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalList from "@components/TerminalList.astro";
+import TerminalText from "@components/TerminalText.astro";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "Home";
 const asciiName = figlet.textSync("Valentin Dibbern", { font: "Big" });
-const profile = await getProfile();
-const projects = await getProjects();
-const references = await getReferences();
-const snippets = await getSnippets();
-const firstProject = projects[0];
-const firstReference = references[0];
-const profileBlock = getFirstBlock(profile.data);
-const projectBlock = firstProject ? getFirstBlock(firstProject.data) : undefined;
-const referenceBlock = firstReference
-    ? getFirstBlock(firstReference.data)
-    : undefined;
-const linksBlock = createLinksBlock(snippets.links);
+const [firstProject] = await getDictionaryEntries("projects");
+const [firstReference] = await getDictionaryEntries("references");
 ---
 
 <BaseLayout title={title}>
@@ -32,53 +18,62 @@ const linksBlock = createLinksBlock(snippets.links);
         <section class="terminal-hero" aria-label="Valentin Dibbern">
             <pre
                 class="ascii-logo"
-                aria-label="Valentin Dibbern">{asciiName}</pre>
+                aria-label="Valentin Dibbern">{asciiName}
+            </pre>
 
-            <p class="prompt">visitor@portfolio:~$ ./introduce.sh</p>
-            <p class="terminal-lede">
-                {profile.data.role}. {snippets["home.lede"]}
-            </p>
-
+            <TerminalCommand command="cat introduction.txt" />
+            <div class="terminal-lede">
+                <TerminalText src="home-lede" />
+            </div>
         </section>
 
         <section id="about" class="terminal-section">
-            <p class="prompt">visitor@portfolio:~$ cd /about</p>
-            <p class="section-intro">
-                Der erste Eintrag aus der About-Seite. Die Unterseite ist für
-                einen öffentlichen Fliesstext über mich vorbereitet.
-            </p>
-
+            <TerminalCommand path="/about" command="cat profile.yaml" />
             <div class="terminal-list">
-                {profileBlock && <TerminalBlock path="/about" block={profileBlock} />}
+                <article class="terminal-entry">
+                    <TerminalDictionary src="profile" />
+                </article>
             </div>
         </section>
 
         <section id="projects" class="terminal-section">
-            <p class="prompt">visitor@portfolio:~$ cd /projects</p>
+            <TerminalCommand command="cd /projects" />
             <p class="section-intro">
                 Der erste Projekt-Eintrag aus GitHub. Die vollständige
                 Projektliste liegt auf der Projects-Seite.
             </p>
 
             <div class="terminal-list">
-                {projectBlock && <TerminalBlock path="/projects" block={projectBlock} />}
+                {
+                    firstProject && (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/projects"
+                                command={firstProject.command ?? "cat projects.yaml"}
+                            />
+                            <TerminalDictionary src="projects" entry={firstProject.id} />
+                        </article>
+                    )
+                }
             </div>
         </section>
 
         <section id="links" class="terminal-section">
-            <p class="prompt">visitor@portfolio:~$ cd /links</p>
+            <TerminalCommand path="/links" command="cat links.yaml" />
             <p class="section-intro">
                 Der erste Link-Output. Downloads bleiben bewusst deaktiviert;
                 hier stehen nur Kontakt- und Profilrouten.
             </p>
 
             <div class="terminal-list">
-                <TerminalBlock path="/links" block={linksBlock} />
+                <article class="terminal-entry">
+                    <TerminalList src="links" />
+                </article>
             </div>
         </section>
 
         <section id="references" class="terminal-section">
-            <p class="prompt">visitor@portfolio:~$ cd /references</p>
+            <TerminalCommand command="cd /references" />
             <p class="section-intro">
                 Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier
                 vorhanden, werden aber aktuell nicht als Download angeboten.
@@ -86,8 +81,17 @@ const linksBlock = createLinksBlock(snippets.links);
 
             <div class="terminal-list">
                 {
-                    referenceBlock && (
-                        <TerminalBlock path="/references" block={referenceBlock} />
+                    firstReference && (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/references"
+                                command={firstReference.command ?? "cat references.yaml"}
+                            />
+                            <TerminalDictionary
+                                src="references"
+                                entry={firstReference.id}
+                            />
+                        </article>
                     )
                 }
             </div>

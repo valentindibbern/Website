@@ -148,10 +148,23 @@ a {
 
 .output-body {
     margin: 1rem 0 0;
-    white-space: pre-wrap;
     color: var(--terminal-text);
     font-size: clamp(0.95rem, 2vw, 1.08rem);
     line-height: 1.8;
+}
+
+.output-body > :first-child {
+    margin-top: 0;
+}
+
+.output-body > :last-child {
+    margin-bottom: 0;
+}
+
+.terminal-lede .output-body {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .output-pairs {
@@ -223,6 +236,22 @@ a {
 
 .terminal-table tbody .terminal-table-cell {
     color: var(--terminal-green);
+}
+
+.terminal-output-list {
+    display: grid;
+    gap: 0.25rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    color: var(--terminal-green);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+    line-height: 1.8;
+    list-style: none;
+}
+
+.terminal-output-list li::before {
+    content: "- ";
+    color: var(--terminal-muted);
 }
 
 .section-heading {

@@ -25,8 +25,8 @@ bun dev
 Lokale Vorschau:
 
 - Dev-Server: `http://localhost:4321`
-- Production Build: `bun build`
-- Preview des Builds: `bun preview`
+- Production Build: `bun run build`
+- Preview des Builds: `bun run preview`
 - Astro-Checks: `bun astro check`
 
 ## Project Overview
@@ -48,6 +48,8 @@ Lokale Vorschau:
 │   ├── components/
 │   ├── config/
 │   ├── content/
+│   │   ├── text/
+│   │   └── data/
 │   ├── utils/
 │   └── styles/
 └── package.json
@@ -57,10 +59,11 @@ Lokale Vorschau:
 
 - `src/pages/*.astro` definiert die Routen der Website.
 - `src/layouts/BaseLayout.astro` kapselt den globalen Rahmen, Meta-Tags und das Basis-Markup.
-- `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Block, Terminal-Output und Tabellen.
-- `src/content/*` speichert redaktionelle Inhalte als Markdown-Dateien mit flexiblen Content-Blöcken.
+- `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Command, Text-, Dictionary-, Listen- und Tabellen-Ausgaben.
+- `src/content/text/*` speichert freie redaktionelle Texte als Markdown.
+- `src/content/data/*` speichert strukturierte Inhalte als YAML.
 - `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
-- `src/utils/content.ts` bündelt Lade-, Sortier-, Block- und Formatierungslogik für Content.
+- `src/utils/content.ts` bündelt Lade- und Validierungslogik für Content-Quellen.
 - `src/styles/global.css` enthält das globale Styling und Tailwind v4.
 
 ## Documentation
@@ -91,8 +94,8 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 | --- | --- |
 | `bun install` | Dependencies installieren |
 | `bun dev` | Lokalen Dev-Server starten |
-| `bun build` | Production Build erzeugen |
-| `bun preview` | Production Build lokal prüfen |
+| `bun run build` | Production Build erzeugen |
+| `bun run preview` | Production Build lokal prüfen |
 | `bun astro check` | Astro- und TypeScript-Checks ausführen |
 | `bun astro -- --help` | Astro-CLI-Hilfe anzeigen |
 
