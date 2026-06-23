@@ -30,6 +30,49 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Enthält die eigentlichen Markdown-Dateien.
   - Ist die primäre Stelle für Inhaltsänderungen.
 
+## Data Path To The Website
+
+1. Markdown-Dateien liegen unter `src/content/*`.
+2. Jede Datei gehört über ihren Ordner zu einer Collection, z. B. `src/content/projects/*` zu `projects`.
+3. `src/content.config.ts` lädt die Dateien mit `glob()` aus dem passenden Ordner.
+4. Das jeweilige Schema validiert die Frontmatter-Felder beim Astro-Check oder Build.
+5. Seiten und Utilities greifen über `getCollection()` und `render()` aus `astro:content` auf die Einträge zu.
+6. `src/utils/content.ts` kapselt wiederverwendbare Zugriffe, Sortierung und Ausgabeformatierung.
+7. Seiten unter `src/pages/*` laden die vorbereiteten Daten zur Build-Zeit.
+8. Komponenten wie `TerminalOutput.astro` rendern die Daten in HTML.
+9. `bun build` erzeugt daraus statische Dateien in `dist/`.
+10. GitHub Pages liefert die statische Website unter der konfigurierten Base-URL aus.
+
+## Current Content Inventory
+
+- `src/content/profile/main.md`
+  - Enthält den zentralen Profil-Datensatz.
+  - Frontmatter: `name`, `role`, `education`, `interests`, `workingStyle`.
+  - Markdown-Body: öffentlicher About-Fließtext.
+  - Genutzt von `index.astro` und `about.astro`.
+- `src/content/projects/*.md`
+  - Enthält Projekt-Einträge.
+  - Dateien: `website.md`, `neovimconfig.md`, `jahr-java-3-aufgaben.md`, `cmd-rechner.md`, `buecherantiquariat.md`.
+  - Frontmatter: `title`, `command`, `order`, `source`, `type`, `stack`, `summary`.
+  - Genutzt von `index.astro` für den ersten sortierten Eintrag und von `projects.astro` für die vollständige Liste.
+- `src/content/references/*.md`
+  - Enthält Referenzen und Nachweise.
+  - Dateien: `references.md`, `school-records.md`, `delf-b1.md`.
+  - Frontmatter: `title`, `command`, `order`, `body`.
+  - Genutzt von `index.astro` für den ersten sortierten Eintrag und von `references.astro` für die vollständige Liste.
+- `src/content/terminal/*.md`
+  - Enthält terminalartige Detailblöcke für Ausbildung und Erfahrung.
+  - Dateien: `education-current.md`, `education-previous.md`, `cobra-software.md`, `klixar-it.md`.
+  - Frontmatter: `title`, `command`, `order`, `body`, `group`.
+  - `group` ist entweder `education` oder `experience`.
+  - Genutzt von `about.astro`.
+- `src/content/snippets/*.md`
+  - Enthält kurze wiederverwendbare Texte und Listen.
+  - Dateien: `home-lede.md`, `skills.md`, `languages.md`, `hobbies.md`, `links.md`, `input-about-text.md`, `input-contact.md`, `input-project-details.md`, `input-references-public.md`.
+  - Frontmatter: `key`, `value`.
+  - `value` ist entweder ein einzelner String oder eine Liste von Strings.
+  - Genutzt von `index.astro`, `about.astro`, `projects.astro`, `links.astro` und `references.astro`.
+
 ## Editing Rules
 
 - Strukturelle Daten gehören in Frontmatter.
