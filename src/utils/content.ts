@@ -1,304 +1,175 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 
-export type ProfileEntry = CollectionEntry<"profile">;
-export type ProjectEntry = CollectionEntry<"projects">;
-export type ReferenceEntry = CollectionEntry<"references">;
-export type TerminalEntry = CollectionEntry<"terminal">;
-export type ContentRow = {
+export type TextEntry = CollectionEntry<"text">;
+export type DataEntry = CollectionEntry<"data">;
+
+export type DictionaryRow = {
     label: string;
     value: string;
     kind?: string;
-    meta?: string;
 };
-export type TerminalTableColumn = {
+
+export type TableColumn = {
     key: string;
     label: string;
 };
-export type JsonEntry = {
-    key: string;
-    value: string;
-};
-export type SkillGroup = {
-    category: string;
-    items: string[];
-};
-export type ContentBlock =
+
+export type ListItem =
+    | string
     | {
-          type: "rows";
-          command: string;
-          order: number;
-          path?: string;
-          rows: ContentRow[];
-      }
-    | {
-          type: "table";
-          command: string;
-          order: number;
-          path?: string;
-          columns: TerminalTableColumn[];
-          rows: Record<string, string>[];
-      }
-    | {
-          type: "list";
-          command: string;
-          order: number;
-          path?: string;
-          items: string[];
-      }
-    | {
-          type: "json";
-          command: string;
-          order: number;
-          path?: string;
-          entries: JsonEntry[];
-      }
-    | {
-          type: "text";
-          command: string;
-          order: number;
-          path?: string;
-          body: string;
+          label: string;
+          value?: string;
       };
 
-type SnippetValue =
-    | string
-    | string[]
-    | SkillGroup[]
-    | JsonEntry[]
-    | undefined;
-type BlockSource = {
-    blocks?: ContentBlock[];
+export type DictionaryEntry = {
+    id?: string;
+    command?: string;
+    rows: DictionaryRow[];
 };
 
-export async function getProfile() {
-    const profiles = await getCollection("profile");
+export async function getTextContent(src: string) {
+    const entry = await getContentEntry("text", src);
+    const rendered = await render(entry);
 
-    if (profiles.length !== 1) {
+    return {
+        Content: rendered.Content,
+    };
+}
+
+export async function getDataContent(src: string) {
+    return getContentEntry("data", src);
+}
+
+export async function getDictionaryContent(
+    src: string,
+    entryId?: string,
+): Promise<DictionaryRow[]> {
+    const entry = await getDataContent(src);
+
+    if (entryId) {
+        if (!isEntryListData(entry.data)) {
+            throw new Error(
+                `Expected entries in src/content/data/${src}.yaml for TerminalDictionary entry "${entryId}".`,
+            );
+        }
+
+        const dictionaryEntry = entry.data.entries.find(
+            (candidate: DictionaryEntry) => candidate.id === entryId,
+        );
+
+        if (!dictionaryEntry) {
+            throw new Error(
+                `Expected dictionary entry "${entryId}" in src/content/data/${src}.yaml.`,
+            );
+        }
+
+        return dictionaryEntry.rows;
+    }
+
+    if (!isDictionaryData(entry.data)) {
         throw new Error(
-            `Expected exactly one profile content entry, found ${profiles.length}.`,
+            `Expected rows in src/content/data/${src}.yaml for TerminalDictionary.`,
         );
     }
 
-    return profiles[0];
+    return entry.data.rows;
 }
 
-export async function getProfileContent() {
-    const profile = await getProfile();
-    const renderedProfile = await render(profile);
+export async function getDictionaryEntries(src: string) {
+    const entry = await getDataContent(src);
 
-    return {
-        profile,
-        Content: renderedProfile.Content,
-    };
-}
-
-export async function getProjects() {
-    const projects = await getCollection("projects");
-
-    return sortEntriesByOrder(projects);
-}
-
-export async function getReferences() {
-    const references = await getCollection("references");
-
-    return sortEntriesByOrder(references);
-}
-
-export async function getTerminalEntries(
-    group: TerminalEntry["data"]["group"],
-) {
-    const entries = await getCollection(
-        "terminal",
-        (entry) => entry.data.group === group,
-    );
-
-    return sortEntriesByOrder(entries);
-}
-
-export async function getSnippets() {
-    const snippets = await getCollection("snippets");
-
-    return Object.fromEntries(
-        snippets.map((entry) => [entry.data.key, entry.data.value]),
-    );
-}
-
-export function getBlocks(data: BlockSource): ContentBlock[] {
-    return sortBlocks(data.blocks ?? []);
-}
-
-export function getFirstBlock(data: BlockSource): ContentBlock | undefined {
-    return getBlocks(data)[0];
-}
-
-export function createSkillTableBlock(
-    rawSkills: SnippetValue,
-    command = "cat skills.txt",
-): ContentBlock {
-    const skillGroups = toSkillGroups(rawSkills);
-    const columns = skillGroups.map((group) => ({
-        key: group.category,
-        label: group.category,
-    }));
-    const rowCount = Math.max(
-        0,
-        ...skillGroups.map((group) => group.items.length),
-    );
-    const rows = Array.from({ length: rowCount }, (_, index) =>
-        Object.fromEntries(
-            skillGroups.map((group) => [
-                group.category,
-                group.items[index] ?? "",
-            ]),
-        ),
-    );
-
-    return {
-        type: "table",
-        command,
-        order: 0,
-        columns,
-        rows,
-    };
-}
-
-export function createListBlock(
-    rawList: SnippetValue,
-    command: string,
-): ContentBlock {
-    return {
-        type: "list",
-        command,
-        order: 0,
-        items: toStringList(rawList),
-    };
-}
-
-export function createLinksBlock(rawLinks: SnippetValue): ContentBlock {
-    return {
-        type: "json",
-        command: "cat links.json",
-        order: 0,
-        entries: toJsonEntries(rawLinks),
-    };
-}
-
-export function blockToBody(block: ContentBlock): string {
-    if (block.type === "text") {
-        return block.body;
+    if (!isEntryListData(entry.data)) {
+        throw new Error(
+            `Expected entries in src/content/data/${src}.yaml for repeated dictionaries.`,
+        );
     }
 
-    if (block.type === "list") {
-        return block.items.join("\n");
-    }
-
-    if (block.type === "json") {
-        return formatJsonEntries(block.entries);
-    }
-
-    return "";
+    return entry.data.entries;
 }
 
-export function formatLinksJson(rawLinks: SnippetValue) {
-    return formatJsonEntries(toJsonEntries(rawLinks));
+export async function getListContent(src: string): Promise<string[]> {
+    const entry = await getDataContent(src);
+
+    if (!("items" in entry.data)) {
+        throw new Error(
+            `Expected items in src/content/data/${src}.yaml for TerminalList.`,
+        );
+    }
+
+    return entry.data.items.map((item) =>
+        typeof item === "string"
+            ? item
+            : item.value
+              ? `${item.label}: ${item.value}`
+              : item.label,
+    );
 }
 
-export function formatJsonEntries(entries: JsonEntry[]) {
-    return `{\n${entries
-        .map(
-            (entry, index) =>
-                `  "${entry.key}": "${entry.value}"${index < entries.length - 1 ? "," : ""}`,
+export async function getTableContent(src: string) {
+    const entry = await getDataContent(src);
+
+    if (!isTableData(entry.data)) {
+        throw new Error(
+            `Expected columns and rows in src/content/data/${src}.yaml for TerminalTable.`,
+        );
+    }
+
+    return {
+        columns: entry.data.columns,
+        rows: entry.data.rows,
+    };
+}
+
+function isDictionaryData(data: DataEntry["data"]): data is {
+    rows: DictionaryRow[];
+} {
+    return (
+        "rows" in data &&
+        !("columns" in data) &&
+        data.rows.every(
+            (row) =>
+                typeof row === "object" &&
+                row !== null &&
+                "label" in row &&
+                "value" in row,
         )
-        .join("\n")}\n}`;
+    );
 }
 
-export function toStringList(value: SnippetValue) {
-    if (!value) {
-        return [];
-    }
-
-    if (typeof value === "string") {
-        return [value];
-    }
-
-    return value.filter((entry): entry is string => typeof entry === "string");
+function isEntryListData(data: DataEntry["data"]): data is {
+    entries: DictionaryEntry[];
+} {
+    return "entries" in data;
 }
 
-export function toSkillGroups(value: SnippetValue): SkillGroup[] {
-    if (!value) {
-        return [];
-    }
-
-    if (typeof value === "string") {
-        return [{ category: "Skills", items: [value] }];
-    }
-
-    if (value.every((entry) => typeof entry === "string")) {
-        return [{ category: "Skills", items: value }];
-    }
-
-    return value.filter(isSkillGroup);
-}
-
-function toJsonEntries(value: SnippetValue): JsonEntry[] {
-    if (!value) {
-        return [];
-    }
-
-    if (typeof value === "string") {
-        return [stringToJsonEntry(value)];
-    }
-
-    return value
-        .map((entry) => {
-            if (typeof entry === "string") {
-                return stringToJsonEntry(entry);
-            }
-
-            if (isJsonEntry(entry)) {
-                return entry;
-            }
-
-            return undefined;
-        })
-        .filter((entry): entry is JsonEntry => Boolean(entry));
-}
-
-function stringToJsonEntry(entry: string): JsonEntry {
-    const [key, ...valueParts] = entry.split("=");
-
-    return {
-        key,
-        value: valueParts.join("="),
-    };
-}
-
-function isJsonEntry(entry: string | SkillGroup | JsonEntry): entry is JsonEntry {
+function isTableData(data: DataEntry["data"]): data is {
+    columns: TableColumn[];
+    rows: Record<string, string>[];
+} {
     return (
-        typeof entry === "object" &&
-        entry !== null &&
-        "key" in entry &&
-        "value" in entry
+        "columns" in data &&
+        "rows" in data &&
+        data.rows.every(
+            (row) =>
+                typeof row === "object" &&
+                row !== null &&
+                Object.values(row).every((value) => typeof value === "string"),
+        )
     );
 }
 
-function isSkillGroup(
-    entry: string | SkillGroup | JsonEntry,
-): entry is SkillGroup {
-    return (
-        typeof entry === "object" &&
-        entry !== null &&
-        "category" in entry &&
-        "items" in entry
-    );
-}
+async function getContentEntry<TCollection extends "data" | "text">(
+    collection: TCollection,
+    src: string,
+): Promise<CollectionEntry<TCollection>> {
+    const entries = await getCollection(collection);
+    const entry = entries.find((candidate) => candidate.id === src);
 
-function sortBlocks(blocks: ContentBlock[]) {
-    return blocks.toSorted((first, second) => first.order - second.order);
-}
+    if (!entry) {
+        throw new Error(
+            `Could not find src/content/${collection}/${src}.${collection === "text" ? "md" : "yaml"}.`,
+        );
+    }
 
-function sortEntriesByOrder<T extends { data: { order: number } }>(entries: T[]) {
-    return entries.toSorted(
-        (first, second) => first.data.order - second.data.order,
-    );
+    return entry;
 }

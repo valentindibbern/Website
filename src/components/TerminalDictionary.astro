@@ -1,0 +1,26 @@
+---
+import { getDictionaryContent } from "@/utils/content";
+
+interface Props {
+    src: string;
+    entry?: string;
+}
+
+const { src, entry } = Astro.props;
+const rows = await getDictionaryContent(src, entry);
+---
+
+<dl class="output-pairs">
+    {
+        rows.map((row) => (
+            <>
+                <dt class={`output-label${row.kind ? ` is-${row.kind}` : ""}`}>
+                    {row.label}
+                </dt>
+                <dd class={`output-value${row.kind ? ` is-${row.kind}` : ""}`}>
+                    {row.value}
+                </dd>
+            </>
+        ))
+    }
+</dl>

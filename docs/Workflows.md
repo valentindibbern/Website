@@ -13,10 +13,11 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 
 ## Add Or Change Content
 
-- Inhalt in `src/content/*` bearbeiten.
-- Bestehende `blocks`, `rows`, `items`, `entries` oder Tabellenzeilen ändern, wenn nur Inhalte angepasst werden.
-- Schema in `src/content.config.ts` nur ändern, wenn ein neuer Blocktyp oder eine neue strukturelle Form nötig ist.
-- Formatierung in `src/utils/content.ts` anpassen, wenn sich die Ausgabeform ändert.
+- Freie Texte in `src/content/text/*.md` bearbeiten.
+- Strukturierte Daten in `src/content/data/*.yaml` bearbeiten.
+- `rows` für Dictionary-Ausgaben, `items` für Listen und `columns` plus `rows` für Tabellen verwenden.
+- Schema in `src/content.config.ts` nur ändern, wenn eine neue strukturelle Datenform nötig ist.
+- Loader in `src/utils/content.ts` nur anpassen, wenn sich die Content-Auswahl oder Validierung ändert.
 - Betroffene Seite in `src/pages/*` prüfen.
 - Dokumentation in `docs/Content-System.md` aktualisieren.
 
@@ -31,7 +32,8 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 ## Add A Component
 
 - Komponente in `src/components/` anlegen.
-- Content-Logik nicht in die Komponente ziehen, wenn sie in `src/utils/content.ts` wiederverwendbar ist.
+- Terminal-Output-Komponenten laden ihre Quelle per `src`.
+- Wiederverwendbare Content-Prüfung bleibt in `src/utils/content.ts`.
 - Props klein und explizit halten.
 - `docs/Components.md` um Zweck, Eingaben und typische Nutzung erweitern.
 
@@ -51,6 +53,6 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 ## Before Finishing
 
 - `bun astro check` ausführen, wenn Astro-, TypeScript-, Content- oder Komponentenlogik geändert wurde.
-- `bun build` ausführen, wenn Seiten, Routing, Content-Schemas oder Deployment-Verhalten betroffen sind.
+- `bun run build` ausführen, wenn Seiten, Routing, Content-Schemas oder Deployment-Verhalten betroffen sind.
 - Dokumentationsänderungen mit der eigentlichen Projektänderung committen.
 - Prüfen, dass neue Doku öffentlich teilbar ist.

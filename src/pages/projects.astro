@@ -1,11 +1,11 @@
 ---
-import TerminalBlock from "@components/TerminalBlock.astro";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalDictionary from "@components/TerminalDictionary.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getBlocks, getProjects, getSnippets } from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "Projects";
-const projects = await getProjects();
-const snippets = await getSnippets();
+const projects = await getDictionaryEntries("projects");
 ---
 
 <BaseLayout title={title}>
@@ -14,7 +14,7 @@ const snippets = await getSnippets();
             class="terminal-section first-section"
             aria-labelledby="projects-title"
         >
-            <p class="prompt">visitor@portfolio:~$ cd /projects</p>
+            <TerminalCommand command="cd /projects" />
             <h1 id="projects-title" class="section-heading">projects/</h1>
             <p class="section-intro">
                 Projektübersicht als vertikale Log-Liste. Jede Ausgabe kann
@@ -23,14 +23,17 @@ const snippets = await getSnippets();
 
             <div class="terminal-list">
                 {
-                    projects.flatMap((entry) =>
-                        getBlocks(entry.data).map((block) => (
-                            <TerminalBlock path="/projects" block={block} />
-                        )),
-                    )
+                    projects.map((entry) => (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/projects"
+                                command={entry.command ?? "cat projects.yaml"}
+                            />
+                            <TerminalDictionary src="projects" entry={entry.id} />
+                        </article>
+                    ))
                 }
             </div>
-            <p class="input-needed">{snippets["input.projectDetails"]}</p>
         </section>
     </div>
 </BaseLayout>

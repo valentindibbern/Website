@@ -1,0 +1,14 @@
+---
+import { getListContent } from "@/utils/content";
+
+interface Props {
+    src: string;
+}
+
+const { src } = Astro.props;
+const items = await getListContent(src);
+---
+
+<ul class="terminal-output-list">
+    {items.map((item) => <li>{item}</li>)}
+</ul>

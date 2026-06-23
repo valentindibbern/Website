@@ -2,55 +2,54 @@
 
 ## Overview
 
-Dieses Projekt ist eine einzelne Astro-Site ohne Monorepo-Struktur. Die Website ist statisch, content-driven und auf eine terminalartige Darstellung ausgerichtet.
+Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-driven und rendert eine terminalartige Oberfläche.
 
 ## Main Layers
 
 - `src/pages/`
-  - Definiert die Routen der Website.
-  - Jede `.astro`-Datei wird direkt zu einer Seite.
+  - Definiert die Routen und die Reihenfolge der sichtbaren Terminal-Ausgaben.
 - `src/layouts/`
-  - Enthält den globalen Rahmen mit Header, `<head>`-Metadaten und Basis-Markup.
+  - Enthält den globalen Seitenrahmen.
 - `src/components/`
-  - Wiederverwendbare UI-Bausteine für Terminal-Blöcke, Terminal-Ausgaben, Tabellen, Navigation und Header.
-- `src/content/`
-  - Markdown-basierte redaktionelle Inhalte für Profil, Projekte, Referenzen, Terminaltexte und Snippets.
+  - Enthält Terminal-Komponenten, Header und Navigation.
+- `src/content/text/`
+  - Markdown-Texte.
+- `src/content/data/`
+  - YAML-Daten für Listen, Tabellen und Dictionaries.
 - `src/utils/`
-  - Hilfsfunktionen für Content-Laden, Sortierung, Formatierung und URL-Handling.
+  - Loader-Helfer für Astro Content Collections und Content-Validierung pro Ausgabeform.
 - `src/styles/global.css`
-  - Globales Styling, Tailwind-Einstieg und Design-Tokens.
-- `src/config/`
-  - Zentrale Konfigurationen wie die Navigation.
+  - Globales Styling und Terminal-Design-Tokens.
 
 ## Data Flow
 
-1. Content wird in `src/content/*` als Markdown gepflegt.
-2. `src/content.config.ts` definiert Collections und validiert Frontmatter.
-3. `src/utils/content.ts` lädt Collections, sortiert Einträge und Blöcke und formatiert Ausgabe.
-4. Seiten wie `src/pages/index.astro` holen die Daten zur Build-Zeit.
-5. `TerminalBlock.astro` delegiert Blöcke an `TerminalOutput.astro` oder `TerminalTable.astro`.
-6. Astro erzeugt statische HTML-Dateien für Deployment und Preview.
+1. Texte werden in `src/content/text/*.md` gepflegt.
+2. Strukturierte Daten werden in `src/content/data/*.yaml` gepflegt.
+3. `src/content.config.ts` definiert die Collections `text` und `data`.
+4. `src/utils/content.ts` lädt Einträge über Astro Content Collections.
+5. Seiten setzen `TerminalCommand` und die passende Output-Komponente.
+6. Output-Komponenten laden per `src` ihre Quelle.
+7. Astro erzeugt statische HTML-Dateien.
 
 ## Routing Model
 
 - `src/pages/index.astro` ist die Home-Seite.
-- `src/pages/about.astro` bündelt Profil, About-Text und Lebenslauf-artige Inhalte.
+- `src/pages/about.astro` bündelt Profil, About-Text, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
 - `src/pages/projects.astro` zeigt alle Projekte.
 - `src/pages/references.astro` zeigt Referenzen und Nachweise.
-- `src/pages/links.astro` rendert Kontakt- und Profilrouten als Terminalausgabe.
+- `src/pages/links.astro` zeigt Kontakt- und Profilrouten.
 
 ## Navigation And Base Paths
 
 - `src/config/navigation.ts` definiert die sichtbaren Navigationslinks.
 - `src/utils/url.ts` erzeugt Links mit `import.meta.env.BASE_URL`.
 - Das ist wichtig, weil `astro.config.mjs` aktuell `base: "/Website"` setzt.
-- Interne Links sollten deshalb über `withBase()` oder die bestehende Navigation laufen.
 
 ## Design Principles
 
-- Inhalt und Darstellung sind getrennt.
-- Wiederverwendbare Inhalte leben in Content Collections statt in JSX/TS-Objekten.
-- Wiederholbare Terminal-Inhalte sollen als Content-Blöcke gepflegt werden, nicht als hartkodierte Row-Arrays in Seiten.
-- Die Terminal-Optik ist bewusst konsistent, damit neue Inhalte ohne Layout-Bruch ergänzt werden können.
-- Statische Generierung ist die Standardannahme, nicht SSR.
+- Content-Dateien bleiben einfach editierbar.
+- Markdown wird für Text genutzt, YAML für Struktur.
+- Seiten bestimmen Reihenfolge und Kontext.
+- Komponenten bestimmen die Ausgabeform und laden ihre Quelle über `src`.
+- Statische Generierung ist die Standardannahme.
 - GitHub-Pages-Kompatibilität ist Teil der Architekturannahme.

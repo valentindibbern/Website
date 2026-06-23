@@ -1,0 +1,11 @@
+---
+interface Props {
+    command: string;
+    path?: string;
+}
+
+const { command, path = "~" } = Astro.props;
+const shellPath = path === "~" ? path : `~/${path.replace(/^\/+/, "")}`;
+---
+
+<p class="prompt">visitor@portfolio:{shellPath}$ {command}</p>

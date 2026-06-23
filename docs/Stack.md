@@ -5,7 +5,7 @@ Technische Übersicht der im Projekt tatsächlich verwendeten Werkzeuge, Librari
 ## Core Stack
 
 - Bun
-  - Package Manager und Runtime für `dev`, `build`, `preview` und `astro`-Befehle.
+  - Package Manager und Runtime für `dev`, `run build`, `run preview` und `astro`-Befehle.
 - Astro
   - Framework für Seiten, Layouts, Content Collections und statisches Rendering.
 - TypeScript
@@ -14,9 +14,11 @@ Technische Übersicht der im Projekt tatsächlich verwendeten Werkzeuge, Librari
 ## Content And Rendering
 
 - Astro Content Collections
-  - Zentrale Schicht für Markdown-Inhalte in `src/content/*`.
+  - Zentrale Schicht für Markdown- und YAML-Inhalte in `src/content/*`.
 - Markdown
-  - Primäres Format für editierbare Inhalte und Dokumentation.
+  - Format für freie Texte und Dokumentation.
+- YAML
+  - Format für strukturierte redaktionelle Daten wie Listen, Dictionaries und Tabellen.
 
 ## UI And Styling
 

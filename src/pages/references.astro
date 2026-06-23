@@ -1,11 +1,11 @@
 ---
-import TerminalBlock from "@components/TerminalBlock.astro";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalDictionary from "@components/TerminalDictionary.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getBlocks, getReferences, getSnippets } from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "References";
-const references = await getReferences();
-const snippets = await getSnippets();
+const references = await getDictionaryEntries("references");
 ---
 
 <BaseLayout title={title}>
@@ -14,7 +14,7 @@ const snippets = await getSnippets();
             class="terminal-section first-section"
             aria-labelledby="references-title"
         >
-            <p class="prompt">visitor@portfolio:~$ cd /references</p>
+            <TerminalCommand command="cd /references" />
             <h1 id="references-title" class="section-heading">references.md</h1>
             <p class="section-intro">
                 Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die
@@ -23,14 +23,20 @@ const snippets = await getSnippets();
 
             <div class="terminal-list">
                 {
-                    references.flatMap((entry) =>
-                        getBlocks(entry.data).map((block) => (
-                            <TerminalBlock path="/references" block={block} />
-                        )),
-                    )
+                    references.map((entry) => (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/references"
+                                command={entry.command ?? "cat references.yaml"}
+                            />
+                            <TerminalDictionary
+                                src="references"
+                                entry={entry.id}
+                            />
+                        </article>
+                    ))
                 }
             </div>
-            <p class="input-needed">{snippets["input.referencesPublic"]}</p>
         </section>
     </div>
 </BaseLayout>

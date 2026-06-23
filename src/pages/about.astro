@@ -1,26 +1,20 @@
 ---
-import TerminalBlock from "@components/TerminalBlock.astro";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalList from "@components/TerminalList.astro";
+import TerminalTable from "@components/TerminalTable.astro";
+import TerminalText from "@components/TerminalText.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import {
-    createListBlock,
-    createSkillTableBlock,
-    getBlocks,
-    getProfileContent,
-    getSnippets,
-    getTerminalEntries,
-} from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "About";
-const { profile, Content } = await getProfileContent();
-const education = await getTerminalEntries("education");
-const experience = await getTerminalEntries("experience");
-const snippets = await getSnippets();
-const profileBlocks = getBlocks(profile.data);
-const educationBlocks = education.flatMap((entry) => getBlocks(entry.data));
-const experienceBlocks = experience.flatMap((entry) => getBlocks(entry.data));
-const skillBlock = createSkillTableBlock(snippets.skills);
-const languageBlock = createListBlock(snippets.languages, "cat languages.txt");
-const hobbyBlock = createListBlock(snippets.hobbies, "cat hobbies.txt");
+const terminalEntries = await getDictionaryEntries("terminal");
+const educationEntries = terminalEntries.filter((entry) =>
+    entry.id?.startsWith("education-"),
+);
+const experienceEntries = terminalEntries.filter(
+    (entry) => !entry.id?.startsWith("education-"),
+);
 ---
 
 <BaseLayout title={title}>
@@ -29,7 +23,7 @@ const hobbyBlock = createListBlock(snippets.hobbies, "cat hobbies.txt");
             class="terminal-section first-section"
             aria-labelledby="about-title"
         >
-            <p class="prompt">visitor@portfolio:~$ cd /about</p>
+            <TerminalCommand command="cd /about" />
             <h1 id="about-title" class="section-heading">about.md</h1>
             <p class="section-intro">
                 Diese Seite ist für einen öffentlichen Fliesstext über mich
@@ -37,29 +31,53 @@ const hobbyBlock = createListBlock(snippets.hobbies, "cat hobbies.txt");
             </p>
 
             <article class="about-copy">
-                <Content />
+                <TerminalText src="abouttext" />
             </article>
-            <p class="input-needed">{snippets["input.aboutText"]}</p>
 
             <div class="terminal-list">
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat profile.yaml" />
+                    <TerminalDictionary src="profile" />
+                </article>
+
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat skills.yaml" />
+                    <TerminalTable src="skills" />
+                </article>
+
                 {
-                    profileBlocks.map((block) => (
-                        <TerminalBlock path="/about" block={block} />
+                    educationEntries.map((entry) => (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/about"
+                                command={entry.command ?? "cat terminal.yaml"}
+                            />
+                            <TerminalDictionary src="terminal" entry={entry.id} />
+                        </article>
                     ))
                 }
-                <TerminalBlock path="/about" block={skillBlock} />
+
                 {
-                    educationBlocks.map((block) => (
-                        <TerminalBlock path="/about" block={block} />
+                    experienceEntries.map((entry) => (
+                        <article class="terminal-entry">
+                            <TerminalCommand
+                                path="/about"
+                                command={entry.command ?? "cat terminal.yaml"}
+                            />
+                            <TerminalDictionary src="terminal" entry={entry.id} />
+                        </article>
                     ))
                 }
-                {
-                    experienceBlocks.map((block) => (
-                        <TerminalBlock path="/about" block={block} />
-                    ))
-                }
-                <TerminalBlock path="/about" block={languageBlock} />
-                <TerminalBlock path="/about" block={hobbyBlock} />
+
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat languages.yaml" />
+                    <TerminalList src="languages" />
+                </article>
+
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat hobbies.yaml" />
+                    <TerminalList src="hobbies" />
+                </article>
             </div>
         </section>
     </div>

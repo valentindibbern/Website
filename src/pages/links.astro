@@ -1,11 +1,9 @@
 ---
-import TerminalBlock from "@components/TerminalBlock.astro";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalList from "@components/TerminalList.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { createLinksBlock, getSnippets } from "@/utils/content";
 
 const title = "Links";
-const snippets = await getSnippets();
-const linksBlock = createLinksBlock(snippets.links);
 ---
 
 <BaseLayout title={title}>
@@ -14,17 +12,19 @@ const linksBlock = createLinksBlock(snippets.links);
             class="terminal-section first-section"
             aria-labelledby="links-title"
         >
-            <p class="prompt">visitor@portfolio:~$ cd /links</p>
-            <h1 id="links-title" class="section-heading">links.json</h1>
+            <TerminalCommand command="cd /links" />
+            <h1 id="links-title" class="section-heading">links.yaml</h1>
             <p class="section-intro">
                 Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs
                 können in den Markdown-Inhalten ersetzt werden.
             </p>
 
             <div class="terminal-list">
-                <TerminalBlock path="/links" block={linksBlock} />
+                <article class="terminal-entry">
+                    <TerminalCommand path="/links" command="cat links.yaml" />
+                    <TerminalList src="links" />
+                </article>
             </div>
-            <p class="input-needed">{snippets["input.contact"]}</p>
         </section>
     </div>
 </BaseLayout>
