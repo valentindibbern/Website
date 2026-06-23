@@ -8,12 +8,16 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 
 - `profile`
   - Ein einzelner Profil-Eintrag mit Name, Rolle, Ausbildung, Interessen und Arbeitsweise.
+  - Kann zusätzlich strukturierte `rows` für die Terminal-Darstellung enthalten.
 - `projects`
   - Mehrere Projekt-Einträge mit Titel, Command, Reihenfolge, Quelle, Typ, Stack und Summary.
+  - Kann zusätzlich strukturierte `rows` enthalten.
 - `references`
   - Mehrere Referenz- und Nachweis-Einträge.
+  - Kann zusätzlich strukturierte `rows` enthalten.
 - `terminal`
   - Zusätzliche terminalartige Textblöcke, gruppiert nach Bereich.
+  - Kann zusätzlich strukturierte `rows` enthalten.
 - `snippets`
   - Kleine wiederverwendbare Textbausteine und Listen wie Hinweise, Skills, Sprachen oder Kontakttexte.
 
@@ -24,7 +28,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Erzwingt minimale Pflichtfelder, damit Seiten konsistent bleiben.
 - `src/utils/content.ts`
   - Stellt Loader-Funktionen wie `getProfile`, `getProjects`, `getReferences`, `getTerminalEntries` und `getSnippets` bereit.
-  - Enthält Formatierer wie `formatProfileTerminalBody`, `formatProjectTerminalBody` und `formatLinksJson`.
+  - Enthält Formatierer und Row-Helper wie `formatProfileTerminalBody`, `getProfileRows`, `getProjectRows`, `getReferenceRows`, `getTerminalRows` und `formatLinksJson`.
   - Sortiert `projects`, `references` und `terminal` über das `order`-Feld; `profile` und `snippets` folgen eigener Logik.
 - `src/content/*`
   - Enthält die eigentlichen Markdown-Dateien.
@@ -48,22 +52,26 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 - `src/content/profile/main.md`
   - Enthält den zentralen Profil-Datensatz.
   - Frontmatter: `name`, `role`, `education`, `interests`, `workingStyle`.
+  - Optional: `rows` für die strukturierte Ausgabe in `TerminalOutput`.
   - Markdown-Body: öffentlicher About-Fließtext.
   - Genutzt von `index.astro` und `about.astro`.
 - `src/content/projects/*.md`
   - Enthält Projekt-Einträge.
   - Dateien: `website.md`, `neovimconfig.md`, `jahr-java-3-aufgaben.md`, `cmd-rechner.md`, `buecherantiquariat.md`.
   - Frontmatter: `title`, `command`, `order`, `source`, `type`, `stack`, `summary`.
+  - Optional: `rows` für die strukturierte Terminal-Ausgabe.
   - Genutzt von `index.astro` für den ersten sortierten Eintrag und von `projects.astro` für die vollständige Liste.
 - `src/content/references/*.md`
   - Enthält Referenzen und Nachweise.
   - Dateien: `references.md`, `school-records.md`, `delf-b1.md`.
   - Frontmatter: `title`, `command`, `order`, `body`.
+  - Optional: `rows` für eine getrennte Label-/Value-Ausgabe.
   - Genutzt von `index.astro` für den ersten sortierten Eintrag und von `references.astro` für die vollständige Liste.
 - `src/content/terminal/*.md`
   - Enthält terminalartige Detailblöcke für Ausbildung und Erfahrung.
   - Dateien: `education-current.md`, `education-previous.md`, `cobra-software.md`, `klixar-it.md`.
   - Frontmatter: `title`, `command`, `order`, `body`, `group`.
+  - Optional: `rows` für die strukturierte Ausgabe.
   - `group` ist entweder `education` oder `experience`.
   - Genutzt von `about.astro`.
 - `src/content/snippets/*.md`
@@ -91,6 +99,9 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Numerische Sortierung innerhalb einer Collection.
 - `body`
   - Textausgabe für terminalartige Einträge.
+- `rows`
+  - Liste aus strukturierten Einträgen mit `label` und `value`.
+  - Wird von `TerminalOutput` als semantische Paare mit eigener Value-Farbe gerendert.
 - `key` und `value`
   - Snippet-Struktur für kleine Texte oder Listen; `value` darf auch ein Array von Strings sein.
 
@@ -99,6 +110,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 - `index.astro` nutzt ausgewählte erste Einträge für die Home-Ansicht.
 - Unterseiten nutzen vollständige Collections.
 - Terminal-Ausgaben bleiben einfache Textblöcke und werden nicht zur Laufzeit aus DOM-Strukturen rekonstruiert.
+- Strukturierte Rows werden als `dl` mit getrennten Label-/Value-Elementen gerendert und behalten auf kleinen Viewports eine lineare Lesbarkeit.
 
 ## Failure Modes
 

@@ -4,11 +4,12 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalOutput from "@components/TerminalOutput.astro";
 import {
     formatLinksJson,
-    formatProfileTerminalBody,
-    formatProjectTerminalBody,
     getProfile,
+    getProfileRows,
     getProjects,
+    getProjectRows,
     getReferences,
+    getReferenceRows,
     getSnippets,
 } from "@/utils/content";
 import { withBase } from "@/utils/url";
@@ -62,7 +63,8 @@ const linksJson = formatLinksJson(snippets.links);
                 <TerminalOutput
                     path="/about"
                     command="whoami"
-                    body={formatProfileTerminalBody(profile.data)}
+                    body=""
+                    rows={getProfileRows(profile.data)}
                 />
             </div>
             <p class="input-needed">{snippets["input.aboutText"]}</p>
@@ -87,7 +89,8 @@ const linksJson = formatLinksJson(snippets.links);
                 <TerminalOutput
                     path="/projects"
                     command={firstProject.data.command}
-                    body={formatProjectTerminalBody(firstProject.data)}
+                    body=""
+                    rows={getProjectRows(firstProject.data)}
                 />
             </div>
             <p class="input-needed">{snippets["input.projectDetails"]}</p>
@@ -134,7 +137,8 @@ const linksJson = formatLinksJson(snippets.links);
                 <TerminalOutput
                     path="/references"
                     command={firstReference.data.command}
-                    body={firstReference.data.body}
+                    body=""
+                    rows={getReferenceRows(firstReference.data)}
                 />
             </div>
             <p class="input-needed">{snippets["input.referencesPublic"]}</p>

@@ -2,9 +2,10 @@
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
-    formatProfileTerminalBody,
     getProfileContent,
+    getProfileRows,
     getSnippets,
+    getTerminalRows,
     getTerminalEntries,
     toStringList,
 } from "@/utils/content";
@@ -41,7 +42,8 @@ const hobbies = toStringList(snippets.hobbies);
                 <TerminalOutput
                     path="/about"
                     command="cat public-profile.txt"
-                    body={formatProfileTerminalBody(profile.data, true)}
+                    body=""
+                    rows={getProfileRows(profile.data, true)}
                 />
                 <TerminalOutput
                     path="/about"
@@ -53,7 +55,8 @@ const hobbies = toStringList(snippets.hobbies);
                         <TerminalOutput
                             path="/about"
                             command={entry.data.command}
-                            body={entry.data.body}
+                            body=""
+                            rows={getTerminalRows(entry.data)}
                         />
                     ))
                 }
@@ -62,7 +65,8 @@ const hobbies = toStringList(snippets.hobbies);
                         <TerminalOutput
                             path="/about"
                             command={entry.data.command}
-                            body={entry.data.body}
+                            body=""
+                            rows={getTerminalRows(entry.data)}
                         />
                     ))
                 }

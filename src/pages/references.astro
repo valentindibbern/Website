@@ -1,7 +1,11 @@
 ---
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getReferences, getSnippets } from "@/utils/content";
+import {
+    getReferenceRows,
+    getReferences,
+    getSnippets,
+} from "@/utils/content";
 
 const title = "References";
 const references = await getReferences();
@@ -27,7 +31,8 @@ const snippets = await getSnippets();
                         <TerminalOutput
                             path="/references"
                             command={entry.data.command}
-                            body={entry.data.body}
+                            body=""
+                            rows={getReferenceRows(entry.data)}
                         />
                     ))
                 }

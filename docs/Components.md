@@ -8,13 +8,16 @@ Datei: `src/components/TerminalOutput.astro`
 - Eingaben:
   - `command`: angezeigter Terminal-Befehl.
   - `body`: der auszugebende Textblock.
+  - `rows`: optionale strukturierte Ausgabe als Liste aus Label-/Value-Paaren.
   - `path`: optionaler Prompt-Pfad, Standard `~`.
 - Ausgabe:
-  - Ein `<article>` mit Promptzeile und vorformatiertem Output.
+  - Ein `<article>` mit Promptzeile und entweder vorformatiertem Output oder semantischen `dl`-Paaren.
 - Typische Nutzung:
   - Projektausgaben
   - Referenzen
   - Profil- und Ausbildungsblöcke
+- Styling:
+  - Values nutzen die Terminal-Akzentfarbe, Labels bleiben gedimmt.
 
 ## HeaderComponent
 

@@ -11,6 +11,7 @@ Datei: `src/pages/index.astro`
   - `references`
   - `snippets`
 - Der About-Vorspann und die Profilzeilen kommen direkt aus `src/content/profile/main.md`.
+- Die kompakten Vorschauen auf Home verwenden die Row-Helper aus `src/utils/content.ts`, damit Label und Value separat gestylt werden können.
 - Zweck:
   - schneller Überblick über das Projekt und die wichtigsten Unterseiten
 
@@ -21,6 +22,7 @@ Datei: `src/pages/about.astro`
 - Zeigt den Fließtext aus der Profil-Content-Schicht.
 - Nutzt denselben Intro-Text und dieselbe strukturierte Detail-Liste aus `src/content/profile/main.md`.
 - Ergänzt Terminal-Ausgaben für Profil, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
+- Die Profil-, Ausbildungs- und Erfahrungseinträge werden als Rows gerendert; die Values erhalten dabei die Akzentfarbe.
 - Nutzt:
   - `profile`
   - `terminal`
@@ -31,7 +33,7 @@ Datei: `src/pages/about.astro`
 Datei: `src/pages/projects.astro`
 
 - Listet alle Projekte in sortierter Reihenfolge.
-- Jede Ausgabe wird über `TerminalOutput` gerendert.
+- Jede Ausgabe wird über `TerminalOutput` mit strukturierten Rows gerendert.
 - Nutzt:
   - `projects`
   - `snippets`
@@ -41,6 +43,7 @@ Datei: `src/pages/projects.astro`
 Datei: `src/pages/references.astro`
 
 - Zeigt alle Referenzen und Nachweise als Terminal-Archiv.
+- Die Einträge werden ebenfalls als Rows ausgegeben, damit Labels und Values getrennt adressierbar bleiben.
 - Nutzt:
   - `references`
   - `snippets`

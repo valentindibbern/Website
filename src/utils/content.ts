@@ -4,6 +4,12 @@ export type ProfileEntry = CollectionEntry<"profile">;
 export type ProjectEntry = CollectionEntry<"projects">;
 export type ReferenceEntry = CollectionEntry<"references">;
 export type TerminalEntry = CollectionEntry<"terminal">;
+export type ContentRow = {
+    label: string;
+    value: string;
+    kind?: string;
+    meta?: string;
+};
 
 export async function getProfile() {
     const profiles = await getCollection("profile");
@@ -73,6 +79,21 @@ export function formatProfileTerminalBody(
         .join("\n");
 }
 
+export function getProfileRows(
+    profile: ProfileEntry["data"],
+    includeEducation = false,
+): ContentRow[] {
+    return [
+        { label: "name", value: profile.name },
+        { label: "role", value: profile.role },
+        includeEducation
+            ? { label: "education", value: profile.education }
+            : undefined,
+        { label: "interests", value: profile.interests },
+        { label: "working style", value: profile.workingStyle },
+    ].filter(Boolean) as ContentRow[];
+}
+
 export function formatProjectTerminalBody(project: ProjectEntry["data"]) {
     return [
         `source: ${project.source}`,
@@ -80,6 +101,33 @@ export function formatProjectTerminalBody(project: ProjectEntry["data"]) {
         `stack: ${project.stack}`,
         `summary: ${project.summary}`,
     ].join("\n");
+}
+
+export function getProjectRows(project: ProjectEntry["data"]): ContentRow[] {
+    return [
+        { label: "source", value: project.source },
+        { label: "type", value: project.type },
+        { label: "stack", value: project.stack },
+        { label: "summary", value: project.summary },
+    ];
+}
+
+export function getReferenceRows(
+    reference: ReferenceEntry["data"],
+): ContentRow[] {
+    return [
+        { label: "title", value: reference.title },
+        { label: "command", value: reference.command },
+        { label: "body", value: reference.body.replaceAll("\n", " ") },
+    ];
+}
+
+export function getTerminalRows(entry: TerminalEntry["data"]): ContentRow[] {
+    return [
+        { label: "title", value: entry.title },
+        { label: "command", value: entry.command },
+        { label: "body", value: entry.body.replaceAll("\n", " ") },
+    ];
 }
 
 export function formatLinksJson(rawLinks: string[] | string) {

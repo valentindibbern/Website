@@ -2,8 +2,8 @@
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
-    formatProjectTerminalBody,
     getProjects,
+    getProjectRows,
     getSnippets,
 } from "@/utils/content";
 
@@ -31,7 +31,8 @@ const snippets = await getSnippets();
                         <TerminalOutput
                             path="/projects"
                             command={entry.data.command}
-                            body={formatProjectTerminalBody(entry.data)}
+                            body=""
+                            rows={getProjectRows(entry.data)}
                         />
                     ))
                 }
