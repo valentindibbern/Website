@@ -172,7 +172,6 @@ a {
 .output-label {
     color: var(--terminal-muted);
     font-weight: 700;
-    justify-self: end;
 }
 
 .output-label::after {
