@@ -14,6 +14,8 @@
 - Update the existing docs whenever behavior, structure, commands, conventions, or content sources change.
 - New project parts must be described in the style of the existing documentation: short, practical, and role-based.
 - Keep `README.md` as the human entry point and `docs/*` as the deeper reference layer.
+- This repository is public; never add secrets, private data, or internal-only notes to README or `docs/*`.
+- Agent-facing documentation must be safe to read publicly and framed as project conventions, not private process notes.
 
 ## Git Rules
 

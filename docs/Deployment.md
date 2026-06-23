@@ -17,6 +17,7 @@ Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zu
 
 - `astro.config.mjs` setzt `site: "https://valentindibbern.github.io"`.
 - `astro.config.mjs` setzt `base: "/Website"`.
+- Die öffentliche Website liegt unter `https://valentindibbern.github.io/Website/`.
 - Interne Links müssen deshalb die Base-URL berücksichtigen.
 - Für manuelle Links im Code sollte `withBase()` aus `src/utils/url.ts` verwendet werden.
 
@@ -32,4 +33,3 @@ Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zu
 - `bun build`
 - Navigation und interne Links auf Base-URL-Kompatibilität prüfen.
 - Keine Änderungen in `dist/`, `.astro/` oder `node_modules/` committen.
-

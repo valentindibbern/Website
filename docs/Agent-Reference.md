@@ -2,7 +2,13 @@
 
 ## Purpose
 
-Diese Datei ist der schnelle Einstieg für Agents und andere KI-Systeme, die an diesem Repository arbeiten.
+Diese Datei ist der öffentliche Einstieg für Agents und andere KI-Systeme, die an diesem Repository arbeiten.
+
+## Public Context
+
+- Das GitHub-Repository ist öffentlich.
+- Keine privaten Daten, Zugangsdaten, internen Notizen oder nicht verifizierten Annahmen dokumentieren.
+- Agent-Hinweise sind öffentliche Projektkonventionen und müssen entsprechend knapp und sachlich bleiben.
 
 ## First Reads
 
@@ -77,3 +83,4 @@ Diese Datei ist der schnelle Einstieg für Agents und andere KI-Systeme, die an 
 - Terminal-Ausgaben sind bewusst textbasiert.
 - Die Doku soll neue Entwickler schnell orientieren und Agents robuste Pfade geben.
 - Jede Projektänderung braucht eine passende Doku-Änderung.
+- README und `docs/*` werden als öffentliche Referenz behandelt.
