@@ -1,0 +1,59 @@
+# Components
+
+## TerminalOutput
+
+Datei: `src/components/TerminalOutput.astro`
+
+- Zweck: standardisierte Terminal-Ausgabe für Projekt-, Referenz- und Profiltexte.
+- Eingaben:
+  - `command`: angezeigter Terminal-Befehl.
+  - `body`: der auszugebende Textblock.
+  - `path`: optionaler Prompt-Pfad, Standard `~`.
+- Ausgabe:
+  - Ein `<article>` mit Promptzeile und vorformatiertem Output.
+- Typische Nutzung:
+  - Projektausgaben
+  - Referenzen
+  - Profil- und Ausbildungsblöcke
+
+## HeaderComponent
+
+Datei: `src/components/HeaderComponent.astro`
+
+- Zweck: globale Kopfzeile und Navigation über alle Seiten.
+- Verantwortung:
+  - aktuellen Seitentitel anzeigen
+  - Navigation bereitstellen
+  - konsistentes Top-Level-Markup sicherstellen
+
+## NavComponent
+
+Datei: `src/components/NavComponent.astro`
+
+- Zweck: Navigationslogik und Linkdarstellung aus einem zentralen Baustein.
+- Verantwortung:
+  - Seitenlinks bündeln
+  - aktive bzw. wiederkehrende Navigationsmuster vereinheitlichen
+- Datenquelle:
+  - `src/config/navigation.ts`
+- Base-URL:
+  - berücksichtigt `import.meta.env.BASE_URL` für GitHub-Pages-Pfade.
+
+## BaseLayout
+
+Datei: `src/layouts/BaseLayout.astro`
+
+- Zweck: globaler Seitenrahmen.
+- Verantwortung:
+  - HTML-Grundstruktur
+  - Meta-Description
+  - Seitentitel
+  - Header-Einbindung
+  - globales CSS importieren
+
+## Component Guidelines
+
+- Komponenten sollen Präsentation und Content-Logik trennen.
+- Content wird vor dem Rendern in den Seiten oder Utilities vorbereitet.
+- Terminal-Komponenten bleiben bewusst simpel, damit ihre Ausgabe vorhersehbar bleibt.
+- Wenn neue Komponenten entstehen, dokumentiere Zweck, Eingaben und typische Nutzung hier.
