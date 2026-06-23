@@ -25,6 +25,13 @@ const profile = defineCollection({
         education: z.string(),
         interests: z.string(),
         workingStyle: z.string(),
+        intro: z.string(),
+        details: z.array(
+            z.object({
+                label: z.string(),
+                value: z.string(),
+            }),
+        ),
     }),
 });
 

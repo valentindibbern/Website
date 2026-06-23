@@ -4,7 +4,6 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalOutput from "@components/TerminalOutput.astro";
 import {
     formatLinksJson,
-    formatProfileTerminalBody,
     formatProjectTerminalBody,
     getProfile,
     getProjects,
@@ -54,16 +53,25 @@ const linksJson = formatLinksJson(snippets.links);
             <p class="prompt">visitor@portfolio:~$ cd /about</p>
             <h2 id="about-title" class="section-heading">about.md</h2>
             <p class="section-intro">
-                Der erste Eintrag aus der About-Seite. Die Unterseite ist für
-                einen öffentlichen Fliesstext über mich vorbereitet.
+                {profile.data.intro}
             </p>
 
             <div class="terminal-list">
-                <TerminalOutput
-                    path="/about"
-                    command="whoami"
-                    body={formatProfileTerminalBody(profile.data)}
-                />
+                <article class="terminal-output">
+                    <p class="prompt">visitor@portfolio:/about$ whoami</p>
+                    <dl class="profile-details profile-details-inline">
+                        {profile.data.details.map((entry) => (
+                            <div class="profile-line">
+                                <dt class="profile-detail-label">
+                                    {entry.label}
+                                </dt>
+                                <dd class="profile-detail-value">
+                                    {entry.value}
+                                </dd>
+                            </div>
+                        ))}
+                    </dl>
+                </article>
             </div>
             <p class="input-needed">{snippets["input.aboutText"]}</p>
             <a class="terminal-link" href={withBase("/about")}

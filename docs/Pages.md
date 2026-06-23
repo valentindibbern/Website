@@ -10,6 +10,7 @@ Datei: `src/pages/index.astro`
   - `projects`
   - `references`
   - `snippets`
+- Der About-Vorspann und die Profilzeilen kommen direkt aus `src/content/profile/main.md`.
 - Zweck:
   - schneller Überblick über das Projekt und die wichtigsten Unterseiten
 
@@ -18,6 +19,7 @@ Datei: `src/pages/index.astro`
 Datei: `src/pages/about.astro`
 
 - Zeigt den Fließtext aus der Profil-Content-Schicht.
+- Nutzt denselben Intro-Text und dieselbe strukturierte Detail-Liste aus `src/content/profile/main.md`.
 - Ergänzt Terminal-Ausgaben für Profil, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
 - Nutzt:
   - `profile`
