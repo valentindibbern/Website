@@ -2,11 +2,10 @@
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getDictionaryEntries, getListContent } from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "References";
 const references = await getDictionaryEntries("references");
-const [referencesNote] = await getListContent("note-references-public");
 ---
 
 <BaseLayout title={title}>
@@ -38,7 +37,6 @@ const [referencesNote] = await getListContent("note-references-public");
                     ))
                 }
             </div>
-            <p class="input-needed">{referencesNote}</p>
         </section>
     </div>
 </BaseLayout>

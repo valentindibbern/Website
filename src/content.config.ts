@@ -17,7 +17,7 @@ const dictionaryEntrySchema = z.object({
     id: z.string().optional(),
     command: z.string().optional(),
     rows: z.array(dictionaryRowSchema),
-});
+}).strict();
 
 const tableRowSchema = z.record(z.string(), z.string());
 
@@ -29,16 +29,41 @@ const listItemSchema = z.union([
     }),
 ]);
 
-const dataSchema = z.object({
-    rows: z.array(z.union([dictionaryRowSchema, tableRowSchema])).optional(),
-    entries: z.array(dictionaryEntrySchema).optional(),
-    items: z.array(listItemSchema).optional(),
-    columns: z.array(tableColumnSchema).optional(),
-});
+const dictionarySchema = z
+    .object({
+        rows: z.array(dictionaryRowSchema),
+    })
+    .strict();
+
+const entryListSchema = z
+    .object({
+        entries: z.array(dictionaryEntrySchema),
+    })
+    .strict();
+
+const listSchema = z
+    .object({
+        items: z.array(listItemSchema),
+    })
+    .strict();
+
+const tableSchema = z
+    .object({
+        columns: z.array(tableColumnSchema),
+        rows: z.array(tableRowSchema),
+    })
+    .strict();
+
+const dataSchema = z.union([
+    tableSchema,
+    entryListSchema,
+    listSchema,
+    dictionarySchema,
+]);
 
 const text = defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/text" }),
-    schema: z.object({}),
+    schema: z.object({}).strict(),
 });
 
 const data = defineCollection({

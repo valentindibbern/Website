@@ -4,6 +4,6 @@ rows:
   - label: "role"
     value: "Informatikschüler"
   - label: "education"
-    value: "-"
+    value: "Informatikmittelschule (IMS), Rudolf Steiner Schule Birseck"
   - label: "interests"
     value: "Dynamische Probleme, Backend"

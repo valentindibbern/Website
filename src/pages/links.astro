@@ -2,10 +2,8 @@
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalList from "@components/TerminalList.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getListContent } from "@/utils/content";
 
 const title = "Links";
-const [contactNote] = await getListContent("note-contact");
 ---
 
 <BaseLayout title={title}>
@@ -27,7 +25,6 @@ const [contactNote] = await getListContent("note-contact");
                     <TerminalList src="links" />
                 </article>
             </div>
-            <p class="input-needed">{contactNote}</p>
         </section>
     </div>
 </BaseLayout>

@@ -24,7 +24,6 @@ Datei: `src/pages/about.astro`
   - `data/terminal.yaml`
   - `data/languages.yaml`
   - `data/hobbies.yaml`
-  - `data/note-about-text.yaml`
 
 ## Projects
 
@@ -32,7 +31,6 @@ Datei: `src/pages/projects.astro`
 
 - Listet alle Projekte aus `data/projects.yaml`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
-- Nutzt zusätzlich `data/note-project-details.yaml`.
 
 ## References
 
@@ -40,16 +38,13 @@ Datei: `src/pages/references.astro`
 
 - Zeigt Referenzen und Nachweise aus `data/references.yaml`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
-- Nutzt zusätzlich `data/note-references-public.yaml`.
 
 ## Links
 
 Datei: `src/pages/links.astro`
 
 - Zeigt Kontakt- und Profilrouten als Liste.
-- Nutzt:
-  - `data/links.yaml`
-  - `data/note-contact.yaml`
+- Nutzt `data/links.yaml`.
 
 ## Page Conventions
 

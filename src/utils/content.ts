@@ -47,8 +47,14 @@ export async function getDictionaryContent(
     const entry = await getDataContent(src);
 
     if (entryId) {
-        const dictionaryEntry = entry.data.entries?.find(
-            (candidate) => candidate.id === entryId,
+        if (!isEntryListData(entry.data)) {
+            throw new Error(
+                `Expected entries in src/content/data/${src}.yaml for TerminalDictionary entry "${entryId}".`,
+            );
+        }
+
+        const dictionaryEntry = entry.data.entries.find(
+            (candidate: DictionaryEntry) => candidate.id === entryId,
         );
 
         if (!dictionaryEntry) {
@@ -60,15 +66,9 @@ export async function getDictionaryContent(
         return dictionaryEntry.rows;
     }
 
-    if (!entry.data.rows) {
+    if (!isDictionaryData(entry.data)) {
         throw new Error(
             `Expected rows in src/content/data/${src}.yaml for TerminalDictionary.`,
-        );
-    }
-
-    if (!entry.data.rows.every(isDictionaryRow)) {
-        throw new Error(
-            `Expected label/value rows in src/content/data/${src}.yaml for TerminalDictionary.`,
         );
     }
 
@@ -78,7 +78,7 @@ export async function getDictionaryContent(
 export async function getDictionaryEntries(src: string) {
     const entry = await getDataContent(src);
 
-    if (!entry.data.entries) {
+    if (!isEntryListData(entry.data)) {
         throw new Error(
             `Expected entries in src/content/data/${src}.yaml for repeated dictionaries.`,
         );
@@ -90,7 +90,7 @@ export async function getDictionaryEntries(src: string) {
 export async function getListContent(src: string): Promise<string[]> {
     const entry = await getDataContent(src);
 
-    if (!entry.data.items) {
+    if (!("items" in entry.data)) {
         throw new Error(
             `Expected items in src/content/data/${src}.yaml for TerminalList.`,
         );
@@ -108,15 +108,9 @@ export async function getListContent(src: string): Promise<string[]> {
 export async function getTableContent(src: string) {
     const entry = await getDataContent(src);
 
-    if (!entry.data.columns || !entry.data.rows) {
+    if (!isTableData(entry.data)) {
         throw new Error(
             `Expected columns and rows in src/content/data/${src}.yaml for TerminalTable.`,
-        );
-    }
-
-    if (!entry.data.rows.every(isTableRow)) {
-        throw new Error(
-            `Expected table rows in src/content/data/${src}.yaml for TerminalTable.`,
         );
     }
 
@@ -126,20 +120,41 @@ export async function getTableContent(src: string) {
     };
 }
 
-function isDictionaryRow(row: unknown): row is DictionaryRow {
+function isDictionaryData(data: DataEntry["data"]): data is {
+    rows: DictionaryRow[];
+} {
     return (
-        typeof row === "object" &&
-        row !== null &&
-        "label" in row &&
-        "value" in row
+        "rows" in data &&
+        !("columns" in data) &&
+        data.rows.every(
+            (row) =>
+                typeof row === "object" &&
+                row !== null &&
+                "label" in row &&
+                "value" in row,
+        )
     );
 }
 
-function isTableRow(row: unknown): row is Record<string, string> {
+function isEntryListData(data: DataEntry["data"]): data is {
+    entries: DictionaryEntry[];
+} {
+    return "entries" in data;
+}
+
+function isTableData(data: DataEntry["data"]): data is {
+    columns: TableColumn[];
+    rows: Record<string, string>[];
+} {
     return (
-        typeof row === "object" &&
-        row !== null &&
-        Object.values(row).every((value) => typeof value === "string")
+        "columns" in data &&
+        "rows" in data &&
+        data.rows.every(
+            (row) =>
+                typeof row === "object" &&
+                row !== null &&
+                Object.values(row).every((value) => typeof value === "string"),
+        )
     );
 }
 

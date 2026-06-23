@@ -1,1 +1,1 @@
-Willkommen auf meiner Website. Hier findest du diverse Informationen zu mir unter anderem was mich interessiert und was ich an Projekten veröffentlicht habe.
+Ich baue gerne einfache, verständliche Software und interessiere mich besonders für Webentwicklung, Datenbanken, Automatisierung und Entwicklungswerkzeuge.

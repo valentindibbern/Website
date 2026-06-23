@@ -84,10 +84,6 @@ rows:
   - `links.yaml`
   - `languages.yaml`
   - `hobbies.yaml`
-  - `note-about-text.yaml`
-  - `note-project-details.yaml`
-  - `note-contact.yaml`
-  - `note-references-public.yaml`
 
 ## Editing Rules
 

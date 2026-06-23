@@ -5,7 +5,7 @@ import TerminalList from "@components/TerminalList.astro";
 import TerminalTable from "@components/TerminalTable.astro";
 import TerminalText from "@components/TerminalText.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getDictionaryEntries, getListContent } from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "About";
 const terminalEntries = await getDictionaryEntries("terminal");
@@ -15,7 +15,6 @@ const educationEntries = terminalEntries.filter((entry) =>
 const experienceEntries = terminalEntries.filter(
     (entry) => !entry.id?.startsWith("education-"),
 );
-const [aboutNote] = await getListContent("note-about-text");
 ---
 
 <BaseLayout title={title}>
@@ -34,7 +33,6 @@ const [aboutNote] = await getListContent("note-about-text");
             <article class="about-copy">
                 <TerminalText src="abouttext" />
             </article>
-            <p class="input-needed">{aboutNote}</p>
 
             <div class="terminal-list">
                 <article class="terminal-entry">

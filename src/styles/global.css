@@ -344,14 +344,6 @@ a {
     margin: 0;
 }
 
-.input-needed {
-    max-width: 62rem;
-    margin: 1rem 0 0;
-    color: var(--terminal-red);
-    font-weight: 700;
-    line-height: 1.55;
-}
-
 @media (max-width: 680px) {
     .site-header {
         position: static;

@@ -2,11 +2,10 @@
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getDictionaryEntries, getListContent } from "@/utils/content";
+import { getDictionaryEntries } from "@/utils/content";
 
 const title = "Projects";
 const projects = await getDictionaryEntries("projects");
-const [projectNote] = await getListContent("note-project-details");
 ---
 
 <BaseLayout title={title}>
@@ -35,7 +34,6 @@ const [projectNote] = await getListContent("note-project-details");
                     ))
                 }
             </div>
-            <p class="input-needed">{projectNote}</p>
         </section>
     </div>
 </BaseLayout>
