@@ -21,7 +21,9 @@ const { command, body, rows = [], path = "~" } = Astro.props;
                         <dt class={`output-label${row.kind ? ` is-${row.kind}` : ""}`}>
                             {row.label}
                         </dt>
-                        <dd class="output-value">{row.value}</dd>
+                        <dd class={`output-value${row.kind ? ` is-${row.kind}` : ""}`}>
+                            {row.value}
+                        </dd>
                     </>
                 ))}
             </dl>

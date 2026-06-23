@@ -123,7 +123,7 @@ export function getReferenceRows(
     return [
         { label: "title", value: reference.title },
         { label: "command", value: reference.command },
-        { label: "body", value: reference.body.replaceAll("\n", " ") },
+        { label: "body", value: reference.body },
     ];
 }
 
@@ -131,7 +131,7 @@ export function getTerminalRows(entry: TerminalEntry["data"]): ContentRow[] {
     return [
         { label: "title", value: entry.title },
         { label: "command", value: entry.command },
-        { label: "body", value: entry.body.replaceAll("\n", " ") },
+        { label: "body", value: entry.body },
     ];
 }
 

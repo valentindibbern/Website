@@ -2,12 +2,12 @@
 
 ## Summary
 
-Die Skills-Liste auf `about.astro` wird als terminalartige Tabelle mit den drei ursprünglichen Kategorien aus dem Bewerbungs-Lebenslauf gerendert: `Sprachen`, `Tools` und `Konzepte`. Die Kategorien stehen als Tabellenkopf, die jeweiligen Einträge darunter in derselben Spalte. Die Website-Farben bleiben erhalten; die Tabellenlinien folgen weiterhin der Screenshot-Referenz.
+Auf `about.astro` wird die Skills-Liste als terminalartige Tabelle mit den drei Kategorien aus dem ursprünglichen Lebenslauf gerendert: `Sprachen`, `Tools` und `Konzepte`. Diese Kategorien stehen als Tabellenkopf, die jeweiligen Einträge darunter in derselben Spalte. Website-Farben und Screenshot-nahe Tabellenlinien bleiben erhalten.
 
 ## Key Changes
 
 - `src/content/snippets/skills.md` speichert Skills als Gruppen mit `category` und `items`.
-- Die Kategorien werden aus `C:\Users\valen\SchuleDokumente\Bewerbungen\Bewerbungs-IDAV2026\Code\lebenslauf.html` übernommen:
+- Die Kategorien werden aus dem ursprünglichen Lebenslauf übernommen:
   - `Sprachen`: Python, PHP, C#, Java, JS/TS, HTML/CSS, SQL
   - `Tools`: Git, GitHub, Bitbucket, VS Code, IntelliJ IDEA, Neovim, Docker
   - `Konzepte`: Rest API, Socket API, Funktionaler Code, Objektorientierter Code, Asynchroner Code
@@ -47,6 +47,6 @@ Die Skills-Liste auf `about.astro` wird als terminalartige Tabelle mit den drei 
 
 ## Assumptions
 
-- Die drei Kategorien aus dem ursprünglichen Lebenslauf sind die gewünschte Quelle der Wahrheit.
+- Als Quelle der Wahrheit gelten die drei Kategorien aus dem ursprünglichen Lebenslauf.
 - Die Schreibweisen aus der Quelle werden übernommen, inklusive `JS/TS`, `HTML/CSS` und `Rest API`.
 - Die Tabellenoptik bleibt terminalartig und verwendet die bestehenden Website-Farben.
