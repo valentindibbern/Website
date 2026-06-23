@@ -18,6 +18,7 @@ Datei: `src/components/TerminalOutput.astro`
   - Profil- und Ausbildungsblöcke
 - Styling:
   - Values nutzen die Terminal-Akzentfarbe, Labels bleiben gedimmt.
+  - Row-Labels sind rechtsbündig in einer `max-content`-Spalte ausgerichtet, damit Values nach dem längsten Label kompakt auf gleicher Höhe beginnen.
 
 ## HeaderComponent
 

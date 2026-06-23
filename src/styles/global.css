@@ -156,8 +156,8 @@ a {
 
 .output-pairs {
     display: grid;
-    grid-template-columns: minmax(11rem, 18rem) minmax(0, 1fr);
-    gap: 0.45rem 1.25rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0.45rem 0.5rem;
     margin: 1rem 0 0;
 }
 
@@ -172,6 +172,7 @@ a {
 .output-label {
     color: var(--terminal-muted);
     font-weight: 700;
+    justify-self: end;
 }
 
 .output-label::after {
