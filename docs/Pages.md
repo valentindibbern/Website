@@ -23,7 +23,7 @@ Datei: `src/pages/about.astro`
 - Nutzt denselben Intro-Text und dieselbe strukturierte Detail-Liste aus `src/content/profile/main.md`.
 - Ergänzt Terminal-Ausgaben für Profil, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
 - Die Profil-, Ausbildungs- und Erfahrungseinträge werden als Rows gerendert; die Values erhalten dabei die Akzentfarbe.
-- Skills werden als terminalartige Tabelle mit den Spalten `Name` und `Kategorie` ausgegeben.
+- Skills werden als terminalartige Tabelle mit den Spalten `Sprachen`, `Tools` und `Konzepte` ausgegeben.
 - Nutzt:
   - `profile`
   - `terminal`

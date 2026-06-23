@@ -10,11 +10,11 @@ export type ContentRow = {
     kind?: string;
     meta?: string;
 };
-export type SkillEntry = {
-    name: string;
+export type SkillGroup = {
     category: string;
+    items: string[];
 };
-type SnippetValue = string | string[] | SkillEntry[] | undefined;
+type SnippetValue = string | string[] | SkillGroup[] | undefined;
 
 export async function getProfile() {
     const profiles = await getCollection("profile");
@@ -165,17 +165,21 @@ export function toStringList(value: SnippetValue) {
     return value.filter((entry): entry is string => typeof entry === "string");
 }
 
-export function toSkillList(value: SnippetValue): SkillEntry[] {
+export function toSkillGroups(value: SnippetValue): SkillGroup[] {
     if (!value) {
         return [];
     }
 
     if (typeof value === "string") {
-        return [{ name: value, category: "Skill" }];
+        return [{ category: "Skills", items: [value] }];
     }
 
-    return value.map((entry) =>
-        typeof entry === "string" ? { name: entry, category: "Skill" } : entry,
+    if (value.every((entry) => typeof entry === "string")) {
+        return [{ category: "Skills", items: value }];
+    }
+
+    return value.filter(
+        (entry): entry is SkillGroup => typeof entry !== "string",
     );
 }
 

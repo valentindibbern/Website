@@ -28,7 +28,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Erzwingt minimale Pflichtfelder, damit Seiten konsistent bleiben.
 - `src/utils/content.ts`
   - Stellt Loader-Funktionen wie `getProfile`, `getProjects`, `getReferences`, `getTerminalEntries` und `getSnippets` bereit.
-  - Enthält Formatierer und Helper wie `formatProfileTerminalBody`, `getProfileRows`, `getProjectRows`, `getReferenceRows`, `getTerminalRows`, `toSkillList` und `formatLinksJson`.
+  - Enthält Formatierer und Helper wie `formatProfileTerminalBody`, `getProfileRows`, `getProjectRows`, `getReferenceRows`, `getTerminalRows`, `toSkillGroups` und `formatLinksJson`.
   - Sortiert `projects`, `references` und `terminal` über das `order`-Feld; `profile` und `snippets` folgen eigener Logik.
 - `src/content/*`
   - Enthält die eigentlichen Markdown-Dateien.
@@ -78,7 +78,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Enthält kurze wiederverwendbare Texte und Listen.
   - Dateien: `home-lede.md`, `skills.md`, `languages.md`, `hobbies.md`, `links.md`, `input-about-text.md`, `input-contact.md`, `input-project-details.md`, `input-references-public.md`.
   - Frontmatter: `key`, `value`.
-  - `value` ist entweder ein einzelner String, eine Liste von Strings oder bei `skills.md` eine Liste aus `name`-/`category`-Objekten.
+  - `value` ist entweder ein einzelner String, eine Liste von Strings oder bei `skills.md` eine Liste aus Skill-Gruppen mit `category` und `items`.
   - Genutzt von `index.astro`, `about.astro`, `projects.astro`, `links.astro` und `references.astro`.
 
 ## Editing Rules
@@ -104,9 +104,9 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
   - Wird von `TerminalOutput` als semantische Paare mit eigener Value-Farbe gerendert.
 - `key` und `value`
   - Snippet-Struktur für kleine Texte oder Listen; `value` darf auch ein Array von Strings sein.
-- `name` und `category`
+- `category` und `items`
   - Struktur für Skills in `src/content/snippets/skills.md`.
-  - `name` ist der sichtbare Skill-Name, `category` die Tabellenkategorie auf der About-Seite.
+  - `category` ist der Tabellenkopf, `items` sind die Einträge darunter.
 
 ## Consumer Behavior
 

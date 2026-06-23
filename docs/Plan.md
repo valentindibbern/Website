@@ -1,63 +1,52 @@
-# Skills-Tabelle Auf About
+# Skills-Tabelle Auf About Mit Originalkategorien
 
 ## Summary
 
-Die Skills-Liste auf `about.astro` wird von einfachem Zeilentext zu einer terminalartigen Tabelle mit den Spalten `Name` und `Kategorie` umgebaut. Das visuelle Vorbild ist der Screenshot: Header oben, eine gestrichelte horizontale Linie unter dem Header, keine vertikalen Linien und keine Linien zwischen den Datenzeilen. Die Website-Farben bleiben unverändert über die bestehenden CSS-Variablen.
+Die Skills-Liste auf `about.astro` wird als terminalartige Tabelle mit den drei ursprünglichen Kategorien aus dem Bewerbungs-Lebenslauf gerendert: `Sprachen`, `Tools` und `Konzepte`. Die Kategorien stehen als Tabellenkopf, die jeweiligen Einträge darunter in derselben Spalte. Die Website-Farben bleiben erhalten; die Tabellenlinien folgen weiterhin der Screenshot-Referenz.
 
 ## Key Changes
 
-- Skills werden in `src/content/snippets/skills.md` von String-Einträgen zu strukturierten Einträgen mit `name` und `category` migriert.
-- Das Snippet-Schema erlaubt zusätzlich Arrays aus Skill-Objekten, ohne bestehende String-Snippets für Languages, Hobbies oder Links zu brechen.
-- Auf `about.astro` wird nur der Skills-Block als Tabelle gerendert; Profile, Education, Experience, Languages und Hobbies bleiben wie bisher.
-- Eine kleine wiederverwendbare `TerminalTable`-Komponente rendert Prompt, Tabellenkopf und Tabellenzeilen im Terminal-Stil.
-- CSS übernimmt die Linienlogik aus dem Screenshot:
-  - gestrichelte Linie nur unter dem Header
-  - keine vertikalen Linien
-  - keine Row-Trenner
-  - kompakte monospace Spalten
+- `src/content/snippets/skills.md` speichert Skills als Gruppen mit `category` und `items`.
+- Die Kategorien werden aus `C:\Users\valen\SchuleDokumente\Bewerbungen\Bewerbungs-IDAV2026\Code\lebenslauf.html` übernommen:
+  - `Sprachen`: Python, PHP, C#, Java, JS/TS, HTML/CSS, SQL
+  - `Tools`: Git, GitHub, Bitbucket, VS Code, IntelliJ IDEA, Neovim, Docker
+  - `Konzepte`: Rest API, Socket API, Funktionaler Code, Objektorientierter Code, Asynchroner Code
+- `about.astro` baut daraus eine Tabelle mit Kategorien als Spaltenköpfen.
+- `TerminalTable` rendert weiterhin nur eine gestrichelte Linie unter dem Header, keine vertikalen Linien und keine Row-Trenner.
+- Andere About-Blöcke und andere Seiten bleiben unverändert.
 
 ## Implementation Changes
 
-- `src/content.config.ts` erweitert `snippets.value` um Skill-Objekte:
-  - `name: string`
+- `src/content.config.ts` erlaubt bei `snippets.value` zusätzlich Arrays aus Skill-Gruppen:
   - `category: string`
-- `src/utils/content.ts` bekommt einen Helper wie `toSkillList(value)`, der nur gültige Skill-Objekte zurückgibt und optional alte String-Skills als `{ name, category: "Skill" }` fallbackt.
-- `src/content/snippets/skills.md` wird auf diese Struktur migriert:
-  - Programmiersprachen: Python, PHP, C#, Java, JavaScript / TypeScript
-  - Web: HTML / CSS
-  - Datenbanken: SQL
-  - Tooling: Git / GitHub / Bitbucket, Docker
-  - Konzepte: REST APIs, Socket APIs, OOP, funktionaler und asynchroner Code
-- `about.astro` ersetzt den aktuellen `TerminalOutput` für `cat skills.txt` durch `TerminalTable` mit zwei Spalten: `Name`, `Kategorie`.
-- `src/styles/global.css` ergänzt Klassen für die Tabelle:
-  - `.terminal-table`
-  - `.terminal-table-row`
-  - `.terminal-table-head`
-  - `.terminal-table-cell`
-  - Header-Bottom-Line als `border-bottom: 1px dashed var(--terminal-muted)`
-  - Textfarben aus `--terminal-text`, `--terminal-muted` und optional `--terminal-green`
-- Mobile Darstellung:
-  - Tabelle bleibt zweispaltig, aber liegt in einem horizontal scrollbaren Wrapper, falls lange Skill-Namen nicht sauber passen.
-  - Keine Spaltenumbrüche, die die Terminal-Tabellenoptik zerstören.
+  - `items: string[]`
+- `src/utils/content.ts` stellt `toSkillGroups(value)` bereit und bietet einen Fallback für einfache String-Listen.
+- `about.astro` normalisiert die Skill-Gruppen zu Tabellenzeilen:
+  - Jede Gruppe wird zu einer Spalte.
+  - Kürzere Gruppen bekommen leere Zellen, damit alle Spalten sauber ausgerichtet bleiben.
+- `src/styles/global.css` behält das Terminal-Tabellenstyling:
+  - Header-Linie gestrichelt
+  - keine vertikalen Linien
+  - keine Datenzeilen-Linien
+  - horizontaler Scroll nur innerhalb des Tabellenwrappers auf kleinen Viewports
+- Dokumentation beschreibt die Skill-Gruppenstruktur und die About-Ausgabe.
 
 ## Test Plan
 
 - `bun astro check` ausführen.
 - `bun run build` ausführen.
 - Im Browser `/about` prüfen:
-  - Skills erscheinen als Tabelle mit `Name` und `Kategorie`.
+  - Tabellenköpfe sind `Sprachen`, `Tools`, `Konzepte`.
+  - Die Einträge stehen unter der passenden Kategorie.
   - Es gibt genau eine gestrichelte Linie unter dem Header.
   - Es gibt keine vertikalen Linien und keine Linien zwischen Datenzeilen.
-  - Farben entsprechen weiterhin der Website, nicht dem Screenshot.
-  - Lange Skill-Namen bleiben lesbar und brechen das Layout nicht.
-- Mobile Browser-Prüfung:
-  - About-Seite bleibt bedienbar.
-  - Skills-Tabelle ist horizontal scrollbar oder passt sauber in den Viewport.
-  - Alle anderen Terminal-Blöcke rendern wie vorher.
+  - Andere Terminal-Blöcke auf About rendern wie vorher.
+- Mobile prüfen:
+  - Die Seite bleibt viewport-breit.
+  - Die Tabelle scrollt bei Bedarf innerhalb ihres Wrappers horizontal.
 
 ## Assumptions
 
-- Die gewünschte Tabellenstruktur ist `Name + Kategorie`.
-- Die Kategorien dürfen aus den aktuellen Skills fachlich abgeleitet werden.
-- Der Screenshot dient nur als Linien- und Tabellenreferenz; Farben, Schrift und Terminal-Stimmung bleiben aus der Website.
-- Die Änderung betrifft nur die Skills-Liste auf About, nicht Languages oder Hobbies.
+- Die drei Kategorien aus dem ursprünglichen Lebenslauf sind die gewünschte Quelle der Wahrheit.
+- Die Schreibweisen aus der Quelle werden übernommen, inklusive `JS/TS`, `HTML/CSS` und `Rest API`.
+- Die Tabellenoptik bleibt terminalartig und verwendet die bestehenden Website-Farben.

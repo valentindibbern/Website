@@ -8,7 +8,7 @@ import {
     getSnippets,
     getTerminalRows,
     getTerminalEntries,
-    toSkillList,
+    toSkillGroups,
     toStringList,
 } from "@/utils/content";
 
@@ -17,7 +17,23 @@ const { profile, Content } = await getProfileContent();
 const education = await getTerminalEntries("education");
 const experience = await getTerminalEntries("experience");
 const snippets = await getSnippets();
-const skills = toSkillList(snippets.skills);
+const skillGroups = toSkillGroups(snippets.skills);
+const skillColumns = skillGroups.map((group) => ({
+    key: group.category,
+    label: group.category,
+}));
+const skillRowCount = Math.max(
+    0,
+    ...skillGroups.map((group) => group.items.length),
+);
+const skillRows = Array.from({ length: skillRowCount }, (_, index) =>
+    Object.fromEntries(
+        skillGroups.map((group) => [
+            group.category,
+            group.items[index] ?? "",
+        ]),
+    ),
+);
 const languages = toStringList(snippets.languages);
 const hobbies = toStringList(snippets.hobbies);
 ---
@@ -50,11 +66,8 @@ const hobbies = toStringList(snippets.hobbies);
                 <TerminalTable
                     path="/about"
                     command="cat skills.txt"
-                    columns={[
-                        { key: "name", label: "Name" },
-                        { key: "category", label: "Kategorie" },
-                    ]}
-                    rows={skills}
+                    columns={skillColumns}
+                    rows={skillRows}
                 />
                 {
                     education.map((entry) => (
