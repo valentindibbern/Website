@@ -9,6 +9,11 @@ const contentRowSchema = z.object({
     meta: z.string().optional(),
 });
 
+const skillSchema = z.object({
+    name: z.string(),
+    category: z.string(),
+});
+
 const terminalEntrySchema = z.object({
     title: z.string(),
     command: z.string(),
@@ -20,7 +25,7 @@ const snippets = defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/snippets" }),
     schema: z.object({
         key: z.string(),
-        value: z.union([z.string(), z.array(z.string())]),
+        value: z.union([z.string(), z.array(z.string()), z.array(skillSchema)]),
     }),
 });
 

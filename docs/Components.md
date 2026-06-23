@@ -20,6 +20,23 @@ Datei: `src/components/TerminalOutput.astro`
   - Values nutzen die Terminal-Akzentfarbe, Labels bleiben gedimmt.
   - Row-Labels sind linksbündig in einer `max-content`-Spalte ausgerichtet, damit Values auf gleicher Höhe beginnen und kürzere Labels sichtbaren Abstand zum Content behalten.
 
+## TerminalTable
+
+Datei: `src/components/TerminalTable.astro`
+
+- Zweck: terminalartige Tabellen für strukturierte Listen wie Skills.
+- Eingaben:
+  - `command`: angezeigter Terminal-Befehl.
+  - `columns`: Spaltendefinitionen mit `key` und `label`.
+  - `rows`: Tabellenzeilen als einfache Key-Value-Objekte.
+  - `path`: optionaler Prompt-Pfad, Standard `~`.
+- Ausgabe:
+  - Ein `<article>` mit Promptzeile und HTML-Tabelle.
+- Styling:
+  - Eine gestrichelte Linie trennt nur den Header von den Daten.
+  - Es gibt keine vertikalen Linien und keine Trenner zwischen Datenzeilen.
+  - Die Tabelle bleibt auf kleinen Viewports horizontal scrollbar.
+
 ## HeaderComponent
 
 Datei: `src/components/HeaderComponent.astro`

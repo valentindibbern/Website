@@ -10,6 +10,11 @@ export type ContentRow = {
     kind?: string;
     meta?: string;
 };
+export type SkillEntry = {
+    name: string;
+    category: string;
+};
+type SnippetValue = string | string[] | SkillEntry[] | undefined;
 
 export async function getProfile() {
     const profiles = await getCollection("profile");
@@ -130,7 +135,7 @@ export function getTerminalRows(entry: TerminalEntry["data"]): ContentRow[] {
     ];
 }
 
-export function formatLinksJson(rawLinks: string[] | string) {
+export function formatLinksJson(rawLinks: SnippetValue) {
     const links = toStringList(rawLinks).map((entry) => {
         const [label, ...valueParts] = entry.split("=");
 
@@ -148,12 +153,30 @@ export function formatLinksJson(rawLinks: string[] | string) {
         .join("\n")}\n}`;
 }
 
-export function toStringList(value: string[] | string | undefined) {
+export function toStringList(value: SnippetValue) {
     if (!value) {
         return [];
     }
 
-    return Array.isArray(value) ? value : [value];
+    if (typeof value === "string") {
+        return [value];
+    }
+
+    return value.filter((entry): entry is string => typeof entry === "string");
+}
+
+export function toSkillList(value: SnippetValue): SkillEntry[] {
+    if (!value) {
+        return [];
+    }
+
+    if (typeof value === "string") {
+        return [{ name: value, category: "Skill" }];
+    }
+
+    return value.map((entry) =>
+        typeof entry === "string" ? { name: entry, category: "Skill" } : entry,
+    );
 }
 
 function sortByOrder<T extends { data: { order: number } }>(entries: T[]) {

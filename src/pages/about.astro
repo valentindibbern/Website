@@ -1,4 +1,5 @@
 ---
+import TerminalTable from "@components/TerminalTable.astro";
 import TerminalOutput from "@components/TerminalOutput.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
@@ -7,6 +8,7 @@ import {
     getSnippets,
     getTerminalRows,
     getTerminalEntries,
+    toSkillList,
     toStringList,
 } from "@/utils/content";
 
@@ -15,7 +17,7 @@ const { profile, Content } = await getProfileContent();
 const education = await getTerminalEntries("education");
 const experience = await getTerminalEntries("experience");
 const snippets = await getSnippets();
-const skills = toStringList(snippets.skills);
+const skills = toSkillList(snippets.skills);
 const languages = toStringList(snippets.languages);
 const hobbies = toStringList(snippets.hobbies);
 ---
@@ -45,10 +47,14 @@ const hobbies = toStringList(snippets.hobbies);
                     body=""
                     rows={getProfileRows(profile.data, true)}
                 />
-                <TerminalOutput
+                <TerminalTable
                     path="/about"
                     command="cat skills.txt"
-                    body={skills.join("\n")}
+                    columns={[
+                        { key: "name", label: "Name" },
+                        { key: "category", label: "Kategorie" },
+                    ]}
+                    rows={skills}
                 />
                 {
                     education.map((entry) => (

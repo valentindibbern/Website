@@ -1,0 +1,49 @@
+---
+export type TerminalTableColumn = {
+    key: string;
+    label: string;
+};
+
+type TerminalTableRow = Record<string, string>;
+
+interface Props {
+    command: string;
+    columns: TerminalTableColumn[];
+    rows: TerminalTableRow[];
+    path?: string;
+}
+
+const { command, columns, rows, path = "~" } = Astro.props;
+---
+
+<article class="terminal-entry">
+    <p class="prompt">visitor@portfolio:{path}$ {command}</p>
+    <div class="terminal-table-wrap">
+        <table class="terminal-table">
+            <thead class="terminal-table-head">
+                <tr class="terminal-table-row">
+                    {
+                        columns.map((column) => (
+                            <th class="terminal-table-cell" scope="col">
+                                {column.label}
+                            </th>
+                        ))
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    rows.map((row) => (
+                        <tr class="terminal-table-row">
+                            {columns.map((column) => (
+                                <td class="terminal-table-cell">
+                                    {row[column.key]}
+                                </td>
+                            ))}
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    </div>
+</article>

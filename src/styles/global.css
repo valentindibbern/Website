@@ -188,6 +188,43 @@ a {
     grid-column: 1 / -1;
 }
 
+.terminal-table-wrap {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+.terminal-table {
+    min-width: min(42rem, 100%);
+    border: 0;
+    border-collapse: collapse;
+    color: var(--terminal-text);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+    line-height: 1.8;
+    white-space: nowrap;
+}
+
+.terminal-table-head {
+    border-bottom: 1px dashed var(--terminal-muted);
+    color: var(--terminal-muted);
+}
+
+.terminal-table-cell {
+    border: 0;
+    padding: 0 2rem 0 0;
+    text-align: left;
+    font-weight: 400;
+}
+
+.terminal-table-cell:last-child {
+    padding-right: 0;
+}
+
+.terminal-table tbody .terminal-table-cell:first-child {
+    color: var(--terminal-green);
+}
+
 .section-heading {
     margin: 0.75rem 0 1.25rem;
     color: var(--terminal-green);
@@ -209,6 +246,7 @@ a {
 }
 
 .terminal-entry {
+    min-width: 0;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--terminal-line);
 }
