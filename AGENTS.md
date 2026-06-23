@@ -24,5 +24,7 @@
 - Commit at sensible checkpoints, including during a larger task when the work is meaningfully split.
 - Use descriptive commit messages that explain the actual change.
 - Commit again at the end of a task before finishing work.
+- Do not ask the user whether committing to `agent-changes` is allowed; it is expected for project work.
 - Push the branch at the end of a task.
+- Do not ask the user whether pushing `agent-changes` is allowed; it is expected at task completion.
 - Never merge branches.
