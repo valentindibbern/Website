@@ -5,6 +5,7 @@
 Datei: `src/pages/index.astro`
 
 - Zeigt den ASCII-Namen, die kurze Einführung und die wichtigsten Einstiege.
+- Die Home-Abschnitte bleiben bewusst kompakt: keine Hero-Aktionsbuttons, keine großen Abschnittsüberschriften und keine roten Content-Hinweise.
 - Nutzt:
   - `profile`
   - `projects`

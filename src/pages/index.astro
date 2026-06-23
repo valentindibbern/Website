@@ -12,7 +12,6 @@ import {
     getReferenceRows,
     getSnippets,
 } from "@/utils/content";
-import { withBase } from "@/utils/url";
 
 const title = "Home";
 const asciiName = figlet.textSync("Valentin Dibbern", { font: "Big" });
@@ -37,23 +36,10 @@ const linksJson = formatLinksJson(snippets.links);
                 {profile.data.role}. {snippets["home.lede"]}
             </p>
 
-            <div class="terminal-actions" aria-label="Primary actions">
-                <a class="terminal-button" href={withBase("/projects")}
-                    >&gt; view projects</a
-                >
-                <a class="terminal-button" href={withBase("/links")}
-                    >$ contact routes</a
-                >
-            </div>
         </section>
 
-        <section
-            id="about"
-            class="terminal-section"
-            aria-labelledby="about-title"
-        >
+        <section id="about" class="terminal-section">
             <p class="prompt">visitor@portfolio:~$ cd /about</p>
-            <h2 id="about-title" class="section-heading">about.md</h2>
             <p class="section-intro">
                 Der erste Eintrag aus der About-Seite. Die Unterseite ist für
                 einen öffentlichen Fliesstext über mich vorbereitet.
@@ -67,19 +53,10 @@ const linksJson = formatLinksJson(snippets.links);
                     rows={getProfileRows(profile.data)}
                 />
             </div>
-            <p class="input-needed">{snippets["input.aboutText"]}</p>
-            <a class="terminal-link" href={withBase("/about")}
-                >open /about --all</a
-            >
         </section>
 
-        <section
-            id="projects"
-            class="terminal-section"
-            aria-labelledby="projects-title"
-        >
+        <section id="projects" class="terminal-section">
             <p class="prompt">visitor@portfolio:~$ cd /projects</p>
-            <h2 id="projects-title" class="section-heading">projects/</h2>
             <p class="section-intro">
                 Der erste Projekt-Eintrag aus GitHub. Die vollständige
                 Projektliste liegt auf der Projects-Seite.
@@ -93,19 +70,10 @@ const linksJson = formatLinksJson(snippets.links);
                     rows={getProjectRows(firstProject.data)}
                 />
             </div>
-            <p class="input-needed">{snippets["input.projectDetails"]}</p>
-            <a class="terminal-link" href={withBase("/projects")}
-                >open /projects --all</a
-            >
         </section>
 
-        <section
-            id="links"
-            class="terminal-section"
-            aria-labelledby="links-title"
-        >
+        <section id="links" class="terminal-section">
             <p class="prompt">visitor@portfolio:~$ cd /links</p>
-            <h2 id="links-title" class="section-heading">links.json</h2>
             <p class="section-intro">
                 Der erste Link-Output. Downloads bleiben bewusst deaktiviert;
                 hier stehen nur Kontakt- und Profilrouten.
@@ -115,19 +83,10 @@ const linksJson = formatLinksJson(snippets.links);
                 <p class="prompt">visitor@portfolio:/links$ cat links.json</p>
                 <pre class="output-body">{linksJson}</pre>
             </article>
-            <p class="input-needed">{snippets["input.contact"]}</p>
-            <a class="terminal-link" href={withBase("/links")}
-                >open /links --all</a
-            >
         </section>
 
-        <section
-            id="references"
-            class="terminal-section"
-            aria-labelledby="references-title"
-        >
+        <section id="references" class="terminal-section">
             <p class="prompt">visitor@portfolio:~$ cd /references</p>
-            <h2 id="references-title" class="section-heading">references.md</h2>
             <p class="section-intro">
                 Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier
                 vorhanden, werden aber aktuell nicht als Download angeboten.
@@ -141,10 +100,6 @@ const linksJson = formatLinksJson(snippets.links);
                     rows={getReferenceRows(firstReference.data)}
                 />
             </div>
-            <p class="input-needed">{snippets["input.referencesPublic"]}</p>
-            <a class="terminal-link" href={withBase("/references")}
-                >open /references --all</a
-            >
         </section>
 
         <p class="cursor" aria-label="Terminal cursor">
