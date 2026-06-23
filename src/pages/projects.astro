@@ -1,11 +1,7 @@
 ---
-import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalBlock from "@components/TerminalBlock.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import {
-    formatProjectTerminalBody,
-    getProjects,
-    getSnippets,
-} from "@/utils/content";
+import { getBlocks, getProjects, getSnippets } from "@/utils/content";
 
 const title = "Projects";
 const projects = await getProjects();
@@ -27,13 +23,11 @@ const snippets = await getSnippets();
 
             <div class="terminal-list">
                 {
-                    projects.map((entry) => (
-                        <TerminalOutput
-                            path="/projects"
-                            command={entry.data.command}
-                            body={formatProjectTerminalBody(entry.data)}
-                        />
-                    ))
+                    projects.flatMap((entry) =>
+                        getBlocks(entry.data).map((block) => (
+                            <TerminalBlock path="/projects" block={block} />
+                        )),
+                    )
                 }
             </div>
             <p class="input-needed">{snippets["input.projectDetails"]}</p>

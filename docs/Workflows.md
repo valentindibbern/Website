@@ -4,10 +4,18 @@
 
 Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür relevant sind.
 
+## Public Documentation Baseline
+
+- Das Repository ist öffentlich.
+- Dokumentation muss für externe Leser verständlich sein.
+- Keine privaten Arbeitsnotizen, Zugangsdaten oder persönlichen Rohinformationen dokumentieren.
+- README erklärt den öffentlichen Einstieg; Detailwissen gehört in passende Dateien unter `docs/`.
+
 ## Add Or Change Content
 
 - Inhalt in `src/content/*` bearbeiten.
-- Schema in `src/content.config.ts` prüfen, wenn Frontmatter-Felder geändert werden.
+- Bestehende `blocks`, `rows`, `items`, `entries` oder Tabellenzeilen ändern, wenn nur Inhalte angepasst werden.
+- Schema in `src/content.config.ts` nur ändern, wenn ein neuer Blocktyp oder eine neue strukturelle Form nötig ist.
 - Formatierung in `src/utils/content.ts` anpassen, wenn sich die Ausgabeform ändert.
 - Betroffene Seite in `src/pages/*` prüfen.
 - Dokumentation in `docs/Content-System.md` aktualisieren.
@@ -45,4 +53,4 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - `bun astro check` ausführen, wenn Astro-, TypeScript-, Content- oder Komponentenlogik geändert wurde.
 - `bun build` ausführen, wenn Seiten, Routing, Content-Schemas oder Deployment-Verhalten betroffen sind.
 - Dokumentationsänderungen mit der eigentlichen Projektänderung committen.
-
+- Prüfen, dass neue Doku öffentlich teilbar ist.

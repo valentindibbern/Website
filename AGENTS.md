@@ -14,6 +14,8 @@
 - Update the existing docs whenever behavior, structure, commands, conventions, or content sources change.
 - New project parts must be described in the style of the existing documentation: short, practical, and role-based.
 - Keep `README.md` as the human entry point and `docs/*` as the deeper reference layer.
+- This repository is public; never add secrets, private data, or internal-only notes to README or `docs/*`.
+- Agent-facing documentation must be safe to read publicly and framed as project conventions, not private process notes.
 
 ## Git Rules
 
@@ -22,5 +24,7 @@
 - Commit at sensible checkpoints, including during a larger task when the work is meaningfully split.
 - Use descriptive commit messages that explain the actual change.
 - Commit again at the end of a task before finishing work.
+- Do not ask the user whether committing to `agent-changes` is allowed; it is expected for project work.
 - Push the branch at the end of a task.
+- Do not ask the user whether pushing `agent-changes` is allowed; it is expected at task completion.
 - Never merge branches.

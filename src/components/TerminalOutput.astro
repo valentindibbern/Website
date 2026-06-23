@@ -1,14 +1,34 @@
 ---
+import type { ContentRow } from "@/utils/content";
+
 interface Props {
     command: string;
     body: string;
+    rows?: ContentRow[];
     path?: string;
 }
 
-const { command, body, path = "~" } = Astro.props;
+const { command, body, rows = [], path = "~" } = Astro.props;
 ---
 
 <article class="terminal-entry">
     <p class="prompt">visitor@portfolio:{path}$ {command}</p>
-    <pre class="output-body">{body}</pre>
+    {
+        rows.length > 0 ? (
+            <dl class="output-pairs">
+                {rows.map((row) => (
+                    <>
+                        <dt class={`output-label${row.kind ? ` is-${row.kind}` : ""}`}>
+                            {row.label}
+                        </dt>
+                        <dd class={`output-value${row.kind ? ` is-${row.kind}` : ""}`}>
+                            {row.value}
+                        </dd>
+                    </>
+                ))}
+            </dl>
+        ) : (
+            <pre class="output-body">{body}</pre>
+        )
+    }
 </article>

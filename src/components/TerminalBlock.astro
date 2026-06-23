@@ -1,0 +1,31 @@
+---
+import TerminalOutput from "@components/TerminalOutput.astro";
+import TerminalTable from "@components/TerminalTable.astro";
+import { blockToBody, type ContentBlock } from "@/utils/content";
+
+interface Props {
+    block: ContentBlock;
+    path?: string;
+}
+
+const { block, path } = Astro.props;
+const blockPath = block.path ?? path;
+---
+
+{
+    block.type === "table" ? (
+        <TerminalTable
+            path={blockPath}
+            command={block.command}
+            columns={block.columns}
+            rows={block.rows}
+        />
+    ) : (
+        <TerminalOutput
+            path={blockPath}
+            command={block.command}
+            body={blockToBody(block)}
+            rows={block.type === "rows" ? block.rows : []}
+        />
+    )
+}

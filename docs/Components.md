@@ -1,5 +1,21 @@
 # Components
 
+## TerminalBlock
+
+Datei: `src/components/TerminalBlock.astro`
+
+- Zweck: zentraler Renderer für Content-Blöcke.
+- Eingaben:
+  - `block`: Content-Block mit `type`, `command`, `order` und typabhängigen Daten.
+  - `path`: optionaler Prompt-Pfad, wenn der Block selbst keinen `path` setzt.
+- Ausgabe:
+  - `table`-Blöcke werden an `TerminalTable` delegiert.
+  - `rows`, `text`, `list` und `json` werden über `TerminalOutput` gerendert.
+- Typische Nutzung:
+  - Seiten rendern Blocklisten, statt einzelne Content-Felder zu kennen.
+  - Home rendert pro Bereich den ersten Block.
+  - Unterseiten rendern alle Blöcke in sortierter Reihenfolge.
+
 ## TerminalOutput
 
 Datei: `src/components/TerminalOutput.astro`
@@ -8,13 +24,38 @@ Datei: `src/components/TerminalOutput.astro`
 - Eingaben:
   - `command`: angezeigter Terminal-Befehl.
   - `body`: der auszugebende Textblock.
+  - `rows`: optionale strukturierte Ausgabe als Liste aus Label-/Value-Paaren.
   - `path`: optionaler Prompt-Pfad, Standard `~`.
 - Ausgabe:
-  - Ein `<article>` mit Promptzeile und vorformatiertem Output.
+  - Ein `<article>` mit Promptzeile und entweder vorformatiertem Output oder semantischen `dl`-Paaren.
 - Typische Nutzung:
   - Projektausgaben
   - Referenzen
   - Profil- und Ausbildungsblöcke
+  - Listen- und JSON-Ausgaben über `TerminalBlock`
+- Styling:
+  - Values nutzen die Terminal-Akzentfarbe, Labels bleiben gedimmt.
+  - Row-Labels sind linksbündig in einer `max-content`-Spalte ausgerichtet, damit Values auf gleicher Höhe beginnen und kürzere Labels sichtbaren Abstand zum Content behalten.
+
+## TerminalTable
+
+Datei: `src/components/TerminalTable.astro`
+
+- Zweck: terminalartige Tabellen für strukturierte Listen wie Skills.
+- Eingaben:
+  - `command`: angezeigter Terminal-Befehl.
+  - `columns`: Spaltendefinitionen mit `key` und `label`.
+  - `rows`: Tabellenzeilen als einfache Key-Value-Objekte.
+  - `path`: optionaler Prompt-Pfad, Standard `~`.
+- Ausgabe:
+  - Ein `<article>` mit Promptzeile und HTML-Tabelle.
+- Typische Nutzung:
+  - Skills
+  - beliebige tabellarische Content-Blöcke
+- Styling:
+  - Eine gestrichelte Linie trennt nur den Header von den Daten.
+  - Es gibt keine vertikalen Linien und keine Trenner zwischen Datenzeilen.
+  - Die Tabelle bleibt auf kleinen Viewports horizontal scrollbar.
 
 ## HeaderComponent
 
@@ -56,4 +97,5 @@ Datei: `src/layouts/BaseLayout.astro`
 - Komponenten sollen Präsentation und Content-Logik trennen.
 - Content wird vor dem Rendern in den Seiten oder Utilities vorbereitet.
 - Terminal-Komponenten bleiben bewusst simpel, damit ihre Ausgabe vorhersehbar bleibt.
+- Neue terminalartige Content-Ausgaben sollen zuerst als Block modelliert und dann über `TerminalBlock` gerendert werden.
 - Wenn neue Komponenten entstehen, dokumentiere Zweck, Eingaben und typische Nutzung hier.
