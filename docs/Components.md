@@ -24,7 +24,6 @@ Datei: `src/components/HeaderComponent.astro`
 - Verantwortung:
   - aktuellen Seitentitel anzeigen
   - Navigation bereitstellen
-  - konsistentes Top-Level-Markup sicherstellen
 
 ## NavComponent
 
@@ -48,6 +47,7 @@ Datei: `src/layouts/BaseLayout.astro`
   - HTML-Grundstruktur
   - Meta-Description
   - Seitentitel
+  - konsistentes Top-Level-Markup sicherstellen
   - Header-Einbindung
   - globales CSS importieren
 

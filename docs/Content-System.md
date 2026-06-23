@@ -25,7 +25,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 - `src/utils/content.ts`
   - Stellt Loader-Funktionen wie `getProfile`, `getProjects`, `getReferences`, `getTerminalEntries` und `getSnippets` bereit.
   - Enthält Formatierer wie `formatProfileTerminalBody`, `formatProjectTerminalBody` und `formatLinksJson`.
-  - Sortiert Collections über das `order`-Feld.
+  - Sortiert `projects`, `references` und `terminal` über das `order`-Feld; `profile` und `snippets` folgen eigener Logik.
 - `src/content/*`
   - Enthält die eigentlichen Markdown-Dateien.
   - Ist die primäre Stelle für Inhaltsänderungen.
@@ -48,7 +48,7 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 - `body`
   - Textausgabe für terminalartige Einträge.
 - `key` und `value`
-  - Snippet-Struktur für kleine Texte oder Listen.
+  - Snippet-Struktur für kleine Texte oder Listen; `value` darf auch ein Array von Strings sein.
 
 ## Consumer Behavior
 
@@ -59,5 +59,5 @@ Die Content-Schicht hält redaktionelle Inhalte aus den Seiten heraus. Dadurch l
 ## Failure Modes
 
 - Fehlt ein Pflichtfeld, scheitert der Astro-Check oder Build.
-- Mehr als ein `profile`-Eintrag führt in `getProfile()` zu einem Fehler.
+- Kein oder mehr als ein `profile`-Eintrag führt in `getProfile()` zu einem Fehler.
 - Unsichtbare Sortierfehler entstehen meist durch fehlende oder doppelte `order`-Werte.

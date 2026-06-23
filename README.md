@@ -33,6 +33,7 @@ Lokale Vorschau:
 │   ├── pages/
 │   ├── layouts/
 │   ├── components/
+│   ├── config/
 │   ├── content/
 │   ├── utils/
 │   └── styles/

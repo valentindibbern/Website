@@ -7,6 +7,7 @@ Diese Datei ist der schnelle Einstieg für Agents und andere KI-Systeme, die an 
 ## First Reads
 
 - `README.md`
+- `AGENTS.md`
 - `docs/Stack.md`
 - `docs/Architecture.md`
 - `docs/Content-System.md`
