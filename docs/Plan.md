@@ -25,9 +25,9 @@ Aus der lokalen `figlet`-Doku relevant:
     - rendert ein semantisches Heading-Element mit Screenreader-Text und sichtbarer ASCII-Ausgabe
   - Geplantes Markup:
     - Wrapper als dynamisches `h1`/`h2`/`h3`
-    - sichtbarer ASCII-Text in `<pre aria-hidden="true">`
+    - sichtbarer ASCII-Text in `<span aria-hidden="true">`
     - normaler Text in einer `.sr-only`-Span für Accessibility
-  - Grund: `<pre>` direkt als einziges Heading wäre visuell passend, aber ohne normalen Text schlechter für Screenreader; ein sichtbares ASCII-`pre` plus versteckter Klartext ist robuster.
+  - Grund: Das Heading bleibt semantisch und enthält nur phrasing content; der sichtbare ASCII-Span bewahrt die Figlet-Zeilen per CSS.
 
 - CSS in `src/styles/global.css` vereinheitlichen:
   - `.ascii-logo` und `.section-heading` durch gemeinsame TerminalHeading-Klassen ersetzen oder auf diese mappen.
@@ -61,11 +61,6 @@ Aus der lokalen `figlet`-Doku relevant:
   - `src/pages/references.astro`
     - `<h1 id="references-title" class="section-heading">references.md</h1>` ersetzen durch `<TerminalHeading id="references-title" text="references.md" size="Small" />`.
 
-- Bestehende lokale Änderungen respektieren:
-  - `src/pages/about.astro` und `src/pages/projects.astro` sind aktuell bereits uncommitted geändert.
-  - Der Implementer darf diese Änderungen nicht blind zurücksetzen.
-  - Die neuen Headings werden auf dem aktuellen Arbeitskopie-Zustand aufgebaut.
-
 ## Documentation Changes
 
 - `docs/Components.md` ergänzen:
@@ -77,7 +72,7 @@ Aus der lokalen `figlet`-Doku relevant:
   - Unterseiten nutzen `TerminalHeading` mit `Small`.
 - `docs/Architecture.md` oder `docs/Stack.md` bei Bedarf präzisieren:
   - `figlet` ist nicht mehr nur Home-spezifisch, sondern Teil des Terminal-Heading-Systems.
-- `docs/plan.md` nur ändern, wenn die Doku weiterhin als lebender Refactor-Plan gelten soll; ansonsten nicht anfassen.
+- `docs/Plan.md` nur ändern, wenn die Doku weiterhin als lebender Refactor-Plan gelten soll; ansonsten nicht anfassen.
 
 ## Test Plan
 
@@ -111,4 +106,3 @@ Aus der lokalen `figlet`-Doku relevant:
 - `size` soll bewusst nur `"Big"` und `"Small"` erlauben, nicht beliebige Figlet-Fonts.
 - Home verwendet `"Big"`, alle Unterseiten verwenden `"Small"`.
 - TerminalHeading ist für Seitenüberschriften gedacht, nicht für jedes Terminal-Command oder jeden Content-Block.
-- Die vorhandenen uncommitted Änderungen in `about.astro` und `projects.astro` stammen vom Nutzer oder einem anderen Agenten und werden nicht zurückgesetzt.

@@ -13,7 +13,7 @@ Datei: `src/components/TerminalHeading.astro`
 - Ausgabe:
   - semantisches `h1`, `h2` oder `h3`
   - Klartext für Screenreader
-  - sichtbare ASCII-Ausgabe in einem horizontal scrollbar gehaltenen `<pre>`
+  - sichtbare ASCII-Ausgabe in einem horizontal scrollbar gehaltenen Span
 - Typische Nutzung:
   - Home nutzt `size="Big"`.
   - Unterseiten nutzen `size="Small"`.

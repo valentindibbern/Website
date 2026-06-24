@@ -15,5 +15,5 @@ const asciiText = figlet.textSync(text, { font: size });
 
 <HeadingTag id={id} class:list={["terminal-heading", `is-${size.toLowerCase()}`]}>
     <span class="sr-only">{text}</span>
-    <pre class="terminal-heading-ascii" aria-hidden="true">{asciiText}</pre>
+    <span class="terminal-heading-ascii" aria-hidden="true">{asciiText}</span>
 </HeadingTag>
