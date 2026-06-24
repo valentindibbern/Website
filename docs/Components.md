@@ -1,5 +1,23 @@
 # Components
 
+## TerminalHeading
+
+Datei: `src/components/TerminalHeading.astro`
+
+- Rendert ASCII-Überschriften mit `figlet`.
+- Props:
+  - `text`: sichtbarer Klartext und Eingabe für die ASCII-Ausgabe.
+  - `size`: erlaubte Figlet-Fonts `Big` oder `Small`.
+  - `id`: optionaler Anker für `aria-labelledby`.
+  - `level`: optionale HTML-Überschriftenebene `1`, `2` oder `3`, Standard `1`.
+- Ausgabe:
+  - semantisches `h1`, `h2` oder `h3`
+  - Klartext für Screenreader
+  - sichtbare ASCII-Ausgabe in einem horizontal scrollbar gehaltenen `<pre>`
+- Typische Nutzung:
+  - Home nutzt `size="Big"`.
+  - Unterseiten nutzen `size="Small"`.
+
 ## TerminalCommand
 
 Datei: `src/components/TerminalCommand.astro`

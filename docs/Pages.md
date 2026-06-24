@@ -5,6 +5,7 @@
 Datei: `src/pages/index.astro`
 
 - Zeigt ASCII-Namen, Einführung und kompakte Vorschauen.
+- Nutzt `TerminalHeading` mit `size="Big"` für den Seiteneinstieg.
 - Nutzt:
   - `text/home-lede.md`
   - `data/profile.yaml`
@@ -17,6 +18,7 @@ Datei: `src/pages/index.astro`
 Datei: `src/pages/about.astro`
 
 - Zeigt den About-Fließtext und strukturierte persönliche Daten.
+- Nutzt `TerminalHeading` mit `size="Small"` für `about.md`.
 - Nutzt:
   - `text/abouttext.md`
   - `data/profile.yaml`
@@ -30,6 +32,7 @@ Datei: `src/pages/about.astro`
 Datei: `src/pages/projects.astro`
 
 - Listet alle Projekte aus `data/projects.yaml`.
+- Nutzt `TerminalHeading` mit `size="Small"` für `projects/`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
 
 ## References
@@ -37,6 +40,7 @@ Datei: `src/pages/projects.astro`
 Datei: `src/pages/references.astro`
 
 - Zeigt Referenzen und Nachweise aus `data/references.yaml`.
+- Nutzt `TerminalHeading` mit `size="Small"` für `references.md`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
 
 ## Links
@@ -44,6 +48,7 @@ Datei: `src/pages/references.astro`
 Datei: `src/pages/links.astro`
 
 - Zeigt Kontakt- und Profilrouten als Liste.
+- Nutzt `TerminalHeading` mit `size="Small"` für `links.yaml`.
 - Nutzt `data/links.yaml`.
 
 ## Page Conventions

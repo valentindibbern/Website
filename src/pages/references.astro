@@ -1,6 +1,7 @@
 ---
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalHeading from "@components/TerminalHeading.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getDictionaryEntries } from "@/utils/content";
 
@@ -15,7 +16,7 @@ const references = await getDictionaryEntries("references");
             aria-labelledby="references-title"
         >
             <TerminalCommand command="cd /references" />
-            <h1 id="references-title" class="section-heading">references.md</h1>
+            <TerminalHeading id="references-title" text="references.md" size="Small" />
             <p class="section-intro">
                 Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die
                 Inhalte bleiben bewusst ruhig und textbasiert.

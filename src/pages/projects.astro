@@ -1,6 +1,7 @@
 ---
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalHeading from "@components/TerminalHeading.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getDictionaryEntries } from "@/utils/content";
 
@@ -15,7 +16,7 @@ const projects = await getDictionaryEntries("projects");
             aria-labelledby="projects-title"
         >
             <TerminalCommand command="cd /projects" />
-            <h1 id="projects-title" class="section-heading">projects/</h1>
+            <TerminalHeading id="projects-title" text="projects/" size="Small" />
             <p class="section-intro">
                 Projektübersicht als vertikale Log-Liste. Jede Ausgabe kann
                 später zu einer eigenen Projektseite erweitert werden.

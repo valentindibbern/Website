@@ -1,6 +1,7 @@
 ---
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalHeading from "@components/TerminalHeading.astro";
 import TerminalList from "@components/TerminalList.astro";
 import TerminalTable from "@components/TerminalTable.astro";
 import TerminalText from "@components/TerminalText.astro";
@@ -23,8 +24,8 @@ const experienceEntries = terminalEntries.filter(
             class="terminal-section first-section"
             aria-labelledby="about-title"
         >
-            <TerminalCommand command="cd /about" />
-            <h1 id="about-title" class="section-heading">about.md</h1>
+            <TerminalCommand command="cd about" />
+            <TerminalHeading id="about-title" text="about.md" size="Small" />
             <p class="section-intro">
                 Diese Seite ist für einen öffentlichen Fliesstext über mich
                 vorbereitet. Der aktuelle Text ist ein Platzhalter.

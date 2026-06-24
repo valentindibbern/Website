@@ -1,14 +1,13 @@
 ---
-import figlet from "figlet";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
+import TerminalHeading from "@components/TerminalHeading.astro";
 import TerminalList from "@components/TerminalList.astro";
 import TerminalText from "@components/TerminalText.astro";
 import { getDictionaryEntries } from "@/utils/content";
 
 const title = "Home";
-const asciiName = figlet.textSync("Valentin Dibbern", { font: "Big" });
 const [firstProject] = await getDictionaryEntries("projects");
 const [firstReference] = await getDictionaryEntries("references");
 ---
@@ -16,10 +15,7 @@ const [firstReference] = await getDictionaryEntries("references");
 <BaseLayout title={title}>
     <div class="terminal-page home-page">
         <section class="terminal-hero" aria-label="Valentin Dibbern">
-            <pre
-                class="ascii-logo"
-                aria-label="Valentin Dibbern">{asciiName}
-            </pre>
+            <TerminalHeading text="Valentin Dibbern" size="Big" />
 
             <TerminalCommand command="cat introduction.txt" />
             <div class="terminal-lede">
