@@ -10,9 +10,11 @@ Die Content-Schicht trennt frei editierbare Inhalte von Seiten- und Komponentenl
   - Freie Texte als `.md`.
   - Der sichtbare Text steht im Markdown-Body.
   - Die Dateien setzen keine inhaltlichen Frontmatter-Felder voraus.
+  - Zeilenumbrüche dürfen für die Bearbeitung gesetzt werden; der sichtbare Umbruch folgt dem Browser.
 - `src/content/data/`
   - Strukturierte Daten als `.yaml`.
   - Genutzt für Dictionaries, Tabellen und Listen.
+  - YAML-Blockstrings wie `value: |` sind erlaubt, haben aber keine eigene Layout-Bedeutung.
 
 ## Collections
 
@@ -90,5 +92,6 @@ rows:
 - Fließtexte in `src/content/text/*.md` bearbeiten.
 - Strukturierte Listen, Tabellen und Label-/Value-Daten in `src/content/data/*.yaml` bearbeiten.
 - Reihenfolge innerhalb einer YAML-Liste ist die sichtbare Reihenfolge.
+- Manuelle Zeilenumbrüche in Content-Dateien sind editorfreundlich, erzwingen aber keinen sichtbaren Umbruch.
 - Neue Terminal-Ausgaben brauchen eine passende Output-Komponente oder eine bestehende Datenform.
 - Keine großen Inhaltsblöcke in Markdown-Frontmatter verschieben.

@@ -92,15 +92,15 @@ a {
 
 .terminal-hero,
 .terminal-section {
-    padding-block: clamp(1.75rem, 4.5vw, 3.5rem);
+    padding-block: clamp(1rem, 2.75vw, 2rem);
 }
 
 .home-page .terminal-section {
-   padding-block: clamp(1.5rem, 4vw, 3rem);
+    padding-block: clamp(0.9rem, 2.4vw, 1.75rem);
 }
 
 .terminal-section {
-    border-top: 1px solid var(--terminal-line);
+    border-top: 0;
 }
 
 .first-section {
@@ -108,6 +108,7 @@ a {
 }
 
 .prompt {
+    margin: 0;
     color: var(--terminal-green);
     font-weight: 700;
 }
@@ -124,7 +125,7 @@ a {
 
 .terminal-heading {
     min-width: 0;
-    margin: 0 0 1.25rem;
+    margin: 0.75rem 0 0.9rem;
     color: var(--terminal-green);
     letter-spacing: 0;
 }
@@ -140,7 +141,7 @@ a {
 }
 
 .terminal-heading.is-small {
-    margin: 0.75rem 0 1.25rem;
+    margin: 0.6rem 0 0.8rem;
 }
 
 .terminal-heading.is-small .terminal-heading-ascii {
@@ -151,7 +152,7 @@ a {
     max-width: 64rem;
     color: var(--terminal-text);
     font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-    line-height: 1.75;
+    line-height: 1.6;
 }
 
 .terminal-output {
@@ -164,10 +165,10 @@ a {
 }
 
 .output-body {
-    margin: 1rem 0 0;
+    margin: 0.65rem 0 0;
     color: var(--terminal-text);
     font-size: clamp(0.95rem, 2vw, 1.08rem);
-    line-height: 1.8;
+    line-height: 1.65;
 }
 
 .output-body > :first-child {
@@ -187,8 +188,8 @@ a {
 .output-pairs {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
-    gap: 0.45rem 0.5rem;
-    margin: 1rem 0 0;
+    gap: 0.25rem 0.5rem;
+    margin: 0.7rem 0 0;
 }
 
 .output-label,
@@ -196,7 +197,7 @@ a {
     margin: 0;
     min-width: 0;
     font-size: clamp(0.95rem, 2vw, 1.08rem);
-    line-height: 1.8;
+    line-height: 1.65;
 }
 
 .output-label {
@@ -211,7 +212,7 @@ a {
 .output-value {
     color: var(--terminal-green);
     overflow-wrap: anywhere;
-    white-space: pre-wrap;
+    white-space: normal;
 }
 
 .output-label.is-long,
@@ -223,17 +224,17 @@ a {
     min-width: 0;
     max-width: 100%;
     overflow-x: auto;
-    margin-top: 1rem;
+    margin-top: 0.7rem;
 }
 
 .terminal-table {
-    min-width: min(42rem, 100%);
+    width: min(42rem, 100%);
+    table-layout: fixed;
     border: 0;
     border-collapse: collapse;
     color: var(--terminal-text);
     font-size: clamp(0.95rem, 2vw, 1.08rem);
-    line-height: 1.8;
-    white-space: nowrap;
+    line-height: 1.65;
 }
 
 .terminal-table-head {
@@ -246,6 +247,7 @@ a {
     padding: 0 2rem 0 0;
     text-align: left;
     font-weight: 400;
+    overflow-wrap: anywhere;
 }
 
 .terminal-table-cell:last-child {
@@ -259,11 +261,11 @@ a {
 .terminal-output-list {
     display: grid;
     gap: 0.25rem;
-    margin: 1rem 0 0;
+    margin: 0.7rem 0 0;
     padding: 0;
     color: var(--terminal-green);
     font-size: clamp(0.95rem, 2vw, 1.08rem);
-    line-height: 1.8;
+    line-height: 1.65;
     list-style: none;
 }
 
@@ -274,21 +276,21 @@ a {
 
 .section-intro {
     max-width: 56rem;
+    margin: 0.7rem 0 0;
     color: var(--terminal-text);
     font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.75;
+    line-height: 1.6;
 }
 
 .terminal-list {
     display: grid;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 0.9rem;
+    margin-top: 1rem;
 }
 
 .terminal-entry {
     min-width: 0;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--terminal-line);
+    padding-bottom: 0.75rem;
 }
 
 .entry-meta {
@@ -345,10 +347,10 @@ a {
 
 .about-copy {
     max-width: 62rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     color: var(--terminal-text);
     font-size: clamp(1rem, 2vw, 1.18rem);
-    line-height: 1.85;
+    line-height: 1.65;
 }
 
 .about-copy p {
