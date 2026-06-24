@@ -1,0 +1,19 @@
+---
+import figlet from "figlet";
+
+interface Props {
+    text: string;
+    size: "Big" | "Small";
+    id?: string;
+    level?: 1 | 2 | 3;
+}
+
+const { text, size, id, level = 1 } = Astro.props;
+const HeadingTag = `h${level}` as const;
+const asciiText = figlet.textSync(text, { font: size });
+---
+
+<HeadingTag id={id} class:list={["terminal-heading", `is-${size.toLowerCase()}`]}>
+    <span class="sr-only">{text}</span>
+    <span class="terminal-heading-ascii" aria-hidden="true">{asciiText}</span>
+</HeadingTag>

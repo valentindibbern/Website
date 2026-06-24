@@ -1,5 +1,23 @@
 # Components
 
+## TerminalHeading
+
+Datei: `src/components/TerminalHeading.astro`
+
+- Rendert ASCII-Überschriften mit `figlet`.
+- Props:
+  - `text`: sichtbarer Klartext und Eingabe für die ASCII-Ausgabe.
+  - `size`: erlaubte Figlet-Fonts `Big` oder `Small`.
+  - `id`: optionaler Anker für `aria-labelledby`.
+  - `level`: optionale HTML-Überschriftenebene `1`, `2` oder `3`, Standard `1`.
+- Ausgabe:
+  - semantisches `h1`, `h2` oder `h3`
+  - Klartext für Screenreader
+  - sichtbare ASCII-Ausgabe in einem horizontal scrollbar gehaltenen Span
+- Typische Nutzung:
+  - Home nutzt `size="Big"`.
+  - Unterseiten nutzen `size="Small"`.
+
 ## TerminalCommand
 
 Datei: `src/components/TerminalCommand.astro`
@@ -20,6 +38,7 @@ Datei: `src/components/TerminalText.astro`
   - `src`: Dateiname ohne `.md`.
 - Beispiel: `src="abouttext"` lädt `src/content/text/abouttext.md`.
 - Macht keine eigene Textformatierungslogik.
+- Zeilenumbrüche folgen dem normalen Browser-Wrap.
 
 ## TerminalDictionary
 
@@ -30,6 +49,7 @@ Datei: `src/components/TerminalDictionary.astro`
   - `src`: YAML-Dateiname ohne `.yaml`.
   - `entry`: optionaler Eintrag in Dateien mit mehreren Dictionaries.
 - Erwartet `rows` oder einen passenden Eintrag unter `entries`.
+- Values folgen dem normalen Browser-Wrap; Zeilenumbrüche in YAML sind keine Layout-Anweisung.
 
 ## TerminalTable
 
@@ -39,7 +59,7 @@ Datei: `src/components/TerminalTable.astro`
 - Props:
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `columns` und `rows`.
-- Tabellen bleiben auf kleinen Viewports horizontal scrollbar.
+- Tabellenzellen dürfen normal umbrechen; horizontaler Scroll bleibt nur ein Fallback.
 
 ## TerminalList
 
@@ -50,6 +70,7 @@ Datei: `src/components/TerminalList.astro`
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `items`.
 - Wird auch für ehemals JSON-artige Link-Ausgaben genutzt.
+- Listeneinträge folgen dem normalen Browser-Wrap.
 
 ## HeaderComponent
 
@@ -78,5 +99,7 @@ Datei: `src/layouts/BaseLayout.astro`
 
 - Terminal-Ausgaben werden flach komponiert: erst `TerminalCommand`, dann genau eine Output-Komponente.
 - Output-Komponenten laden ihre Inhalte selbst über `src`.
+- Content-Ausgaben überlassen den sichtbaren Zeilenumbruch dem Browser; vorformatierte Ausgabe ist nur für bewusst generierte ASCII-Elemente wie `TerminalHeading` vorgesehen.
 - Seiten bestimmen Reihenfolge und Kontext, nicht die Datenform.
+- Vertikale Abstände werden in `src/styles/global.css` über gemeinsame Terminal-Klassen gesteuert; Blöcke sollen als durchlaufender Terminal-Textfluss wirken, nicht als voneinander getrennte Karten.
 - Neue Komponenten brauchen eine kurze Beschreibung in dieser Datei.

@@ -45,7 +45,7 @@ Technische Übersicht der im Projekt tatsächlich verwendeten Werkzeuge, Librari
 ## Libraries Used In The App
 
 - `figlet`
-  - ASCII-Schriftzug auf der Startseite.
+  - ASCII-Überschriften über `TerminalHeading`.
 - `@lucide/astro`
   - Icon-Set für UI-Bausteine.
 - `clsx`
