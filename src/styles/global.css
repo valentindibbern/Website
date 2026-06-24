@@ -131,22 +131,14 @@ a {
 
 .terminal-heading-ascii {
     display: block;
-    overflow-x: auto;
+    overflow: hidden;
     margin: 0;
     line-height: 1.15;
     white-space: pre;
 }
 
-.terminal-heading.is-big .terminal-heading-ascii {
-    font-size: clamp(0.78rem, 2.2vw, 1.5rem);
-}
-
 .terminal-heading.is-small {
     margin: 0.6rem 0 0.8rem;
-}
-
-.terminal-heading.is-small .terminal-heading-ascii {
-    font-size: clamp(0.55rem, 1.55vw, 1rem);
 }
 
 .terminal-lede {
