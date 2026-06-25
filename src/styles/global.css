@@ -126,15 +126,26 @@ a {
     min-width: 0;
     margin: 0.75rem 0 0.9rem;
     color: var(--terminal-green);
+    container-type: inline-size;
     letter-spacing: 0;
 }
 
 .terminal-heading-ascii {
     display: block;
-    overflow: hidden;
+    overflow-x: auto;
+    scrollbar-width: none;
     margin: 0;
+    font-size: clamp(
+        var(--ascii-min-font, 0.55rem),
+        calc(100cqw / var(--ascii-columns, 1)),
+        var(--ascii-max-font, 1rem)
+    );
     line-height: 1.15;
     white-space: pre;
+}
+
+.terminal-heading-ascii::-webkit-scrollbar {
+    display: none;
 }
 
 .terminal-heading.is-small {
