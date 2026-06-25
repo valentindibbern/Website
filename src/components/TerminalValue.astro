@@ -1,0 +1,29 @@
+---
+import type { TerminalValue as TerminalValueData } from "@/utils/content";
+
+type Props = TerminalValueData;
+
+const { value, attributes = [] } = Astro.props;
+const shouldRenderLink = attributes.includes("link");
+const href = shouldRenderLink ? getHref(value) : undefined;
+
+function getHref(value: string) {
+    const trimmedValue = value.trim();
+
+    if (/^(https?:|mailto:|tel:|\/|#)/.test(trimmedValue)) {
+        return trimmedValue;
+    }
+
+    return `https://${trimmedValue}`;
+}
+---
+
+{
+    href ? (
+        <a class="terminal-value-link" href={href} rel="noreferrer">
+            {value}
+        </a>
+    ) : (
+        value
+    )
+}

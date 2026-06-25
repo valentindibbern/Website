@@ -1,5 +1,6 @@
 ---
 import { getListContent } from "@/utils/content";
+import TerminalValue from "@components/TerminalValue.astro";
 
 interface Props {
     src: string;
@@ -10,5 +11,14 @@ const items = await getListContent(src);
 ---
 
 <ul class="terminal-output-list">
-    {items.map((item) => <li>{item}</li>)}
+    {
+        items.map((item) => (
+            <li>
+                <TerminalValue
+                    value={item.value}
+                    attributes={item.attributes}
+                />
+            </li>
+        ))
+    }
 </ul>

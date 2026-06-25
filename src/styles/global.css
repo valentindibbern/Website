@@ -219,11 +219,6 @@ a {
     white-space: normal;
 }
 
-.output-label.is-long,
-.output-value.is-long {
-    grid-column: 1 / -1;
-}
-
 .terminal-table-wrap {
     min-width: 0;
     max-width: 100%;
@@ -343,6 +338,19 @@ a {
 
 .terminal-link:is(:hover, :focus-visible)::before {
     color: var(--terminal-bg);
+}
+
+.terminal-value-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.18em;
+}
+
+.terminal-value-link:is(:hover, :focus-visible) {
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
+    outline: 0;
 }
 
 .cursor {

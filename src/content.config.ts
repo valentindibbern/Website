@@ -2,16 +2,22 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-const dictionaryRowSchema = z.object({
-    label: z.string(),
-    value: z.string(),
-    kind: z.string().optional(),
-});
+const valueAttributeSchema = z.enum(["link"]);
 
-const tableColumnSchema = z.object({
-    key: z.string(),
-    label: z.string(),
-});
+const dictionaryRowSchema = z
+    .object({
+        label: z.string(),
+        value: z.string(),
+        attributes: z.array(valueAttributeSchema).optional(),
+    })
+    .strict();
+
+const tableColumnSchema = z
+    .object({
+        key: z.string(),
+        label: z.string(),
+    })
+    .strict();
 
 const dictionaryEntrySchema = z.object({
     id: z.string().optional(),
@@ -19,14 +25,27 @@ const dictionaryEntrySchema = z.object({
     rows: z.array(dictionaryRowSchema),
 }).strict();
 
-const tableRowSchema = z.record(z.string(), z.string());
+const tableValueSchema = z.union([
+    z.string(),
+    z
+        .object({
+            value: z.string(),
+            attributes: z.array(valueAttributeSchema).optional(),
+        })
+        .strict(),
+]);
+
+const tableRowSchema = z.record(z.string(), tableValueSchema);
 
 const listItemSchema = z.union([
     z.string(),
-    z.object({
-        label: z.string(),
-        value: z.string().optional(),
-    }),
+    z
+        .object({
+            label: z.string(),
+            value: z.string().optional(),
+            attributes: z.array(valueAttributeSchema).optional(),
+        })
+        .strict(),
 ]);
 
 const dictionarySchema = z

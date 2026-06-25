@@ -44,6 +44,7 @@ Lokale Vorschau:
 │   └── Agent-Reference.md
 ├── src/
 │   ├── pages/
+│   ├── drafts/
 │   ├── layouts/
 │   ├── components/
 │   ├── config/
@@ -58,10 +59,12 @@ Lokale Vorschau:
 ### How it works
 
 - `src/pages/*.astro` definiert die Routen der Website.
+- `src/drafts/*.astro` enthält Seitenentwürfe, die nicht öffentlich geroutet werden.
 - `src/layouts/BaseLayout.astro` kapselt den globalen Rahmen, Meta-Tags und das Basis-Markup.
 - `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Command, Text-, Dictionary-, Listen- und Tabellen-Ausgaben.
 - `src/content/text/*` speichert freie redaktionelle Texte als Markdown.
 - `src/content/data/*` speichert strukturierte Inhalte als YAML.
+- YAML-Werte in Dictionary-, Listen- und Tabellen-Ausgaben können mit `attributes: ["link"]` als klickbare Links markiert werden.
 - `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
 - `src/utils/content.ts` bündelt Lade- und Validierungslogik für Content-Quellen.
 - `src/styles/global.css` enthält das globale Styling und Tailwind v4.

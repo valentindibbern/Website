@@ -3,18 +3,17 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
 import TerminalHeading from "@components/TerminalHeading.astro";
-import TerminalList from "@components/TerminalList.astro";
 import TerminalText from "@components/TerminalText.astro";
 import { getDictionaryEntries } from "@/utils/content";
 
 const title = "Home";
 const [firstProject] = await getDictionaryEntries("projects");
-const [firstReference] = await getDictionaryEntries("references");
 ---
 
 <BaseLayout title={title}>
     <div class="terminal-page home-page">
         <section class="terminal-hero" aria-label="Valentin Dibbern">
+            <TerminalCommand command="echo $HOME" path=""></TerminalCommand>
             <TerminalHeading text="Valentin Dibbern" size="Big" />
 
             <TerminalCommand command="cat introduction.txt" />
@@ -23,7 +22,8 @@ const [firstReference] = await getDictionaryEntries("references");
             </div>
         </section>
 
-        <section id="about" class="terminal-section">
+        <section id="home-section-about" class="terminal-section">
+            <TerminalCommand command="cd about"></TerminalCommand>
             <TerminalCommand path="/about" command="cat profile.yaml" />
             <div class="terminal-list">
                 <article class="terminal-entry">
@@ -32,13 +32,8 @@ const [firstReference] = await getDictionaryEntries("references");
             </div>
         </section>
 
-        <section id="projects" class="terminal-section">
-            <TerminalCommand command="cd /projects" />
-            <p class="section-intro">
-                Der erste Projekt-Eintrag aus GitHub. Die vollständige
-                Projektliste liegt auf der Projects-Seite.
-            </p>
-
+        <section id="home-section-projects" class="terminal-section">
+            <TerminalCommand command="cd ../projects" />
             <div class="terminal-list">
                 {
                     firstProject && (
@@ -54,47 +49,13 @@ const [firstReference] = await getDictionaryEntries("references");
             </div>
         </section>
 
-        <section id="links" class="terminal-section">
+        <section id="home-section-links" class="terminal-section">
             <TerminalCommand path="/links" command="cat links.yaml" />
-            <p class="section-intro">
-                Der erste Link-Output. Downloads bleiben bewusst deaktiviert;
-                hier stehen nur Kontakt- und Profilrouten.
-            </p>
-
             <div class="terminal-list">
                 <article class="terminal-entry">
-                    <TerminalList src="links" />
+                    <TerminalDictionary src="links" />
                 </article>
             </div>
         </section>
-
-        <section id="references" class="terminal-section">
-            <TerminalCommand command="cd /references" />
-            <p class="section-intro">
-                Der erste Referenz-/Nachweis-Eintrag. Dateien sind im Dossier
-                vorhanden, werden aber aktuell nicht als Download angeboten.
-            </p>
-
-            <div class="terminal-list">
-                {
-                    firstReference && (
-                        <article class="terminal-entry">
-                            <TerminalCommand
-                                path="/references"
-                                command={firstReference.command ?? "cat references.yaml"}
-                            />
-                            <TerminalDictionary
-                                src="references"
-                                entry={firstReference.id}
-                            />
-                        </article>
-                    )
-                }
-            </div>
-        </section>
-
-        <p class="cursor" aria-label="Terminal cursor">
-            visitor@portfolio:~$ _
-        </p>
     </div>
 </BaseLayout>

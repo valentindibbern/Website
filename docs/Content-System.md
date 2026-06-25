@@ -33,6 +33,10 @@ Dictionary:
 rows:
   - label: "name"
     value: "Valentin Dibbern"
+  - label: "github"
+    value: "github.com/valentindibbern"
+    attributes:
+      - "link"
 ```
 
 Mehrere Dictionaries in einer Datei:
@@ -51,6 +55,10 @@ Liste:
 ```yaml
 items:
   - "GitHub: github.com/valentindibbern"
+  - label: "GitHub"
+    value: "github.com/valentindibbern"
+    attributes:
+      - "link"
 ```
 
 Tabelle:
@@ -59,9 +67,23 @@ Tabelle:
 columns:
   - key: "sprachen"
     label: "Sprachen"
+  - key: "docs"
+    label: "Docs"
 rows:
   - sprachen: "Python"
+    docs:
+      value: "docs.python.org"
+      attributes:
+        - "link"
 ```
+
+## Value Attributes
+
+- Dictionary-Werte, Listen-Werte und Tabellenzellen dürfen ein optionales `attributes`-Array haben.
+- `attributes` ist Metadaten, wird nicht sichtbar ausgegeben und gilt nur für den Value, nicht für Labels oder Tabellen-Header.
+- Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
+- `"link"` rendert den sichtbaren `value` als HTML-Link. Werte mit `https:`, `http:`, `mailto:`, `tel:`, `/` oder `#` werden direkt als `href` genutzt; andere Werte bekommen automatisch `https://` vorangestellt.
+- Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
 
 ## Loading Rules
 
@@ -72,6 +94,7 @@ rows:
 - `TerminalList src="links"` liest `src/content/data/links.yaml`.
 - Seiten setzen die Reihenfolge und rendern `TerminalCommand` vor der passenden Output-Komponente.
 - Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml` geladen. Ihre Commands sind bewusst leer und stehen direkt in der Seite.
+- `references.yaml` bleibt Content für den Entwurf `src/drafts/references.astro` und wird aktuell nicht auf einer öffentlichen Route gerendert.
 
 ## Current Inventory
 
