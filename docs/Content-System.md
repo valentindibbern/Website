@@ -71,7 +71,7 @@ rows:
 - `TerminalTable src="skills"` liest `src/content/data/skills.yaml`.
 - `TerminalList src="links"` liest `src/content/data/links.yaml`.
 - Seiten setzen die Reihenfolge und rendern `TerminalCommand` vor der passenden Output-Komponente.
-- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` sind statisches HTML. Ihre Commands sind bewusst leer, damit sie direkt im Markup ergänzt werden können.
+- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml` geladen. Ihre Commands sind bewusst leer und stehen direkt in der Seite.
 
 ## Current Inventory
 
@@ -82,7 +82,10 @@ rows:
   - `profile.yaml`
   - `projects.yaml`
   - `references.yaml`
-  - `terminal.yaml`
+  - `education-current.yaml`
+  - `education-previous.yaml`
+  - `cobra-software.yaml`
+  - `klixar-it.yaml`
   - `skills.yaml`
   - `links.yaml`
   - `languages.yaml`
