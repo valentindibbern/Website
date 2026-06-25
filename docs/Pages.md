@@ -19,11 +19,11 @@ Datei: `src/pages/about.astro`
 
 - Zeigt den About-Fließtext und strukturierte persönliche Daten.
 - Nutzt `TerminalHeading` mit `size="Small"` für `about.md`.
+- Ausbildung und Erfahrung stehen als statisches HTML in der Seite; die sichtbaren Commands dieser Einträge bleiben leer und können später manuell ergänzt werden.
 - Nutzt:
   - `text/abouttext.md`
   - `data/profile.yaml`
   - `data/skills.yaml`
-  - `data/terminal.yaml`
   - `data/languages.yaml`
   - `data/hobbies.yaml`
 
