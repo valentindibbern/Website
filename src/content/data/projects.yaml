@@ -4,6 +4,7 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/buecherantiquariat"
+        href: "https://github.com/valentindibbern/buecherantiquariat"
         attributes:
           - "link"
       - label: "type"
@@ -17,6 +18,7 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/JahrJava3Aufgaben"
+        href: "https://github.com/valentindibbern/JahrJava3Aufgaben"
         attributes:
           - "link"
       - label: "type"
@@ -30,6 +32,7 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/neovimconfig"
+        href: "https://github.com/valentindibbern/neovimconfig"
         attributes:
           - "link"
       - label: "type"
@@ -43,6 +46,7 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/cmdRechner"
+        href: "https://github.com/valentindibbern/cmdRechner"
         attributes:
           - "link"
       - label: "type"
@@ -56,6 +60,7 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/Website"
+        href: "https://github.com/valentindibbern/Website"
         attributes:
           - "link"
       - label: "type"

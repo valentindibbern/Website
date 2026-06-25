@@ -4,13 +4,28 @@ import { z } from "astro/zod";
 
 const valueAttributeSchema = z.enum(["link"]);
 
+function requireHrefForLink(
+    value: { attributes?: Array<"link">; href?: string },
+    context: z.RefinementCtx,
+) {
+    if (value.attributes?.includes("link") && !value.href) {
+        context.addIssue({
+            code: "custom",
+            message: 'Values with attributes: ["link"] require href.',
+            path: ["href"],
+        });
+    }
+}
+
 const dictionaryRowSchema = z
     .object({
         label: z.string(),
         value: z.string(),
+        href: z.string().optional(),
         attributes: z.array(valueAttributeSchema).optional(),
     })
-    .strict();
+    .strict()
+    .superRefine(requireHrefForLink);
 
 const tableColumnSchema = z
     .object({
@@ -30,9 +45,11 @@ const tableValueSchema = z.union([
     z
         .object({
             value: z.string(),
+            href: z.string().optional(),
             attributes: z.array(valueAttributeSchema).optional(),
         })
-        .strict(),
+        .strict()
+        .superRefine(requireHrefForLink),
 ]);
 
 const tableRowSchema = z.record(z.string(), tableValueSchema);
@@ -43,9 +60,11 @@ const listItemSchema = z.union([
         .object({
             label: z.string(),
             value: z.string().optional(),
+            href: z.string().optional(),
             attributes: z.array(valueAttributeSchema).optional(),
         })
-        .strict(),
+        .strict()
+        .superRefine(requireHrefForLink),
 ]);
 
 const dictionarySchema = z

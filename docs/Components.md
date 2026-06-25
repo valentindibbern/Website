@@ -53,7 +53,7 @@ Datei: `src/components/TerminalDictionary.astro`
   - `entry`: optionaler Eintrag in Dateien mit mehreren Dictionaries.
 - Erwartet `rows` oder einen passenden Eintrag unter `entries`.
 - Values folgen dem normalen Browser-Wrap; Zeilenumbrüche in YAML sind keine Layout-Anweisung.
-- Values können `attributes: ["link"]` tragen und werden dann über `TerminalValue` als HTML-Link gerendert.
+- Values können `attributes: ["link"]` und `href` tragen und werden dann über `TerminalValue` als HTML-Link gerendert.
 - Labels bleiben reiner Text und übernehmen keine Value-Attribute.
 
 ## TerminalTable
@@ -64,7 +64,7 @@ Datei: `src/components/TerminalTable.astro`
 - Props:
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `columns` und `rows`.
-- Tabellenzellen können als String oder als Objekt mit `value` und `attributes` gepflegt werden.
+- Tabellenzellen können als String oder als Objekt mit `value`, `href` und `attributes` gepflegt werden.
 - Zellen mit `attributes: ["link"]` werden über `TerminalValue` als HTML-Link gerendert.
 - Tabellenzellen dürfen normal umbrechen; horizontaler Scroll bleibt nur ein Fallback.
 
@@ -77,7 +77,7 @@ Datei: `src/components/TerminalList.astro`
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `items`.
 - Wird auch für ehemals JSON-artige Link-Ausgaben genutzt.
-- Listeneinträge können Strings bleiben oder als Objekt mit `label`, optionalem `value` und optionalem `attributes` gepflegt werden.
+- Listeneinträge können Strings bleiben oder als Objekt mit `label`, optionalem `value`, optionalem `href` und optionalem `attributes` gepflegt werden.
 - Wenn ein Listeneintrag `attributes: ["link"]` trägt, wird der zusammengesetzte sichtbare Wert als HTML-Link gerendert.
 - Listeneinträge folgen dem normalen Browser-Wrap.
 
@@ -88,9 +88,11 @@ Datei: `src/components/TerminalValue.astro`
 - Rendert einzelne Values für Dictionary, Table und List.
 - Props:
   - `value`: sichtbarer Wert.
+  - `href`: optionales technisches Linkziel.
   - `attributes`: optionale Value-Metadaten.
 - Unterstützt aktuell `attributes: ["link"]`.
-- Link-Values werden als `<a>` ausgegeben; Werte ohne Protokoll bekommen automatisch `https://`.
+- Link-Values werden nur mit `attributes: ["link"]` und vorhandenem `href` als `<a>` ausgegeben.
+- Interne `href`-Werte mit `/` laufen durch `withBase()`.
 - Rendert keine Labels und zeigt `attributes` nicht sichtbar an.
 
 ## HeaderComponent

@@ -4,28 +4,24 @@ import type { TerminalValue as TerminalValueData } from "@/utils/content";
 
 type Props = TerminalValueData;
 
-const { value, attributes = [] } = Astro.props;
+const { value, href, attributes = [] } = Astro.props;
 const shouldRenderLink = attributes.includes("link");
-const href = shouldRenderLink ? getHref(value) : undefined;
+const linkHref = shouldRenderLink && href ? normalizeHref(href) : undefined;
 
-function getHref(value: string) {
-    const trimmedValue = value.trim();
+function normalizeHref(href: string) {
+    const trimmedHref = href.trim();
 
-    if (trimmedValue.startsWith("/")) {
-        return withBase(trimmedValue);
+    if (trimmedHref.startsWith("/")) {
+        return withBase(trimmedHref);
     }
 
-    if (/^(https?:|mailto:|tel:|#)/.test(trimmedValue)) {
-        return trimmedValue;
-    }
-
-    return `https://${trimmedValue}`;
+    return trimmedHref;
 }
 ---
 
 {
-    href ? (
-        <a class="terminal-value-link" href={href} rel="noreferrer">
+    linkHref ? (
+        <a class="terminal-value-link" href={linkHref} rel="noreferrer">
             {value}
         </a>
     ) : (

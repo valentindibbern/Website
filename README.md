@@ -64,7 +64,7 @@ Lokale Vorschau:
 - `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Command, Text-, Dictionary-, Listen- und Tabellen-Ausgaben.
 - `src/content/text/*` speichert freie redaktionelle Texte als Markdown.
 - `src/content/data/*` speichert strukturierte Inhalte als YAML.
-- YAML-Werte in Dictionary-, Listen- und Tabellen-Ausgaben können mit `attributes: ["link"]` als klickbare Links markiert werden.
+- YAML-Werte in Dictionary-, Listen- und Tabellen-Ausgaben können mit `href` und `attributes: ["link"]` als klickbare Links markiert werden.
 - `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
 - `src/utils/content.ts` bündelt Lade- und Validierungslogik für Content-Quellen.
 - `src/styles/global.css` enthält das globale Styling und Tailwind v4.

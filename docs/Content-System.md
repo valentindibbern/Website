@@ -34,7 +34,8 @@ rows:
   - label: "name"
     value: "Valentin Dibbern"
   - label: "github"
-    value: "github.com/valentindibbern"
+    value: "GitHub"
+    href: "https://github.com/valentindibbern"
     attributes:
       - "link"
 ```
@@ -56,7 +57,8 @@ Liste:
 items:
   - "GitHub: github.com/valentindibbern"
   - label: "GitHub"
-    value: "github.com/valentindibbern"
+    value: "Profil"
+    href: "https://github.com/valentindibbern"
     attributes:
       - "link"
 ```
@@ -72,7 +74,8 @@ columns:
 rows:
   - sprachen: "Python"
     docs:
-      value: "docs.python.org"
+      value: "Python Docs"
+      href: "https://docs.python.org"
       attributes:
         - "link"
 ```
@@ -82,7 +85,9 @@ rows:
 - Dictionary-Werte, Listen-Werte und Tabellenzellen dürfen ein optionales `attributes`-Array haben.
 - `attributes` ist Metadaten, wird nicht sichtbar ausgegeben und gilt nur für den Value, nicht für Labels oder Tabellen-Header.
 - Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
-- `"link"` rendert den sichtbaren `value` als HTML-Link. Werte mit `https:`, `http:`, `mailto:`, `tel:`, `/` oder `#` werden direkt als `href` genutzt; andere Werte bekommen automatisch `https://` vorangestellt.
+- `value` ist immer der sichtbare Text. `href` ist immer das technische Linkziel.
+- `"link"` rendert den sichtbaren `value` als HTML-Link und verlangt ein `href`.
+- Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; externe `href`-Werte, `mailto:`, `tel:` und `#` werden direkt genutzt.
 - Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
 - Sensible externe Ziele stehen nicht direkt in `links.yaml`. Solche Einträge verweisen auf lokale Gate-Routen wie `/application`.
 

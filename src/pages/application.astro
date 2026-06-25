@@ -64,7 +64,7 @@ const title = "Bewerbungsdateien";
     </div>
 </BaseLayout>
 
-<script define:vars={{ payload: applicationAccessPayload }}>
+<script is:inline define:vars={{ payload: applicationAccessPayload }}>
     const form = document.querySelector("[data-application-form]");
     const passwordInput = document.querySelector("[data-application-password]");
     const status = document.querySelector("[data-application-status]");

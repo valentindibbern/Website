@@ -19,6 +19,7 @@ const rows = await getDictionaryContent(src, entry);
                 <dd class="output-value">
                     <TerminalValue
                         value={row.value}
+                        href={row.href}
                         attributes={row.attributes}
                     />
                 </dd>

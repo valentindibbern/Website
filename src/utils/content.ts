@@ -7,12 +7,14 @@ export type ValueAttribute = "link";
 
 export type TerminalValue = {
     value: string;
+    href?: string;
     attributes?: ValueAttribute[];
 };
 
 export type DictionaryRow = {
     label: string;
     value: string;
+    href?: string;
     attributes?: ValueAttribute[];
 };
 
@@ -26,6 +28,7 @@ export type ListItem =
     | {
           label: string;
           value?: string;
+          href?: string;
           attributes?: ValueAttribute[];
       };
 
@@ -111,6 +114,7 @@ export async function getListContent(src: string): Promise<TerminalValue[]> {
 
         return {
             value: item.value ? `${item.label}: ${item.value}` : item.label,
+            href: item.href,
             attributes: item.attributes,
         };
     });
