@@ -107,3 +107,4 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 - Keine Änderungen an `dist/`, `.astro/` oder `node_modules/`.
 - Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/`.
 - Alle Dokumentationsdateien sind für ein öffentliches Repository geschrieben.
+- Bewerbungslinks werden statisch verschlüsselt; Klartext-Links, Passwörter und lokale Secret-Dateien gehören nicht ins Repository.

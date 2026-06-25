@@ -4,6 +4,8 @@
 
 Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zur Laufzeit ist kein Node-Server nötig.
 
+Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt. Der externe Dateilink liegt nur als verschlüsselter Payload im Build und wird im Browser per Web Crypto entschlüsselt.
+
 ## Commands
 
 - `bun build`
@@ -32,4 +34,5 @@ Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zu
 - `bun astro check`
 - `bun build`
 - Navigation und interne Links auf Base-URL-Kompatibilität prüfen.
+- Prüfen, dass keine Klartext-Bewerbungslinks oder Passwörter in Repository oder `dist/` stehen.
 - Keine Änderungen in `dist/`, `.astro/` oder `node_modules/` committen.

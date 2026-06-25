@@ -318,6 +318,55 @@ a {
     color: var(--terminal-bg);
 }
 
+.terminal-form {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 42rem;
+    margin-top: 1rem;
+}
+
+.terminal-form-label,
+.terminal-status {
+    color: var(--terminal-muted);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+    line-height: 1.65;
+}
+
+.terminal-form-label::after {
+    content: ":";
+}
+
+.terminal-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.terminal-input {
+    min-width: min(100%, 18rem);
+    min-height: 2.75rem;
+    border: 1px solid var(--terminal-dim);
+    border-radius: 0;
+    background: var(--terminal-panel);
+    padding: 0.65rem 0.75rem;
+    color: var(--terminal-green);
+    font: inherit;
+}
+
+.terminal-input:focus-visible {
+    outline: 1px solid var(--terminal-green);
+    outline-offset: 2px;
+}
+
+.terminal-status {
+    margin: 0.85rem 0 0;
+}
+
+.terminal-gate-link {
+    margin-top: 1rem;
+}
+
 .terminal-link {
     display: inline-flex;
     margin-top: 0.8rem;

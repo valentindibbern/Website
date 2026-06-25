@@ -9,3 +9,7 @@ rows:
       - "link"
   - label: "contact"
     value: "contact route not public yet"
+  - label: "bewerbungsdateien"
+    value: "/application"
+    attributes:
+      - "link"

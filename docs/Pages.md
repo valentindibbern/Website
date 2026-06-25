@@ -52,8 +52,17 @@ Datei: `src/drafts/references.astro`
 Datei: `src/pages/links.astro`
 
 - Zeigt Kontakt- und Profilrouten als Liste.
+- Zeigt den Einstieg zu geschützten Bewerbungsdateien als lokalen Link.
 - Nutzt `TerminalHeading` mit `size="Small"` für `links.yaml`.
 - Nutzt `data/links.yaml`.
+
+## Application
+
+Datei: `src/pages/application.astro`
+
+- Zeigt ein Passwortformular für Bewerbungsdateien.
+- Entschlüsselt den externen Dateilink clientseitig mit der Web Crypto API.
+- Speichert weder Passwort noch Klartext-Dateilink im HTML oder Content-System.
 
 ## Page Conventions
 

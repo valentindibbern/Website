@@ -84,6 +84,7 @@ rows:
 - Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
 - `"link"` rendert den sichtbaren `value` als HTML-Link. Werte mit `https:`, `http:`, `mailto:`, `tel:`, `/` oder `#` werden direkt als `href` genutzt; andere Werte bekommen automatisch `https://` vorangestellt.
 - Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
+- Sensible externe Ziele stehen nicht direkt in `links.yaml`. Solche Einträge verweisen auf lokale Gate-Routen wie `/application`.
 
 ## Loading Rules
 
