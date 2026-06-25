@@ -11,9 +11,13 @@ interface Props {
 const { text, size, id, level = 1 } = Astro.props;
 const HeadingTag = `h${level}` as const;
 const asciiText = figlet.textSync(text, { font: size });
+const asciiColumns = Math.max(1, ...asciiText.split("\n").map((line) => line.length));
+const minFontSize = size === "Big" ? "0.78rem" : "0.55rem";
+const maxFontSize = size === "Big" ? "1.5rem" : "1rem";
+const asciiStyle = `--ascii-columns: ${asciiColumns}; --ascii-min-font: ${minFontSize}; --ascii-max-font: ${maxFontSize}`;
 ---
 
 <HeadingTag id={id} class:list={["terminal-heading", `is-${size.toLowerCase()}`]}>
     <span class="sr-only">{text}</span>
-    <span class="terminal-heading-ascii" aria-hidden="true">{asciiText}</span>
+    <span class="terminal-heading-ascii" style={asciiStyle} aria-hidden="true">{asciiText}</span>
 </HeadingTag>

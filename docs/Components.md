@@ -13,7 +13,10 @@ Datei: `src/components/TerminalHeading.astro`
 - Ausgabe:
   - semantisches `h1`, `h2` oder `h3`
   - Klartext für Screenreader
-  - sichtbare ASCII-Ausgabe in einem horizontal scrollbar gehaltenen Span
+  - sichtbare ASCII-Ausgabe ohne sichtbare horizontale Scrollbar
+  - längste ASCII-Zeile wird als CSS-Basis für responsive Skalierung gesetzt
+  - Skalierung orientiert sich an der tatsächlichen Heading-Containerbreite
+  - bei extrem schmalen Viewports bleibt horizontaler Fallback-Scroll möglich
 - Typische Nutzung:
   - Home nutzt `size="Big"`.
   - Unterseiten nutzen `size="Small"`.
