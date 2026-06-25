@@ -11,7 +11,6 @@ Datei: `src/pages/index.astro`
   - `data/profile.yaml`
   - erster Eintrag aus `data/projects.yaml`
   - `data/links.yaml`
-  - erster Eintrag aus `data/references.yaml`
 
 ## About
 
@@ -39,11 +38,12 @@ Datei: `src/pages/projects.astro`
 - Nutzt `TerminalHeading` mit `size="Small"` für `projects/`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
 
-## References
+## Draft References
 
-Datei: `src/pages/references.astro`
+Datei: `src/drafts/references.astro`
 
-- Zeigt Referenzen und Nachweise aus `data/references.yaml`.
+- Ist als Entwurf im Projekt, aber keine öffentliche Route.
+- Zeigt Referenzen und Nachweise aus `data/references.yaml`, wenn die Datei später nach `src/pages/` verschoben wird.
 - Nutzt `TerminalHeading` mit `size="Small"` für `references.md`.
 - Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
 
@@ -62,3 +62,4 @@ Datei: `src/pages/links.astro`
 - Output-Komponenten erhalten ihre Content-Quelle über `src`.
 - Interne Links müssen Base-URL-kompatibel bleiben.
 - Neue Seiten brauchen bei Bedarf einen Eintrag in `src/config/navigation.ts`.
+- Seitenentwürfe bleiben außerhalb von `src/pages/`, solange sie nicht veröffentlicht werden sollen.
