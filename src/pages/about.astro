@@ -6,16 +6,8 @@ import TerminalList from "@components/TerminalList.astro";
 import TerminalTable from "@components/TerminalTable.astro";
 import TerminalText from "@components/TerminalText.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getDictionaryEntries } from "@/utils/content";
 
 const title = "About";
-const terminalEntries = await getDictionaryEntries("terminal");
-const educationEntries = terminalEntries.filter((entry) =>
-    entry.id?.startsWith("education-"),
-);
-const experienceEntries = terminalEntries.filter(
-    (entry) => !entry.id?.startsWith("education-"),
-);
 ---
 
 <BaseLayout title={title}>
@@ -25,11 +17,8 @@ const experienceEntries = terminalEntries.filter(
             aria-labelledby="about-title"
         >
             <TerminalCommand command="cd about" />
-            <TerminalHeading id="about-title" text="about.md" size="Small" />
-            <p class="section-intro">
-                Diese Seite ist für einen öffentlichen Fliesstext über mich
-                vorbereitet. Der aktuelle Text ist ein Platzhalter.
-            </p>
+            <TerminalCommand command="echo $ABOUT" path="about" />
+            <TerminalHeading id="about-title" text="About" size="Small" />
 
             <article class="about-copy">
                 <TerminalText src="abouttext" />
@@ -46,29 +35,16 @@ const experienceEntries = terminalEntries.filter(
                     <TerminalTable src="skills" />
                 </article>
 
-                {
-                    educationEntries.map((entry) => (
-                        <article class="terminal-entry">
-                            <TerminalCommand
-                                path="/about"
-                                command={entry.command ?? "cat terminal.yaml"}
-                            />
-                            <TerminalDictionary src="terminal" entry={entry.id} />
-                        </article>
-                    ))
-                }
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat current-education.yaml" />
+                    <TerminalDictionary src="education-current" />
+                </article>
 
-                {
-                    experienceEntries.map((entry) => (
-                        <article class="terminal-entry">
-                            <TerminalCommand
-                                path="/about"
-                                command={entry.command ?? "cat terminal.yaml"}
-                            />
-                            <TerminalDictionary src="terminal" entry={entry.id} />
-                        </article>
-                    ))
-                }
+                <article class="terminal-entry">
+                    <TerminalCommand path="/about" command="cat schnupper-praktikas.yaml" />
+                    <TerminalDictionary src="cobra-software" />
+                    <TerminalDictionary src="klixar-it" />
+                </article>
 
                 <article class="terminal-entry">
                     <TerminalCommand path="/about" command="cat languages.yaml" />

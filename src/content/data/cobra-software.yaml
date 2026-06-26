@@ -1,0 +1,7 @@
+rows:
+  - label: "firma"
+    value: "Cobra Software AG"
+  - label: "länge"
+    value: "10 Tage"
+  - label: "inhalt"
+    value: "Einblick in Softwareentwicklung im Bereich Datenmanagement"

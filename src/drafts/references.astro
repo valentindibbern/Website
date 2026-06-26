@@ -15,12 +15,9 @@ const references = await getDictionaryEntries("references");
             class="terminal-section first-section"
             aria-labelledby="references-title"
         >
-            <TerminalCommand command="cd /references" />
-            <TerminalHeading id="references-title" text="references.md" size="Small" />
-            <p class="section-intro">
-                Referenzen und Dokumente als kuratiertes Terminal-Archiv. Die
-                Inhalte bleiben bewusst ruhig und textbasiert.
-            </p>
+            <TerminalCommand command="cd references" />
+            <TerminalCommand command="echo $REFERENCES" path="/references" />
+            <TerminalHeading id="references-title" text="references" size="Small" />
 
             <div class="terminal-list">
                 {

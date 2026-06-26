@@ -1,4 +1,18 @@
-items:
-  - "github: github.com/valentindibbern"
-  - "portfolio: valentindibbern.github.io"
-  - "contact: contact route not public yet"
+rows:
+  - label : "github"
+    value: "Profile"
+    href: "https://github.com/valentindibbern"
+    attributes:
+      - "link"
+  - label: "website"
+    value: "Personal"
+    href: "https://valentindibbern.github.io/Website/"
+    attributes:
+      - "link"
+  - label: "contact"
+    value: "contact route not public yet"
+  - label: "files"
+    value: "Bewerbungsdateien"
+    href: "/application"
+    attributes:
+      - "link"

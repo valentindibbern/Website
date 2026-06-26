@@ -1,8 +1,8 @@
 ---
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalHeading from "@components/TerminalHeading.astro";
-import TerminalList from "@components/TerminalList.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TerminalDictionary from "@components/TerminalDictionary.astro";
 
 const title = "Links";
 ---
@@ -13,17 +13,14 @@ const title = "Links";
             class="terminal-section first-section"
             aria-labelledby="links-title"
         >
-            <TerminalCommand command="cd /links" />
-            <TerminalHeading id="links-title" text="links.yaml" size="Small" />
-            <p class="section-intro">
-                Kontakt- und Profilrouten als statische Ausgabe. Die echten URLs
-                können in den Markdown-Inhalten ersetzt werden.
-            </p>
+            <TerminalCommand command="cd links" />
+            <TerminalCommand command="echo $LINKS" path="links" />
+            <TerminalHeading id="links-title" text="links" size="Small" />
 
             <div class="terminal-list">
                 <article class="terminal-entry">
                     <TerminalCommand path="/links" command="cat links.yaml" />
-                    <TerminalList src="links" />
+                    <TerminalDictionary src="links" />
                 </article>
             </div>
         </section>

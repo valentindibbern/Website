@@ -30,6 +30,8 @@ Technische Übersicht der im Projekt tatsächlich verwendeten Werkzeuge, Librari
   - Vite-Integration für Tailwind v4 im Astro-Build.
 - CSS Custom Properties
   - Design-Tokens für Terminalfarben, Maximalbreiten und Grundflächen in `src/styles/global.css`.
+- Web Crypto API
+  - Browser-API für das statische Bewerbungsgate mit PBKDF2 und AES-GCM.
 
 ## Developer Tooling
 

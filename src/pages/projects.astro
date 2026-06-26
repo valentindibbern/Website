@@ -15,12 +15,9 @@ const projects = await getDictionaryEntries("projects");
             class="terminal-section first-section"
             aria-labelledby="projects-title"
         >
-            <TerminalCommand command="cd /projects" />
-            <TerminalHeading id="projects-title" text="projects/" size="Small" />
-            <p class="section-intro">
-                Projektübersicht als vertikale Log-Liste. Jede Ausgabe kann
-                später zu einer eigenen Projektseite erweitert werden.
-            </p>
+            <TerminalCommand command="cd projects" />
+            <TerminalCommand command="echo $PROJECTS" path="projects" />
+            <TerminalHeading id="projects-title" text="projects" size="Small" />
 
             <div class="terminal-list">
                 {

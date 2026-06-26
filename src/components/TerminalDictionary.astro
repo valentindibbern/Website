@@ -1,5 +1,6 @@
 ---
 import { getDictionaryContent } from "@/utils/content";
+import TerminalValue from "@components/TerminalValue.astro";
 
 interface Props {
     src: string;
@@ -14,11 +15,13 @@ const rows = await getDictionaryContent(src, entry);
     {
         rows.map((row) => (
             <>
-                <dt class={`output-label${row.kind ? ` is-${row.kind}` : ""}`}>
-                    {row.label}
-                </dt>
-                <dd class={`output-value${row.kind ? ` is-${row.kind}` : ""}`}>
-                    {row.value}
+                <dt class="output-label">{row.label}</dt>
+                <dd class="output-value">
+                    <TerminalValue
+                        value={row.value}
+                        href={row.href}
+                        attributes={row.attributes}
+                    />
                 </dd>
             </>
         ))

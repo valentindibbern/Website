@@ -1,13 +1,16 @@
 entries:
   - id: "buecherantiquariat"
-    command: "open project buecherantiquariat"
+    command: "cat buecherantiquariat.project"
     rows:
       - label: "source"
         value: "github.com/valentindibbern/buecherantiquariat"
+        href: "https://github.com/valentindibbern/buecherantiquariat"
+        attributes:
+          - "link"
       - label: "type"
         value: "Schul-/Lernprojekt"
       - label: "stack"
-        value: "Plain PHP, mysqli, HTML/CSS"
+        value: "PHP, MySQL, HTML, CSS"
       - label: "summary"
         value: "kleine Antiquariat-Anwendung mit MVC-ähnlicher Struktur, Routing, Models, Views, Komponenten und Projektdokumentation"
   - id: "jahr-java-3-aufgaben"
@@ -15,6 +18,9 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/JahrJava3Aufgaben"
+        href: "https://github.com/valentindibbern/JahrJava3Aufgaben"
+        attributes:
+          - "link"
       - label: "type"
         value: "Java-Aufgabensammlung"
       - label: "stack"
@@ -26,6 +32,9 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/neovimconfig"
+        href: "https://github.com/valentindibbern/neovimconfig"
+        attributes:
+          - "link"
       - label: "type"
         value: "persönliche Entwicklungsumgebung"
       - label: "stack"
@@ -37,6 +46,9 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/cmdRechner"
+        href: "https://github.com/valentindibbern/cmdRechner"
+        attributes:
+          - "link"
       - label: "type"
         value: "Konsolenprojekt"
       - label: "stack"
@@ -48,6 +60,9 @@ entries:
     rows:
       - label: "source"
         value: "github.com/valentindibbern/Website"
+        href: "https://github.com/valentindibbern/Website"
+        attributes:
+          - "link"
       - label: "type"
         value: "persönliche Website"
       - label: "stack"

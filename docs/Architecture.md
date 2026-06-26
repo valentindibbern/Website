@@ -8,6 +8,8 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 
 - `src/pages/`
   - Definiert die Routen und die Reihenfolge der sichtbaren Terminal-Ausgaben.
+- `src/drafts/`
+  - Enthält Seitenentwürfe, die Astro nicht als öffentliche Routen erzeugt.
 - `src/layouts/`
   - Enthält den globalen Seitenrahmen.
 - `src/components/`
@@ -36,12 +38,14 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - `src/pages/index.astro` ist die Home-Seite.
 - `src/pages/about.astro` bündelt Profil, About-Text, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
 - `src/pages/projects.astro` zeigt alle Projekte.
-- `src/pages/references.astro` zeigt Referenzen und Nachweise.
 - `src/pages/links.astro` zeigt Kontakt- und Profilrouten.
+- `src/pages/application.astro` zeigt ein statisches Passwort-Gate für Bewerbungsdateien.
+- `src/drafts/references.astro` hält die References-Seite als nicht veröffentlichte Vorlage.
 
 ## Navigation And Base Paths
 
 - `src/config/navigation.ts` definiert die sichtbaren Navigationslinks.
+- Nicht veröffentlichte Entwürfe werden nicht in der Navigation verlinkt.
 - `src/utils/url.ts` erzeugt Links mit `import.meta.env.BASE_URL`.
 - Das ist wichtig, weil `astro.config.mjs` aktuell `base: "/Website"` setzt.
 
@@ -53,3 +57,4 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - Komponenten bestimmen die Ausgabeform und laden ihre Quelle über `src`.
 - Statische Generierung ist die Standardannahme.
 - GitHub-Pages-Kompatibilität ist Teil der Architekturannahme.
+- Sensible Dateilinks werden für GitHub Pages clientseitig entschlüsselt: `links.yaml` verweist auf `/application`, die Seite nutzt Web Crypto und einen öffentlichen Ciphertext, um den externen Link erst nach Passworteingabe sichtbar zu machen.

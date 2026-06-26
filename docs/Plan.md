@@ -58,7 +58,7 @@ Aus der lokalen `figlet`-Doku relevant:
     - `aria-labelledby="projects-title"` bleibt dadurch wieder gültig.
   - `src/pages/links.astro`
     - `<h1 id="links-title" class="section-heading">links.yaml</h1>` ersetzen durch `<TerminalHeading id="links-title" text="links.yaml" size="Small" />`.
-  - `src/pages/references.astro`
+  - `src/drafts/references.astro`
     - `<h1 id="references-title" class="section-heading">references.md</h1>` ersetzen durch `<TerminalHeading id="references-title" text="references.md" size="Small" />`.
 
 ## Documentation Changes
@@ -92,8 +92,8 @@ Aus der lokalen `figlet`-Doku relevant:
     - `aria-labelledby="projects-title"` verweist auf existierendes Element.
   - `/links`
     - zeigt `links.yaml` als Small-ASCII-Heading.
-  - `/references`
-    - zeigt `references.md` als Small-ASCII-Heading.
+  - `src/drafts/references.astro`
+    - bleibt als nicht veröffentlichter Entwurf erhalten und zeigt `references.md` als Small-ASCII-Heading, wenn er später geroutet wird.
 - Responsive Prüfung:
   - ASCII-Headings verursachen keinen horizontalen Page-Overflow.
   - Falls ASCII-Zeilen breiter als der Viewport sind, scrollt nur der Heading-Block horizontal.

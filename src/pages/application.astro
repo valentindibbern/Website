@@ -1,0 +1,196 @@
+---
+import { applicationAccessPayload } from "@/config/applicationAccess";
+import TerminalCommand from "@components/TerminalCommand.astro";
+import TerminalHeading from "@components/TerminalHeading.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const title = "Bewerbungsdateien";
+---
+
+<BaseLayout title={title}>
+    <div class="terminal-page terminal-subpage">
+        <section
+            class="terminal-section first-section"
+            aria-labelledby="application-title"
+        >
+            <TerminalCommand command="cd links/application" />
+            <TerminalCommand command="decrypt application-access" path="application" />
+            <TerminalHeading
+                id="application-title"
+                text="application"
+                size="Small"
+            />
+
+            <div class="terminal-gate" data-application-gate>
+                <form class="terminal-form" data-application-form>
+                    <label class="terminal-form-label" for="application-password">
+                        passwort
+                    </label>
+                    <div class="terminal-form-row">
+                        <input
+                            class="terminal-input"
+                            id="application-password"
+                            name="password"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                            data-application-password
+                        />
+                        <button class="terminal-button" type="submit">
+                            entsperren
+                        </button>
+                    </div>
+                </form>
+
+                <p
+                    class="terminal-status"
+                    aria-live="polite"
+                    data-application-status
+                >
+                    passwort erforderlich
+                </p>
+
+                <a
+                    class="terminal-button terminal-gate-link"
+                    href="#"
+                    rel="noreferrer"
+                    hidden
+                    data-application-link
+                >
+                    bewerbungsdateien öffnen
+                </a>
+            </div>
+        </section>
+    </div>
+</BaseLayout>
+
+<script
+    id="application-access-payload"
+    is:inline
+    type="application/json"
+    set:html={JSON.stringify(applicationAccessPayload)}
+/>
+
+<script>
+    interface ApplicationAccessPayload {
+        salt?: string;
+        iv?: string;
+        ciphertext?: string;
+        iterations: number;
+    }
+
+    const payloadElement = document.getElementById("application-access-payload");
+    const payload: ApplicationAccessPayload = payloadElement?.textContent
+        ? JSON.parse(payloadElement.textContent)
+        : { iterations: 600000 };
+    const form = document.querySelector("[data-application-form]");
+    const passwordInput = document.querySelector("[data-application-password]");
+    const status = document.querySelector("[data-application-status]");
+    const link = document.querySelector("[data-application-link]");
+
+    form?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (
+            !(passwordInput instanceof HTMLInputElement) ||
+            !(status instanceof HTMLElement) ||
+            !(link instanceof HTMLAnchorElement)
+        ) {
+            return;
+        }
+
+        link.hidden = true;
+        link.removeAttribute("href");
+        status.textContent = "prüfe passwort...";
+
+        try {
+            const decryptedUrl = await decryptApplicationUrl(
+                passwordInput.value,
+                payload,
+            );
+            const safeUrl = parseSafeApplicationUrl(decryptedUrl);
+
+            link.href = safeUrl.href;
+            link.hidden = false;
+            status.textContent = "zugriff freigegeben";
+            passwordInput.value = "";
+        } catch {
+            status.textContent = getFailureMessage(payload);
+        }
+    });
+
+    async function decryptApplicationUrl(
+        password: string,
+        encryptedPayload: ApplicationAccessPayload,
+    ) {
+        if (
+            !encryptedPayload.salt ||
+            !encryptedPayload.iv ||
+            !encryptedPayload.ciphertext
+        ) {
+            throw new Error("Application access payload is not configured.");
+        }
+
+        const encoder = new TextEncoder();
+        const keyMaterial = await crypto.subtle.importKey(
+            "raw",
+            encoder.encode(password),
+            "PBKDF2",
+            false,
+            ["deriveKey"],
+        );
+        const key = await crypto.subtle.deriveKey(
+            {
+                name: "PBKDF2",
+                hash: "SHA-256",
+                salt: fromBase64(encryptedPayload.salt),
+                iterations: encryptedPayload.iterations,
+            },
+            keyMaterial,
+            {
+                name: "AES-GCM",
+                length: 256,
+            },
+            false,
+            ["decrypt"],
+        );
+        const decrypted = await crypto.subtle.decrypt(
+            {
+                name: "AES-GCM",
+                iv: fromBase64(encryptedPayload.iv),
+            },
+            key,
+            fromBase64(encryptedPayload.ciphertext),
+        );
+
+        return new TextDecoder().decode(decrypted);
+    }
+
+    function fromBase64(value: string) {
+        return Uint8Array.from(atob(value), (character) =>
+            character.charCodeAt(0),
+        );
+    }
+
+    function parseSafeApplicationUrl(value: string) {
+        const url = new URL(value);
+
+        if (url.protocol !== "https:") {
+            throw new Error("Application access URL must use HTTPS.");
+        }
+
+        return url;
+    }
+
+    function getFailureMessage(encryptedPayload: ApplicationAccessPayload) {
+        if (
+            !encryptedPayload.salt ||
+            !encryptedPayload.iv ||
+            !encryptedPayload.ciphertext
+        ) {
+            return "zugriff ist noch nicht konfiguriert";
+        }
+
+        return "passwort konnte nicht entschlüsseln";
+    }
+</script>

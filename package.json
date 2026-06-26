@@ -7,7 +7,9 @@
     },
     "scripts": {
         "dev": "astro dev",
+        "encrypt:application-link": "node scripts/encrypt-application-link.mjs",
         "build": "astro build",
+        "build:production": "bun run encrypt:application-link && astro build",
         "preview": "astro preview",
         "astro": "astro"
     },

@@ -1,0 +1,44 @@
+---
+import { withBase } from "@/utils/url";
+import type { TerminalValue as TerminalValueData } from "@/utils/content";
+
+type Props = TerminalValueData;
+
+const { value, href, attributes = [] } = Astro.props;
+const shouldRenderLink = attributes.includes("link");
+const linkHref = shouldRenderLink && href ? normalizeHref(href) : undefined;
+
+function normalizeHref(href: string) {
+    const trimmedHref = href.trim();
+
+    if (trimmedHref.startsWith("#")) {
+        return trimmedHref;
+    }
+
+    if (trimmedHref.startsWith("/")) {
+        return withBase(trimmedHref);
+    }
+
+    try {
+        const url = new URL(trimmedHref);
+
+        if (["https:", "http:", "mailto:", "tel:"].includes(url.protocol)) {
+            return url.href;
+        }
+    } catch {
+        return undefined;
+    }
+
+    return undefined;
+}
+---
+
+{
+    linkHref ? (
+        <a class="terminal-value-link" href={linkHref} rel="noreferrer">
+            {value}
+        </a>
+    ) : (
+        value
+    )
+}

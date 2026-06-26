@@ -17,6 +17,12 @@ html {
     scroll-behavior: smooth;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     min-height: 100vh;
     margin: 0;
@@ -52,6 +58,10 @@ a {
     backdrop-filter: blur(10px);
 }
 
+.site-header > * {
+    min-width: 0;
+}
+
 .terminal-titlebar {
     display: flex;
     gap: 0.5rem;
@@ -60,8 +70,10 @@ a {
 }
 
 .site-title {
+    min-width: 0;
     color: var(--terminal-muted);
     font-size: 0.95rem;
+    overflow-wrap: anywhere;
     text-decoration: none;
 }
 
@@ -70,6 +82,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem 1.4rem;
+    min-width: 0;
 }
 
 .nav-link {
@@ -219,11 +232,6 @@ a {
     white-space: normal;
 }
 
-.output-label.is-long,
-.output-value.is-long {
-    grid-column: 1 / -1;
-}
-
 .terminal-table-wrap {
     min-width: 0;
     max-width: 100%;
@@ -310,6 +318,7 @@ a {
 
 .terminal-button {
     display: inline-flex;
+    max-width: 100%;
     min-height: 2.75rem;
     align-items: center;
     border: 1px solid var(--terminal-dim);
@@ -321,6 +330,57 @@ a {
 .terminal-button:is(:hover, :focus-visible) {
     background: var(--terminal-green);
     color: var(--terminal-bg);
+}
+
+.terminal-form {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 42rem;
+    margin-top: 1rem;
+}
+
+.terminal-form-label,
+.terminal-status {
+    color: var(--terminal-muted);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+    line-height: 1.65;
+}
+
+.terminal-form-label::after {
+    content: ":";
+}
+
+.terminal-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.terminal-input {
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 18rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--terminal-dim);
+    border-radius: 0;
+    background: var(--terminal-panel);
+    padding: 0.65rem 0.75rem;
+    color: var(--terminal-green);
+    font: inherit;
+}
+
+.terminal-input:focus-visible {
+    outline: 1px solid var(--terminal-green);
+    outline-offset: 2px;
+}
+
+.terminal-status {
+    margin: 0.85rem 0 0;
+}
+
+.terminal-gate-link {
+    margin-top: 1rem;
 }
 
 .terminal-link {
@@ -343,6 +403,19 @@ a {
 
 .terminal-link:is(:hover, :focus-visible)::before {
     color: var(--terminal-bg);
+}
+
+.terminal-value-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.18em;
+}
+
+.terminal-value-link:is(:hover, :focus-visible) {
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
+    outline: 0;
 }
 
 .cursor {

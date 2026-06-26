@@ -2,16 +2,66 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-const dictionaryRowSchema = z.object({
-    label: z.string(),
-    value: z.string(),
-    kind: z.string().optional(),
-});
+const valueAttributeSchema = z.enum(["link"]);
 
-const tableColumnSchema = z.object({
-    key: z.string(),
-    label: z.string(),
-});
+function requireHrefForLink(
+    value: { attributes?: Array<"link">; href?: string },
+    context: z.RefinementCtx,
+) {
+    if (!value.attributes?.includes("link")) {
+        return;
+    }
+
+    if (!value.href?.trim()) {
+        context.addIssue({
+            code: "custom",
+            message: 'Values with attributes: ["link"] require href.',
+            path: ["href"],
+        });
+        return;
+    }
+
+    if (!isAllowedHref(value.href)) {
+        context.addIssue({
+            code: "custom",
+            message:
+                'Values with attributes: ["link"] require a safe href scheme.',
+            path: ["href"],
+        });
+    }
+}
+
+function isAllowedHref(href: string) {
+    const trimmedHref = href.trim();
+
+    if (trimmedHref.startsWith("/") || trimmedHref.startsWith("#")) {
+        return true;
+    }
+
+    try {
+        const url = new URL(trimmedHref);
+        return ["https:", "http:", "mailto:", "tel:"].includes(url.protocol);
+    } catch {
+        return false;
+    }
+}
+
+const dictionaryRowSchema = z
+    .object({
+        label: z.string(),
+        value: z.string(),
+        href: z.string().optional(),
+        attributes: z.array(valueAttributeSchema).optional(),
+    })
+    .strict()
+    .superRefine(requireHrefForLink);
+
+const tableColumnSchema = z
+    .object({
+        key: z.string(),
+        label: z.string(),
+    })
+    .strict();
 
 const dictionaryEntrySchema = z.object({
     id: z.string().optional(),
@@ -19,14 +69,31 @@ const dictionaryEntrySchema = z.object({
     rows: z.array(dictionaryRowSchema),
 }).strict();
 
-const tableRowSchema = z.record(z.string(), z.string());
+const tableValueSchema = z.union([
+    z.string(),
+    z
+        .object({
+            value: z.string(),
+            href: z.string().optional(),
+            attributes: z.array(valueAttributeSchema).optional(),
+        })
+        .strict()
+        .superRefine(requireHrefForLink),
+]);
+
+const tableRowSchema = z.record(z.string(), tableValueSchema);
 
 const listItemSchema = z.union([
     z.string(),
-    z.object({
-        label: z.string(),
-        value: z.string().optional(),
-    }),
+    z
+        .object({
+            label: z.string(),
+            value: z.string().optional(),
+            href: z.string().optional(),
+            attributes: z.array(valueAttributeSchema).optional(),
+        })
+        .strict()
+        .superRefine(requireHrefForLink),
 ]);
 
 const dictionarySchema = z

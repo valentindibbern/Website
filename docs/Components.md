@@ -53,6 +53,8 @@ Datei: `src/components/TerminalDictionary.astro`
   - `entry`: optionaler Eintrag in Dateien mit mehreren Dictionaries.
 - Erwartet `rows` oder einen passenden Eintrag unter `entries`.
 - Values folgen dem normalen Browser-Wrap; Zeilenumbrüche in YAML sind keine Layout-Anweisung.
+- Values können `attributes: ["link"]` und `href` tragen und werden dann über `TerminalValue` als HTML-Link gerendert.
+- Labels bleiben reiner Text und übernehmen keine Value-Attribute.
 
 ## TerminalTable
 
@@ -62,6 +64,8 @@ Datei: `src/components/TerminalTable.astro`
 - Props:
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `columns` und `rows`.
+- Tabellenzellen können als String oder als Objekt mit `value`, `href` und `attributes` gepflegt werden.
+- Zellen mit `attributes: ["link"]` werden über `TerminalValue` als HTML-Link gerendert.
 - Tabellenzellen dürfen normal umbrechen; horizontaler Scroll bleibt nur ein Fallback.
 
 ## TerminalList
@@ -73,7 +77,23 @@ Datei: `src/components/TerminalList.astro`
   - `src`: YAML-Dateiname ohne `.yaml`.
 - Erwartet `items`.
 - Wird auch für ehemals JSON-artige Link-Ausgaben genutzt.
+- Listeneinträge können Strings bleiben oder als Objekt mit `label`, optionalem `value`, optionalem `href` und optionalem `attributes` gepflegt werden.
+- Wenn ein Listeneintrag `attributes: ["link"]` trägt, wird der zusammengesetzte sichtbare Wert als HTML-Link gerendert.
 - Listeneinträge folgen dem normalen Browser-Wrap.
+
+## TerminalValue
+
+Datei: `src/components/TerminalValue.astro`
+
+- Rendert einzelne Values für Dictionary, Table und List.
+- Props:
+  - `value`: sichtbarer Wert.
+  - `href`: optionales technisches Linkziel.
+  - `attributes`: optionale Value-Metadaten.
+- Unterstützt aktuell `attributes: ["link"]`.
+- Link-Values werden nur mit `attributes: ["link"]` und vorhandenem `href` als `<a>` ausgegeben.
+- Interne `href`-Werte mit `/` laufen durch `withBase()`.
+- Rendert keine Labels und zeigt `attributes` nicht sichtbar an.
 
 ## HeaderComponent
 
@@ -105,4 +125,5 @@ Datei: `src/layouts/BaseLayout.astro`
 - Content-Ausgaben überlassen den sichtbaren Zeilenumbruch dem Browser; vorformatierte Ausgabe ist nur für bewusst generierte ASCII-Elemente wie `TerminalHeading` vorgesehen.
 - Seiten bestimmen Reihenfolge und Kontext, nicht die Datenform.
 - Vertikale Abstände werden in `src/styles/global.css` über gemeinsame Terminal-Klassen gesteuert; Blöcke sollen als durchlaufender Terminal-Textfluss wirken, nicht als voneinander getrennte Karten.
+- Formular-Controls verwenden Border-Box-Breiten und flexible Zeilen, damit Eingaben und Buttons auf mobilen Viewports keinen Seiten-Overflow erzeugen.
 - Neue Komponenten brauchen eine kurze Beschreibung in dieser Datei.

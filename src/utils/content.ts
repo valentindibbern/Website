@@ -3,10 +3,19 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 export type TextEntry = CollectionEntry<"text">;
 export type DataEntry = CollectionEntry<"data">;
 
+export type ValueAttribute = "link";
+
+export type TerminalValue = {
+    value: string;
+    href?: string;
+    attributes?: ValueAttribute[];
+};
+
 export type DictionaryRow = {
     label: string;
     value: string;
-    kind?: string;
+    href?: string;
+    attributes?: ValueAttribute[];
 };
 
 export type TableColumn = {
@@ -19,6 +28,8 @@ export type ListItem =
     | {
           label: string;
           value?: string;
+          href?: string;
+          attributes?: ValueAttribute[];
       };
 
 export type DictionaryEntry = {
@@ -87,7 +98,7 @@ export async function getDictionaryEntries(src: string) {
     return entry.data.entries;
 }
 
-export async function getListContent(src: string): Promise<string[]> {
+export async function getListContent(src: string): Promise<TerminalValue[]> {
     const entry = await getDataContent(src);
 
     if (!("items" in entry.data)) {
@@ -96,13 +107,17 @@ export async function getListContent(src: string): Promise<string[]> {
         );
     }
 
-    return entry.data.items.map((item) =>
-        typeof item === "string"
-            ? item
-            : item.value
-              ? `${item.label}: ${item.value}`
-              : item.label,
-    );
+    return entry.data.items.map((item) => {
+        if (typeof item === "string") {
+            return { value: item };
+        }
+
+        return {
+            value: item.value ? `${item.label}: ${item.value}` : item.label,
+            href: item.href,
+            attributes: item.attributes,
+        };
+    });
 }
 
 export async function getTableContent(src: string) {
@@ -116,7 +131,14 @@ export async function getTableContent(src: string) {
 
     return {
         columns: entry.data.columns,
-        rows: entry.data.rows,
+        rows: entry.data.rows.map((row) =>
+            Object.fromEntries(
+                Object.entries(row).map(([key, value]) => [
+                    key,
+                    normalizeTerminalValue(value),
+                ]),
+            ),
+        ),
     };
 }
 
@@ -144,7 +166,7 @@ function isEntryListData(data: DataEntry["data"]): data is {
 
 function isTableData(data: DataEntry["data"]): data is {
     columns: TableColumn[];
-    rows: Record<string, string>[];
+    rows: Record<string, string | TerminalValue>[];
 } {
     return (
         "columns" in data &&
@@ -153,9 +175,24 @@ function isTableData(data: DataEntry["data"]): data is {
             (row) =>
                 typeof row === "object" &&
                 row !== null &&
-                Object.values(row).every((value) => typeof value === "string"),
+                Object.values(row).every(
+                    (value) =>
+                        typeof value === "string" ||
+                        (typeof value === "object" &&
+                            value !== null &&
+                            "value" in value &&
+                            typeof value.value === "string"),
+                ),
         )
     );
+}
+
+function normalizeTerminalValue(value: string | TerminalValue): TerminalValue {
+    if (typeof value === "string") {
+        return { value };
+    }
+
+    return value;
 }
 
 async function getContentEntry<TCollection extends "data" | "text">(

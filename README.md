@@ -26,6 +26,7 @@ Lokale Vorschau:
 
 - Dev-Server: `http://localhost:4321`
 - Production Build: `bun run build`
+- Production Build mit Bewerbungsgate-Payload: `bun run build:production`
 - Preview des Builds: `bun run preview`
 - Astro-Checks: `bun astro check`
 
@@ -44,6 +45,7 @@ Lokale Vorschau:
 │   └── Agent-Reference.md
 ├── src/
 │   ├── pages/
+│   ├── drafts/
 │   ├── layouts/
 │   ├── components/
 │   ├── config/
@@ -58,10 +60,12 @@ Lokale Vorschau:
 ### How it works
 
 - `src/pages/*.astro` definiert die Routen der Website.
+- `src/drafts/*.astro` enthält Seitenentwürfe, die nicht öffentlich geroutet werden.
 - `src/layouts/BaseLayout.astro` kapselt den globalen Rahmen, Meta-Tags und das Basis-Markup.
 - `src/components/*` enthält wiederverwendbare UI-Bausteine wie Terminal-Command, Text-, Dictionary-, Listen- und Tabellen-Ausgaben.
 - `src/content/text/*` speichert freie redaktionelle Texte als Markdown.
 - `src/content/data/*` speichert strukturierte Inhalte als YAML.
+- YAML-Werte in Dictionary-, Listen- und Tabellen-Ausgaben können mit `href` und `attributes: ["link"]` als klickbare Links markiert werden.
 - `src/content.config.ts` beschreibt die Content Collections und ihre Schemas.
 - `src/utils/content.ts` bündelt Lade- und Validierungslogik für Content-Quellen.
 - `src/styles/global.css` enthält das globale Styling und Tailwind v4.
@@ -94,7 +98,9 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 | --- | --- |
 | `bun install` | Dependencies installieren |
 | `bun dev` | Lokalen Dev-Server starten |
+| `bun run encrypt:application-link` | Verschlüsselten Bewerbungslink aus `.application-secrets.local.json` erzeugen |
 | `bun run build` | Production Build erzeugen |
+| `bun run build:production` | Bewerbungslink-Payload erzeugen und Production Build ausführen |
 | `bun run preview` | Production Build lokal prüfen |
 | `bun astro check` | Astro- und TypeScript-Checks ausführen |
 | `bun astro -- --help` | Astro-CLI-Hilfe anzeigen |
@@ -104,3 +110,4 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 - Keine Änderungen an `dist/`, `.astro/` oder `node_modules/`.
 - Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/`.
 - Alle Dokumentationsdateien sind für ein öffentliches Repository geschrieben.
+- Bewerbungslinks werden statisch verschlüsselt; Klartext-Links, Passwörter, lokale Secret-Dateien und konkret generierte Payloads gehören nicht ins Repository.

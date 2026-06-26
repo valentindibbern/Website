@@ -1,0 +1,12 @@
+rows:
+  - label: "title"
+    value: "IMS - Informatikmittelschule"
+  - label: "duration"
+    value: "2023 - heute"
+  - label: "beschreibung"
+    value: "Informatikausbildung mit Fokus auf Wirtschaft"
+  - label: "abschlüsse"
+    value: "Informatiker EFZ mit Berufsmaturität in Wirtschaft"
+  - label: "ausbildung"
+    value: "Applikationsentwickler"
+
