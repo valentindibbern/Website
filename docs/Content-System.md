@@ -87,7 +87,8 @@ rows:
 - Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
 - `value` ist immer der sichtbare Text. `href` ist immer das technische Linkziel.
 - `"link"` rendert den sichtbaren `value` als HTML-Link und verlangt ein nicht leeres `href`.
-- Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; externe `href`-Werte, `mailto:`, `tel:` und `#` werden direkt genutzt.
+- Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; erlaubt sind außerdem `#`, `https:`, `http:`, `mailto:` und `tel:`.
+- Andere Schemes wie `javascript:` oder `data:` werden vom Schema abgewiesen.
 - Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
 - Sensible externe Ziele stehen nicht direkt in `links.yaml`. Solche Einträge verweisen auf lokale Gate-Routen wie `/application`.
 

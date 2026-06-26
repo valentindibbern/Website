@@ -11,11 +11,25 @@ const linkHref = shouldRenderLink && href ? normalizeHref(href) : undefined;
 function normalizeHref(href: string) {
     const trimmedHref = href.trim();
 
+    if (trimmedHref.startsWith("#")) {
+        return trimmedHref;
+    }
+
     if (trimmedHref.startsWith("/")) {
         return withBase(trimmedHref);
     }
 
-    return trimmedHref;
+    try {
+        const url = new URL(trimmedHref);
+
+        if (["https:", "http:", "mailto:", "tel:"].includes(url.protocol)) {
+            return url.href;
+        }
+    } catch {
+        return undefined;
+    }
+
+    return undefined;
 }
 ---
 

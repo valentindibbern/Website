@@ -8,12 +8,41 @@ function requireHrefForLink(
     value: { attributes?: Array<"link">; href?: string },
     context: z.RefinementCtx,
 ) {
-    if (value.attributes?.includes("link") && !value.href?.trim()) {
+    if (!value.attributes?.includes("link")) {
+        return;
+    }
+
+    if (!value.href?.trim()) {
         context.addIssue({
             code: "custom",
             message: 'Values with attributes: ["link"] require href.',
             path: ["href"],
         });
+        return;
+    }
+
+    if (!isAllowedHref(value.href)) {
+        context.addIssue({
+            code: "custom",
+            message:
+                'Values with attributes: ["link"] require a safe href scheme.',
+            path: ["href"],
+        });
+    }
+}
+
+function isAllowedHref(href: string) {
+    const trimmedHref = href.trim();
+
+    if (trimmedHref.startsWith("/") || trimmedHref.startsWith("#")) {
+        return true;
+    }
+
+    try {
+        const url = new URL(trimmedHref);
+        return ["https:", "http:", "mailto:", "tel:"].includes(url.protocol);
+    } catch {
+        return false;
     }
 }
 
