@@ -24,7 +24,8 @@ jobs:
         env:
           APPLICATION_ACCESS_PASSWORD: ${{ secrets.APPLICATION_ACCESS_PASSWORD }}
           APPLICATION_ACCESS_URL: ${{ secrets.APPLICATION_ACCESS_URL }}
-        run: node -e "require('node:fs').writeFileSync('.application-secrets.local.json', JSON.stringify({ password: process.env.APPLICATION_ACCESS_PASSWORD, url: process.env.APPLICATION_ACCESS_URL }, null, 2))"
+        run: |
+          node -e "require('node:fs').writeFileSync('.application-secrets.local.json', JSON.stringify({ password: process.env.APPLICATION_ACCESS_PASSWORD, url: process.env.APPLICATION_ACCESS_URL }, null, 2))"
       - name: Install, build, and upload your site
         uses: withastro/action@v6
         with:
