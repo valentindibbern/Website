@@ -1,7 +1,7 @@
 rows:
-  - label: "title"
+  - label: "firma"
     value: "Klixar IT GmbH"
-  - label: "body"
-    value: |
-      Schnupperlehre: Klixar IT GmbH
-      Praktische Erfahrungen in der IT-Branche und Kennenlernen verschiedener Technologien und Arbeitsabläufe
+  - label: "länge"
+    value: "3 Tage"
+  - label: "inhalt"
+    value: "Einblick in Softwareentwicklung in kleineres Softwareunternehmen"

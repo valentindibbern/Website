@@ -125,4 +125,5 @@ Datei: `src/layouts/BaseLayout.astro`
 - Content-Ausgaben überlassen den sichtbaren Zeilenumbruch dem Browser; vorformatierte Ausgabe ist nur für bewusst generierte ASCII-Elemente wie `TerminalHeading` vorgesehen.
 - Seiten bestimmen Reihenfolge und Kontext, nicht die Datenform.
 - Vertikale Abstände werden in `src/styles/global.css` über gemeinsame Terminal-Klassen gesteuert; Blöcke sollen als durchlaufender Terminal-Textfluss wirken, nicht als voneinander getrennte Karten.
+- Formular-Controls verwenden Border-Box-Breiten und flexible Zeilen, damit Eingaben und Buttons auf mobilen Viewports keinen Seiten-Overflow erzeugen.
 - Neue Komponenten brauchen eine kurze Beschreibung in dieser Datei.

@@ -86,7 +86,7 @@ rows:
 - `attributes` ist Metadaten, wird nicht sichtbar ausgegeben und gilt nur für den Value, nicht für Labels oder Tabellen-Header.
 - Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
 - `value` ist immer der sichtbare Text. `href` ist immer das technische Linkziel.
-- `"link"` rendert den sichtbaren `value` als HTML-Link und verlangt ein `href`.
+- `"link"` rendert den sichtbaren `value` als HTML-Link und verlangt ein nicht leeres `href`.
 - Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; externe `href`-Werte, `mailto:`, `tel:` und `#` werden direkt genutzt.
 - Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
 - Sensible externe Ziele stehen nicht direkt in `links.yaml`. Solche Einträge verweisen auf lokale Gate-Routen wie `/application`.
@@ -99,7 +99,7 @@ rows:
 - `TerminalTable src="skills"` liest `src/content/data/skills.yaml`.
 - `TerminalList src="links"` liest `src/content/data/links.yaml`.
 - Seiten setzen die Reihenfolge und rendern `TerminalCommand` vor der passenden Output-Komponente.
-- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml` geladen. Ihre Commands sind bewusst leer und stehen direkt in der Seite.
+- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml` geladen. Ihre sichtbaren Terminal-Commands stehen direkt in der Seite.
 - `references.yaml` bleibt Content für den Entwurf `src/drafts/references.astro` und wird aktuell nicht auf einer öffentlichen Route gerendert.
 
 ## Current Inventory

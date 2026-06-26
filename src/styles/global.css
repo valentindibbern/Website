@@ -17,6 +17,12 @@ html {
     scroll-behavior: smooth;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     min-height: 100vh;
     margin: 0;
@@ -52,6 +58,10 @@ a {
     backdrop-filter: blur(10px);
 }
 
+.site-header > * {
+    min-width: 0;
+}
+
 .terminal-titlebar {
     display: flex;
     gap: 0.5rem;
@@ -60,8 +70,10 @@ a {
 }
 
 .site-title {
+    min-width: 0;
     color: var(--terminal-muted);
     font-size: 0.95rem;
+    overflow-wrap: anywhere;
     text-decoration: none;
 }
 
@@ -70,6 +82,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem 1.4rem;
+    min-width: 0;
 }
 
 .nav-link {
@@ -305,6 +318,7 @@ a {
 
 .terminal-button {
     display: inline-flex;
+    max-width: 100%;
     min-height: 2.75rem;
     align-items: center;
     border: 1px solid var(--terminal-dim);
@@ -344,7 +358,9 @@ a {
 }
 
 .terminal-input {
-    min-width: min(100%, 18rem);
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 18rem;
     min-height: 2.75rem;
     border: 1px solid var(--terminal-dim);
     border-radius: 0;

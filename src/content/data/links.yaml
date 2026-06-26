@@ -1,17 +1,17 @@
 rows:
   - label : "github"
-    value: "GitHub"
+    value: "Profile"
     href: "https://github.com/valentindibbern"
     attributes:
       - "link"
-  - label: "portfolio"
-    value: "Portfolio"
-    href: "https://valentindibbern.github.io"
+  - label: "website"
+    value: "Personal"
+    href: "https://valentindibbern.github.io/Website/"
     attributes:
       - "link"
   - label: "contact"
     value: "contact route not public yet"
-  - label: "bewerbungsdateien"
+  - label: "files"
     value: "Bewerbungsdateien"
     href: "/application"
     attributes:

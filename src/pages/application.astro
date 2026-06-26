@@ -64,7 +64,25 @@ const title = "Bewerbungsdateien";
     </div>
 </BaseLayout>
 
-<script is:inline define:vars={{ payload: applicationAccessPayload }}>
+<script
+    id="application-access-payload"
+    is:inline
+    type="application/json"
+    set:html={JSON.stringify(applicationAccessPayload)}
+/>
+
+<script>
+    interface ApplicationAccessPayload {
+        salt?: string;
+        iv?: string;
+        ciphertext?: string;
+        iterations: number;
+    }
+
+    const payloadElement = document.getElementById("application-access-payload");
+    const payload: ApplicationAccessPayload = payloadElement?.textContent
+        ? JSON.parse(payloadElement.textContent)
+        : { iterations: 600000 };
     const form = document.querySelector("[data-application-form]");
     const passwordInput = document.querySelector("[data-application-password]");
     const status = document.querySelector("[data-application-status]");
@@ -90,8 +108,9 @@ const title = "Bewerbungsdateien";
                 passwordInput.value,
                 payload,
             );
+            const safeUrl = parseSafeApplicationUrl(decryptedUrl);
 
-            link.href = decryptedUrl;
+            link.href = safeUrl.href;
             link.hidden = false;
             status.textContent = "zugriff freigegeben";
             passwordInput.value = "";
@@ -100,7 +119,10 @@ const title = "Bewerbungsdateien";
         }
     });
 
-    async function decryptApplicationUrl(password, encryptedPayload) {
+    async function decryptApplicationUrl(
+        password: string,
+        encryptedPayload: ApplicationAccessPayload,
+    ) {
         if (
             !encryptedPayload.salt ||
             !encryptedPayload.iv ||
@@ -144,13 +166,23 @@ const title = "Bewerbungsdateien";
         return new TextDecoder().decode(decrypted);
     }
 
-    function fromBase64(value) {
+    function fromBase64(value: string) {
         return Uint8Array.from(atob(value), (character) =>
             character.charCodeAt(0),
         );
     }
 
-    function getFailureMessage(encryptedPayload) {
+    function parseSafeApplicationUrl(value: string) {
+        const url = new URL(value);
+
+        if (url.protocol !== "https:") {
+            throw new Error("Application access URL must use HTTPS.");
+        }
+
+        return url;
+    }
+
+    function getFailureMessage(encryptedPayload: ApplicationAccessPayload) {
         if (
             !encryptedPayload.salt ||
             !encryptedPayload.iv ||

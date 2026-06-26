@@ -1,7 +1,7 @@
 rows:
-  - label: "title"
+  - label: "firma"
     value: "Cobra Software AG"
-  - label: "body"
-    value: |
-      Schnupperlehre: Cobra Software AG
-      Einblick in Softwareentwicklung und Projektabwicklung in einem professionellen Umfeld
+  - label: "länge"
+    value: "10 Tage"
+  - label: "inhalt"
+    value: "Einblick in Softwareentwicklung im Bereich Datenmanagement"

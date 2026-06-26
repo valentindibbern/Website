@@ -13,12 +13,21 @@ if (!isNonEmptyString(secrets.password) || !isNonEmptyString(secrets.url)) {
     );
 }
 
+const password = secrets.password.trim();
+const url = parseHttpsUrl(secrets.url.trim());
+
+if (!isStrongPassword(password)) {
+    throw new Error(
+        "Application access password must be at least 16 characters and include uppercase, lowercase, number, and symbol characters.",
+    );
+}
+
 const encoder = new TextEncoder();
 const salt = webcrypto.getRandomValues(new Uint8Array(16));
 const iv = webcrypto.getRandomValues(new Uint8Array(12));
 const keyMaterial = await webcrypto.subtle.importKey(
     "raw",
-    encoder.encode(secrets.password),
+    encoder.encode(password),
     "PBKDF2",
     false,
     ["deriveKey"],
@@ -44,7 +53,7 @@ const encrypted = await webcrypto.subtle.encrypt(
         iv,
     },
     key,
-    encoder.encode(secrets.url),
+    encoder.encode(url.href),
 );
 
 const payload = {
@@ -65,6 +74,26 @@ console.log("Wrote encrypted application access payload.");
 
 function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
+}
+
+function isStrongPassword(value) {
+    return (
+        value.length >= 16 &&
+        /[a-z]/.test(value) &&
+        /[A-Z]/.test(value) &&
+        /\d/.test(value) &&
+        /[^A-Za-z0-9]/.test(value)
+    );
+}
+
+function parseHttpsUrl(value) {
+    const url = new URL(value);
+
+    if (url.protocol !== "https:") {
+        throw new Error("Application access url must use HTTPS.");
+    }
+
+    return url;
 }
 
 function toBase64(bytes) {

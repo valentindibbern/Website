@@ -50,9 +50,18 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - `docs/Stack.md` aktualisieren, wenn Dependencies, Integrationen oder Build-Tools geändert werden.
 - `README.md` aktualisieren, wenn sich Befehle oder Setup-Schritte ändern.
 
+## Update Application Gate
+
+- Lokale Secrets in `.application-secrets.local.json` pflegen; diese Datei bleibt ignored.
+- Nur HTTPS-Ziele und starke, nicht wiederverwendete Passwörter verwenden.
+- `bun run encrypt:application-link` erzeugt temporär den verschlüsselten Payload.
+- Vor Commits `src/config/applicationAccess.ts` wieder als Placeholder prüfen.
+- Für Deployment müssen die GitHub-Secrets `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` gesetzt sein.
+
 ## Before Finishing
 
 - `bun astro check` ausführen, wenn Astro-, TypeScript-, Content- oder Komponentenlogik geändert wurde.
 - `bun run build` ausführen, wenn Seiten, Routing, Content-Schemas oder Deployment-Verhalten betroffen sind.
+- `bun run build:production` nur ausführen, wenn die lokalen oder GitHub-Secrets verfügbar sind.
 - Dokumentationsänderungen mit der eigentlichen Projektänderung committen.
 - Prüfen, dass neue Doku öffentlich teilbar ist.

@@ -20,8 +20,15 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v6
+      - name: Write application access secrets
+        env:
+          APPLICATION_ACCESS_PASSWORD: ${{ secrets.APPLICATION_ACCESS_PASSWORD }}
+          APPLICATION_ACCESS_URL: ${{ secrets.APPLICATION_ACCESS_URL }}
+        run: node -e "require('node:fs').writeFileSync('.application-secrets.local.json', JSON.stringify({ password: process.env.APPLICATION_ACCESS_PASSWORD, url: process.env.APPLICATION_ACCESS_URL }, null, 2))"
       - name: Install, build, and upload your site
         uses: withastro/action@v6
+        with:
+          build-cmd: bun run build:production
           # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
           # node-version: 24 # The specific version of Node that should be used to build your site. Defaults to 24. (optional)

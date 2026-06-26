@@ -26,6 +26,7 @@ Lokale Vorschau:
 
 - Dev-Server: `http://localhost:4321`
 - Production Build: `bun run build`
+- Production Build mit Bewerbungsgate-Payload: `bun run build:production`
 - Preview des Builds: `bun run preview`
 - Astro-Checks: `bun astro check`
 
@@ -97,7 +98,9 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 | --- | --- |
 | `bun install` | Dependencies installieren |
 | `bun dev` | Lokalen Dev-Server starten |
+| `bun run encrypt:application-link` | Verschlüsselten Bewerbungslink aus `.application-secrets.local.json` erzeugen |
 | `bun run build` | Production Build erzeugen |
+| `bun run build:production` | Bewerbungslink-Payload erzeugen und Production Build ausführen |
 | `bun run preview` | Production Build lokal prüfen |
 | `bun astro check` | Astro- und TypeScript-Checks ausführen |
 | `bun astro -- --help` | Astro-CLI-Hilfe anzeigen |
@@ -107,4 +110,4 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 - Keine Änderungen an `dist/`, `.astro/` oder `node_modules/`.
 - Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/`.
 - Alle Dokumentationsdateien sind für ein öffentliches Repository geschrieben.
-- Bewerbungslinks werden statisch verschlüsselt; Klartext-Links, Passwörter und lokale Secret-Dateien gehören nicht ins Repository.
+- Bewerbungslinks werden statisch verschlüsselt; Klartext-Links, Passwörter, lokale Secret-Dateien und konkret generierte Payloads gehören nicht ins Repository.

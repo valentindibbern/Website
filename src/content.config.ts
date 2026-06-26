@@ -8,7 +8,7 @@ function requireHrefForLink(
     value: { attributes?: Array<"link">; href?: string },
     context: z.RefinementCtx,
 ) {
-    if (value.attributes?.includes("link") && !value.href) {
+    if (value.attributes?.includes("link") && !value.href?.trim()) {
         context.addIssue({
             code: "custom",
             message: 'Values with attributes: ["link"] require href.',

@@ -8,4 +8,4 @@ const { command, path = "~" } = Astro.props;
 const shellPath = path === "~" ? path : `~/${path.replace(/^\/+/, "")}`;
 ---
 
-<p class="prompt">visitor@portfolio:{shellPath}$ {command}</p>
+<p class="prompt">visitor@website:{shellPath}$ {command}</p>

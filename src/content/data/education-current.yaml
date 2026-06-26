@@ -1,9 +1,12 @@
 rows:
   - label: "title"
-    value: "Informatikmittelschule"
-  - label: "body"
-    value: |
-      2023 - heute
-      Informatikmittelschule (IMS)
-      Wirtschaftsinformatik mit Berufsmaturität
-      Fokus: Softwareentwicklung, Datenbanken und Betriebsinformatik
+    value: "IMS - Informatikmittelschule"
+  - label: "duration"
+    value: "2023 - heute"
+  - label: "beschreibung"
+    value: "Informatikausbildung mit Fokus auf Wirtschaft"
+  - label: "abschlüsse"
+    value: "Informatiker EFZ mit Berufsmaturität in Wirtschaft"
+  - label: "ausbildung"
+    value: "Applikationsentwickler"
+
