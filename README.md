@@ -98,7 +98,7 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 | --- | --- |
 | `bun install` | Dependencies installieren |
 | `bun dev` | Lokalen Dev-Server starten |
-| `bun run encrypt:application-link` | Verschlüsselten Bewerbungslink aus `.application-secrets.local.json` erzeugen |
+| `bun run encrypt:application-link` | Verschlüsselten Bewerbungslink aus Env-Secrets oder `.application-secrets.local.json` erzeugen |
 | `bun run build` | Production Build erzeugen |
 | `bun run build:production` | Bewerbungslink-Payload erzeugen und Production Build ausführen |
 | `bun run preview` | Production Build lokal prüfen |

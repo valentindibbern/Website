@@ -53,10 +53,11 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 ## Update Application Gate
 
 - Lokale Secrets in `.application-secrets.local.json` pflegen; diese Datei bleibt ignored.
+- CI-Secrets als `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` im GitHub-Repository setzen.
 - Nur HTTPS-Ziele und starke, nicht wiederverwendete Passwörter verwenden.
-- `bun run encrypt:application-link` erzeugt temporär den verschlüsselten Payload.
+- `bun run encrypt:application-link` nutzt zuerst Env-Secrets und fällt lokal auf `.application-secrets.local.json` zurück.
 - Vor Commits `src/config/applicationAccess.ts` wieder als Placeholder prüfen.
-- Für Deployment müssen die GitHub-Secrets `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` gesetzt sein.
+- Vor Deployment mit `gh secret list` prüfen, dass beide Secret-Namen vorhanden sind.
 
 ## Before Finishing
 

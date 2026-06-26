@@ -5,11 +5,11 @@ const secretsPath = new URL("../.application-secrets.local.json", import.meta.ur
 const outputPath = new URL("../src/config/applicationAccess.ts", import.meta.url);
 const iterations = 600000;
 
-const secrets = JSON.parse(await readFile(secretsPath, "utf8"));
+const secrets = await loadSecrets();
 
 if (!isNonEmptyString(secrets.password) || !isNonEmptyString(secrets.url)) {
     throw new Error(
-        "Expected .application-secrets.local.json with non-empty password and url fields.",
+        "Expected non-empty application access password and url from environment variables or .application-secrets.local.json.",
     );
 }
 
@@ -71,6 +71,53 @@ await writeFile(
 );
 
 console.log("Wrote encrypted application access payload.");
+
+async function loadSecrets() {
+    const envSecrets = {
+        password: process.env.APPLICATION_ACCESS_PASSWORD,
+        url: process.env.APPLICATION_ACCESS_URL,
+    };
+    const hasPasswordEnv = envSecrets.password !== undefined;
+    const hasUrlEnv = envSecrets.url !== undefined;
+
+    if (hasPasswordEnv || hasUrlEnv) {
+        if (!isNonEmptyString(envSecrets.password)) {
+            throw new Error(
+                "Missing or empty APPLICATION_ACCESS_PASSWORD environment variable.",
+            );
+        }
+
+        if (!isNonEmptyString(envSecrets.url)) {
+            throw new Error(
+                "Missing or empty APPLICATION_ACCESS_URL environment variable.",
+            );
+        }
+
+        return envSecrets;
+    }
+
+    if (process.env.GITHUB_ACTIONS === "true") {
+        throw new Error(
+            "Missing GitHub repository secrets APPLICATION_ACCESS_PASSWORD and APPLICATION_ACCESS_URL.",
+        );
+    }
+
+    try {
+        return JSON.parse(await readFile(secretsPath, "utf8"));
+    } catch (error) {
+        if (error && typeof error === "object" && "code" in error) {
+            const nodeError = error;
+
+            if (nodeError.code === "ENOENT") {
+                throw new Error(
+                    "Expected .application-secrets.local.json for local production builds, or APPLICATION_ACCESS_PASSWORD and APPLICATION_ACCESS_URL environment variables.",
+                );
+            }
+        }
+
+        throw error;
+    }
+}
 
 function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
