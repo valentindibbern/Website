@@ -11,7 +11,7 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 - `bun build`
   - Erzeugt den Production Build.
 - `bun run encrypt:application-link`
-  - Liest `.application-secrets.local.json`, verlangt ein starkes Passwort und eine HTTPS-URL und schreibt den verschlüsselten Payload nach `src/config/applicationAccess.ts`.
+  - Liest `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` aus der Umgebung oder lokal `.application-secrets.local.json`, verlangt ein starkes Passwort und eine HTTPS-URL und schreibt den verschlüsselten Payload nach `src/config/applicationAccess.ts`.
 - `bun run build:production`
   - Erzeugt zuerst den verschlüsselten Bewerbungsgate-Payload und baut danach die Website.
 - `bun preview`
@@ -30,8 +30,9 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 ## Application Gate Secrets
 
 - `src/config/applicationAccess.ts` bleibt im Repository als leerer Placeholder.
-- `.application-secrets.local.json` enthält lokal `password` und `url`, ist ignored und wird nicht committed.
-- GitHub Pages nutzt die Repository-Secrets `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL`.
+- GitHub Pages nutzt die Repository-Secrets `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` direkt als Build-Umgebung.
+- Der Workflow bricht vor dem Astro-Build mit einer klaren Fehlermeldung ab, wenn eines dieser Secrets fehlt.
+- `.application-secrets.local.json` enthält lokal `password` und `url`, ist ignored und wird nur als Fallback verwendet, wenn keine Env-Secrets gesetzt sind.
 - `APPLICATION_ACCESS_URL` muss eine HTTPS-URL sein.
 - Das Passwort muss mindestens 16 Zeichen haben und Großbuchstaben, Kleinbuchstaben, Zahl und Sonderzeichen enthalten.
 
@@ -46,6 +47,7 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 - `bun astro check`
 - `bun run build`
 - `bun run build:production`, wenn Deployment-Secrets verfügbar sind.
+- `gh secret list` muss `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` zeigen, bevor GitHub Pages deployen kann.
 - Navigation und interne Links auf Base-URL-Kompatibilität prüfen.
 - Prüfen, dass keine Klartext-Bewerbungslinks oder Passwörter in Repository oder `dist/` stehen.
 - Vor Commits prüfen, dass `src/config/applicationAccess.ts` wieder den leeren Placeholder enthält.

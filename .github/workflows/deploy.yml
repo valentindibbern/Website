@@ -17,15 +17,24 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      APPLICATION_ACCESS_PASSWORD: ${{ secrets.APPLICATION_ACCESS_PASSWORD }}
+      APPLICATION_ACCESS_URL: ${{ secrets.APPLICATION_ACCESS_URL }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v6
-      - name: Write application access secrets
-        env:
-          APPLICATION_ACCESS_PASSWORD: ${{ secrets.APPLICATION_ACCESS_PASSWORD }}
-          APPLICATION_ACCESS_URL: ${{ secrets.APPLICATION_ACCESS_URL }}
+      - name: Verify application access secrets
         run: |
-          node -e "require('node:fs').writeFileSync('.application-secrets.local.json', JSON.stringify({ password: process.env.APPLICATION_ACCESS_PASSWORD, url: process.env.APPLICATION_ACCESS_URL }, null, 2))"
+          missing=0
+          if [ -z "$APPLICATION_ACCESS_PASSWORD" ]; then
+            echo "::error title=Missing GitHub secret::Set APPLICATION_ACCESS_PASSWORD in repository secrets."
+            missing=1
+          fi
+          if [ -z "$APPLICATION_ACCESS_URL" ]; then
+            echo "::error title=Missing GitHub secret::Set APPLICATION_ACCESS_URL in repository secrets."
+            missing=1
+          fi
+          exit "$missing"
       - name: Install, build, and upload your site
         uses: withastro/action@v6
         with:
