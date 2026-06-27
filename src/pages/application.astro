@@ -22,17 +22,21 @@ const title = "Bewerbungsdateien";
             />
 
             <div class="terminal-gate" data-application-gate>
-                <form class="terminal-form" data-application-form>
+                <form
+                    class="terminal-form"
+                    autocomplete="off"
+                    data-application-form
+                >
                     <label class="terminal-form-label" for="application-password">
-                        passwort
+                        zugangscode
                     </label>
                     <div class="terminal-form-row">
                         <input
                             class="terminal-input"
                             id="application-password"
-                            name="password"
+                            name="application-access"
                             type="password"
-                            autocomplete="current-password"
+                            autocomplete="off"
                             required
                             data-application-password
                         />

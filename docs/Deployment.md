@@ -4,7 +4,7 @@
 
 Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zur Laufzeit ist kein Node-Server nötig.
 
-Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt. Der externe Dateilink liegt nur als verschlüsselter Payload im Build und wird im Browser per Web Crypto entschlüsselt. Dieser Payload ist öffentlich abrufbar; der Schutz hängt an einem starken, nicht wiederverwendeten Passwort und ersetzt keine serverseitige Autorisierung für sensible Dateien.
+Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt. Der externe Dateilink liegt nur als verschlüsselter Payload im Build und wird im Browser per Web Crypto entschlüsselt. Dieser Payload ist öffentlich abrufbar; der Schutz hängt an einer langen zufälligen, nicht wiederverwendeten Passphrase und ersetzt keine serverseitige Autorisierung, kein Rate-Limit und keine Sperre für sensible Dateien.
 
 ## Commands
 
@@ -35,6 +35,8 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 - `.application-secrets.local.json` enthält lokal `password` und `url`, ist ignored und wird nur als Fallback verwendet, wenn keine Env-Secrets gesetzt sind.
 - `APPLICATION_ACCESS_URL` muss eine HTTPS-URL sein.
 - Das Passwort muss mindestens 16 Zeichen haben und Großbuchstaben, Kleinbuchstaben, Zahl und Sonderzeichen enthalten.
+- Für echte Deployments sollte das Passwort eine lange zufällige Passphrase sein, nur für eine Bewerbungsphase gelten und danach rotiert oder entfernt werden.
+- Das Formular nutzt den Begriff Zugangscode und sendet den eingegebenen Wert nicht an einen Server; die Entschlüsselung passiert vollständig im Browser.
 
 ## Output
 
@@ -51,4 +53,5 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 - Navigation und interne Links auf Base-URL-Kompatibilität prüfen.
 - Prüfen, dass keine Klartext-Bewerbungslinks oder Passwörter in Repository oder `dist/` stehen.
 - Vor Commits prüfen, dass `src/config/applicationAccess.ts` wieder den leeren Placeholder enthält.
+- Nach einer Bewerbungsphase den produktiven Payload entfernen oder mit neuer Passphrase neu erzeugen.
 - Keine Änderungen in `dist/`, `.astro/` oder `node_modules/` committen.

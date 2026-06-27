@@ -39,7 +39,7 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - `src/pages/about.astro` bündelt Profil, About-Text, Skills, Ausbildung, Erfahrung, Sprachen und Hobbys.
 - `src/pages/projects.astro` zeigt alle Projekte.
 - `src/pages/links.astro` zeigt Kontakt- und Profilrouten.
-- `src/pages/application.astro` zeigt ein statisches Passwort-Gate für Bewerbungsdateien.
+- `src/pages/application.astro` zeigt ein statisches Zugangscode-Gate für Bewerbungsdateien.
 - `src/drafts/references.astro` hält die References-Seite als nicht veröffentlichte Vorlage.
 
 ## Navigation And Base Paths
@@ -57,4 +57,4 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - Komponenten bestimmen die Ausgabeform und laden ihre Quelle über `src`.
 - Statische Generierung ist die Standardannahme.
 - GitHub-Pages-Kompatibilität ist Teil der Architekturannahme.
-- Sensible Dateilinks werden für GitHub Pages clientseitig entschlüsselt: `links.yaml` verweist auf `/application`, die Seite nutzt Web Crypto und einen öffentlichen Ciphertext, um den externen Link erst nach Passworteingabe sichtbar zu machen.
+- Sensible Dateilinks werden für GitHub Pages clientseitig entschlüsselt: `links.yaml` verweist auf `/application`, die Seite nutzt Web Crypto und einen öffentlichen Ciphertext, um den externen Link erst nach Eingabe des Zugangscodes sichtbar zu machen. Das ist eine statische Entsperrung, keine serverseitige Authentifizierung.

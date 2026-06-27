@@ -18,17 +18,18 @@ Datei: `src/pages/about.astro`
 
 - Zeigt den About-Fließtext und strukturierte persönliche Daten.
 - Nutzt `TerminalHeading` mit `size="Small"` für `about.md`.
-- Ausbildung und Erfahrung werden als einzelne statisch adressierte Dictionary-Dateien geladen; die sichtbaren Commands dieser Einträge bleiben leer und können später manuell ergänzt werden.
+- Ausbildung und Erfahrung werden als einzelne statisch adressierte Dictionary-Dateien geladen. Die sichtbaren Commands stehen direkt in der Seite.
 - Nutzt:
   - `text/abouttext.md`
   - `data/profile.yaml`
   - `data/skills.yaml`
   - `data/education-current.yaml`
-  - `data/education-previous.yaml`
   - `data/cobra-software.yaml`
   - `data/klixar-it.yaml`
   - `data/languages.yaml`
   - `data/hobbies.yaml`
+- `data/education-previous.yaml` ist im Content-Inventar vorhanden, wird aktuell aber nicht auf `/about` gerendert.
+- `data/cobra-software.yaml` und `data/klixar-it.yaml` bleiben getrennte Quellen und werden gemeinsam im Praktika-Abschnitt ausgegeben.
 
 ## Projects
 
@@ -51,18 +52,18 @@ Datei: `src/drafts/references.astro`
 
 Datei: `src/pages/links.astro`
 
-- Zeigt Kontakt- und Profilrouten als Liste.
+- Zeigt Kontakt- und Profilrouten als Dictionary.
 - Zeigt den Einstieg zu geschützten Bewerbungsdateien als lokalen Link.
 - Nutzt `TerminalHeading` mit `size="Small"` für `links.yaml`.
-- Nutzt `data/links.yaml`.
+- Nutzt `data/links.yaml` über `TerminalDictionary`.
 
 ## Application
 
 Datei: `src/pages/application.astro`
 
-- Zeigt ein Passwortformular für Bewerbungsdateien.
+- Zeigt ein Zugangscode-Formular für Bewerbungsdateien.
 - Entschlüsselt den externen Dateilink clientseitig mit der Web Crypto API.
-- Speichert weder Passwort noch Klartext-Dateilink im HTML oder Content-System.
+- Speichert weder Zugangscode noch Klartext-Dateilink im HTML oder Content-System.
 
 ## Page Conventions
 
