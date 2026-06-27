@@ -6,9 +6,11 @@ Terminal-inspirierte Astro-Website mit Content Collections, Markdown-Inhalten un
 
 Dieses Repository ist öffentlich. Die README ist deshalb der öffentliche Einstieg für Besucher, Entwickler und Agents.
 
-- Keine privaten Daten, Zugangsdaten oder internen Notizen in README oder `docs/` ablegen.
+- Keine privaten Daten, Zugangsdaten oder internen Notizen in README oder `docs/public/` ablegen.
 - Dokumentation soll den aktuellen Projektzustand erklären, nicht persönliche Arbeitsnotizen sammeln.
-- Agent-spezifische Hinweise sind öffentlich sichtbare Projektkonventionen und stehen in [Agent Reference](./docs/Agent-Reference.md) und [AGENTS.md](./AGENTS.md).
+- Öffentliche Detaildokumentation liegt in `docs/public/`.
+- Private Arbeitsnotizen, Pläne, Research und Risikoanalysen liegen in `docs/private/`, einem privaten Git-Submodule.
+- Agent-spezifische Hinweise sind öffentlich sichtbare Projektkonventionen und stehen in [Agent Reference](./docs/public/Agent-Reference.md) und [AGENTS.md](./AGENTS.md).
 
 ## Live Site
 
@@ -35,14 +37,17 @@ Lokale Vorschau:
 ```text
 /
 ├── docs/
-│   ├── Stack.md
-│   ├── Architecture.md
-│   ├── Content-System.md
-│   ├── Components.md
-│   ├── Pages.md
-│   ├── Workflows.md
-│   ├── Deployment.md
-│   └── Agent-Reference.md
+│   ├── public/
+│   │   ├── Stack.md
+│   │   ├── Architecture.md
+│   │   ├── Content-System.md
+│   │   ├── Components.md
+│   │   ├── Pages.md
+│   │   ├── Workflows.md
+│   │   ├── Deployment.md
+│   │   └── Agent-Reference.md
+│   └── private/
+│       └── private Git submodule, not part of the public documentation
 ├── src/
 │   ├── pages/
 │   ├── drafts/
@@ -72,16 +77,16 @@ Lokale Vorschau:
 
 ## Documentation
 
-- [Stack](./docs/Stack.md): verwendete Technologien, Tools und Libraries
-- [Architecture](./docs/Architecture.md): Projektaufbau und Datenfluss
-- [Content System](./docs/Content-System.md): Content Collections und Content-Ladung
-- [Components](./docs/Components.md): wichtige UI-Bausteine
-- [Pages](./docs/Pages.md): was jede Seite rendert und welche Daten sie nutzt
-- [Workflows](./docs/Workflows.md): typische Änderungen und wo sie umgesetzt werden
-- [Deployment](./docs/Deployment.md): Build, Preview und Base-URL-Verhalten
-- [Hosting Research](./docs/Hosting-Research.md): kritischer Vergleich möglicher Hostingprovider
-- [Cloudflare Pages Migration](./docs/Cloudflare-Pages-Migration.md): Recherche und Ablauf für einen möglichen Umzug von GitHub Pages
-- [Agent Reference](./docs/Agent-Reference.md): öffentliche Arbeitskonventionen für Agents und KI-Systeme
+- [Stack](./docs/public/Stack.md): verwendete Technologien, Tools und Libraries
+- [Architecture](./docs/public/Architecture.md): Projektaufbau und Datenfluss
+- [Content System](./docs/public/Content-System.md): Content Collections und Content-Ladung
+- [Components](./docs/public/Components.md): wichtige UI-Bausteine
+- [Pages](./docs/public/Pages.md): was jede Seite rendert und welche Daten sie nutzt
+- [Workflows](./docs/public/Workflows.md): typische Änderungen und wo sie umgesetzt werden
+- [Deployment](./docs/public/Deployment.md): Build, Preview und Base-URL-Verhalten
+- [Agent Reference](./docs/public/Agent-Reference.md): öffentliche Arbeitskonventionen für Agents und KI-Systeme
+
+Private Arbeitsdokumente sind bewusst getrennt. `docs/private/` ist ein privates Submodule und enthält keine öffentliche Projekt-Dokumentation.
 
 ## Source Of Truth
 
@@ -110,6 +115,7 @@ Alle Befehle werden aus dem Repository-Root ausgeführt.
 ## Notes
 
 - Keine Änderungen an `dist/`, `.astro/` oder `node_modules/`.
-- Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/`.
-- Alle Dokumentationsdateien sind für ein öffentliches Repository geschrieben.
+- Die Doku ist absichtlich verteilt: Überblick in `README.md`, technische Tiefe in `docs/public/`.
+- Öffentliche Dokumentationsdateien sind für ein öffentliches Repository geschrieben.
+- `docs/private/` ist ein privates Submodule für Arbeitsnotizen, konkrete Pläne, Research und Risikoanalysen.
 - Bewerbungslinks werden statisch verschlüsselt; Klartext-Links, Passwörter, lokale Secret-Dateien und konkret generierte Payloads gehören nicht ins Repository.
