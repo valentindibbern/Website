@@ -1,71 +1,68 @@
-entries:
+projects:
   - id: "buecherantiquariat"
+    repo: "valentindibbern/buecherantiquariat"
+    title: "buecherantiquariat"
     command: "cat buecherantiquariat.project"
-    rows:
-      - label: "source"
-        value: "github.com/valentindibbern/buecherantiquariat"
-        href: "https://github.com/valentindibbern/buecherantiquariat"
-        attributes:
-          - "link"
-      - label: "type"
-        value: "Schul-/Lernprojekt"
-      - label: "stack"
-        value: "PHP, MySQL, HTML, CSS"
-      - label: "summary"
-        value: "kleine Antiquariat-Anwendung mit MVC-ähnlicher Struktur, Routing, Models, Views, Komponenten und Projektdokumentation"
+    type: "Schul-/Lernprojekt"
+    stack:
+      - "PHP"
+      - "MySQL"
+      - "HTML"
+      - "CSS"
+    summary: "kleine Antiquariat-Anwendung mit MVC-ähnlicher Struktur, Routing, Models, Views, Komponenten und Projektdokumentation"
+    source:
+      label: "github.com/valentindibbern/buecherantiquariat"
+      href: "https://github.com/valentindibbern/buecherantiquariat"
+    featured: true
+    order: 10
   - id: "jahr-java-3-aufgaben"
+    repo: "valentindibbern/JahrJava3Aufgaben"
+    title: "JahrJava3Aufgaben"
     command: "open project JahrJava3Aufgaben"
-    rows:
-      - label: "source"
-        value: "github.com/valentindibbern/JahrJava3Aufgaben"
-        href: "https://github.com/valentindibbern/JahrJava3Aufgaben"
-        attributes:
-          - "link"
-      - label: "type"
-        value: "Java-Aufgabensammlung"
-      - label: "stack"
-        value: "Java"
-      - label: "summary"
-        value: "Aufgaben aus dem dritten Schuljahr, unter anderem ggT/kgV-Konsolenprogramm und Parkhaus-Simulation mit OOP- und SOLID-Fokus"
+    type: "Java-Aufgabensammlung"
+    stack:
+      - "Java"
+    summary: "Aufgaben aus dem dritten Schuljahr, unter anderem ggT/kgV-Konsolenprogramm und Parkhaus-Simulation mit OOP- und SOLID-Fokus"
+    source:
+      label: "github.com/valentindibbern/JahrJava3Aufgaben"
+      href: "https://github.com/valentindibbern/JahrJava3Aufgaben"
+    order: 20
   - id: "neovimconfig"
+    repo: "valentindibbern/neovimconfig"
+    title: "neovimconfig"
     command: "open project neovimconfig"
-    rows:
-      - label: "source"
-        value: "github.com/valentindibbern/neovimconfig"
-        href: "https://github.com/valentindibbern/neovimconfig"
-        attributes:
-          - "link"
-      - label: "type"
-        value: "persönliche Entwicklungsumgebung"
-      - label: "stack"
-        value: "Lua, Neovim"
-      - label: "summary"
-        value: "eigene Neovim-Konfiguration mit LSP, Treesitter, Telescope, Lualine, Noice, Mini und weiteren Plugins"
+    type: "persönliche Entwicklungsumgebung"
+    stack:
+      - "Lua"
+      - "Neovim"
+    summary: "eigene Neovim-Konfiguration mit LSP, Treesitter, Telescope, Lualine, Noice, Mini und weiteren Plugins"
+    source:
+      label: "github.com/valentindibbern/neovimconfig"
+      href: "https://github.com/valentindibbern/neovimconfig"
+    order: 30
   - id: "cmd-rechner"
+    repo: "valentindibbern/cmdRechner"
+    title: "cmdRechner"
     command: "open project cmdRechner"
-    rows:
-      - label: "source"
-        value: "github.com/valentindibbern/cmdRechner"
-        href: "https://github.com/valentindibbern/cmdRechner"
-        attributes:
-          - "link"
-      - label: "type"
-        value: "Konsolenprojekt"
-      - label: "stack"
-        value: "Python"
-      - label: "summary"
-        value: "kleines Python-Projekt aus dem GitHub-Profil; Repository enthält Source- und Dokumentationsordner"
+    type: "Konsolenprojekt"
+    stack:
+      - "Python"
+    summary: "kleines Python-Projekt aus dem GitHub-Profil; Repository enthält Source- und Dokumentationsordner"
+    source:
+      label: "github.com/valentindibbern/cmdRechner"
+      href: "https://github.com/valentindibbern/cmdRechner"
+    order: 40
   - id: "website"
+    repo: "valentindibbern/Website"
+    title: "Website"
     command: "open project Website"
-    rows:
-      - label: "source"
-        value: "github.com/valentindibbern/Website"
-        href: "https://github.com/valentindibbern/Website"
-        attributes:
-          - "link"
-      - label: "type"
-        value: "persönliche Website"
-      - label: "stack"
-        value: "Astro, TypeScript, Tailwind"
-      - label: "summary"
-        value: "statische Portfolio-Website im Terminal-/ASCII-Stil"
+    type: "persönliche Website"
+    stack:
+      - "Astro"
+      - "TypeScript"
+      - "Tailwind"
+    summary: "statische Portfolio-Website im Terminal-/ASCII-Stil"
+    source:
+      label: "github.com/valentindibbern/Website"
+      href: "https://github.com/valentindibbern/Website"
+    order: 50

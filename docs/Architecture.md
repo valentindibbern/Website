@@ -19,7 +19,7 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - `src/content/data/`
   - YAML-Daten für Listen, Tabellen und Dictionaries.
 - `src/utils/`
-  - Loader-Helfer für Astro Content Collections und Content-Validierung pro Ausgabeform.
+  - Loader-Helfer für Astro Content Collections, Content-Validierung pro Ausgabeform und die spezialisierte Projekt-Mapping-Schicht.
 - `src/styles/global.css`
   - Globales Styling und Terminal-Design-Tokens.
 
@@ -29,9 +29,10 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 2. Strukturierte Daten werden in `src/content/data/*.yaml` gepflegt.
 3. `src/content.config.ts` definiert die Collections `text` und `data`.
 4. `src/utils/content.ts` lädt Einträge über Astro Content Collections.
-5. Seiten setzen `TerminalCommand` und die passende Output-Komponente.
-6. Output-Komponenten laden per `src` ihre Quelle.
-7. Astro erzeugt statische HTML-Dateien.
+5. Projekte werden aus dem spezialisierten `projects`-Shape in Terminal-Dictionary-Zeilen gemapped.
+6. Seiten setzen `TerminalCommand` und die passende Output-Komponente.
+7. Output-Komponenten laden per `src` ihre Quelle oder erhalten vorbereitete Daten als Props.
+8. Astro erzeugt statische HTML-Dateien.
 
 ## Routing Model
 
@@ -53,6 +54,7 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 
 - Content-Dateien bleiben einfach editierbar.
 - Markdown wird für Text genutzt, YAML für Struktur.
+- Projekte nutzen eine strukturierte YAML-Form mit `repo` als späterem Merge-Key für GitHub-Daten.
 - Seiten bestimmen Reihenfolge und Kontext.
 - Komponenten bestimmen die Ausgabeform und laden ihre Quelle über `src`.
 - Statische Generierung ist die Standardannahme.

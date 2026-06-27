@@ -1,0 +1,31 @@
+---
+import {
+    projectToDictionaryRows,
+    type ProjectEntry,
+} from "@/utils/content";
+import TerminalValue from "@components/TerminalValue.astro";
+
+interface Props {
+    project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const rows = projectToDictionaryRows(project);
+---
+
+<dl class="output-pairs">
+    {
+        rows.map((row) => (
+            <>
+                <dt class="output-label">{row.label}</dt>
+                <dd class="output-value">
+                    <TerminalValue
+                        value={row.value}
+                        href={row.href}
+                        attributes={row.attributes}
+                    />
+                </dd>
+            </>
+        ))
+    }
+</dl>

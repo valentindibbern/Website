@@ -38,6 +38,26 @@ export type DictionaryEntry = {
     rows: DictionaryRow[];
 };
 
+export type ProjectLink = {
+    label?: string;
+    href: string;
+};
+
+export type ProjectEntry = {
+    id: string;
+    repo: string;
+    title: string;
+    command?: string;
+    type?: string;
+    stack?: string[];
+    summary: string;
+    source: ProjectLink;
+    demo?: ProjectLink;
+    featured?: boolean;
+    order?: number;
+    hidden?: boolean;
+};
+
 export async function getTextContent(src: string) {
     const entry = await getContentEntry("text", src);
     const rendered = await render(entry);
@@ -96,6 +116,78 @@ export async function getDictionaryEntries(src: string) {
     }
 
     return entry.data.entries;
+}
+
+export async function getProjects(): Promise<ProjectEntry[]> {
+    const entry = await getDataContent("projects");
+
+    if (!isProjectListData(entry.data)) {
+        throw new Error(
+            "Expected projects in src/content/data/projects.yaml for project output.",
+        );
+    }
+
+    return entry.data.projects
+        .map((project, index) => ({ project, index }))
+        .filter(({ project }) => !project.hidden)
+        .sort((left, right) => {
+            const leftOrder = left.project.order ?? Number.POSITIVE_INFINITY;
+            const rightOrder = right.project.order ?? Number.POSITIVE_INFINITY;
+
+            if (leftOrder !== rightOrder) {
+                return leftOrder - rightOrder;
+            }
+
+            return left.index - right.index;
+        })
+        .map(({ project }) => project);
+}
+
+export async function getFeaturedProject(): Promise<ProjectEntry | undefined> {
+    const projects = await getProjects();
+
+    return projects.find((project) => project.featured) ?? projects[0];
+}
+
+export function projectToDictionaryRows(project: ProjectEntry): DictionaryRow[] {
+    const rows: DictionaryRow[] = [
+        {
+            label: "source",
+            value: project.source.label ?? formatProjectLinkLabel(project.source.href),
+            href: project.source.href,
+            attributes: ["link"],
+        },
+    ];
+
+    if (project.type) {
+        rows.push({
+            label: "type",
+            value: project.type,
+        });
+    }
+
+    if (project.stack?.length) {
+        rows.push({
+            label: "stack",
+            value: project.stack.join(", "),
+        });
+    }
+
+    rows.push({
+        label: "summary",
+        value: project.summary,
+    });
+
+    if (project.demo) {
+        rows.push({
+            label: "demo",
+            value: project.demo.label ?? formatProjectLinkLabel(project.demo.href),
+            href: project.demo.href,
+            attributes: ["link"],
+        });
+    }
+
+    return rows;
 }
 
 export async function getListContent(src: string): Promise<TerminalValue[]> {
@@ -195,6 +287,12 @@ function isEntryListData(data: DataEntry["data"]): data is {
     return "entries" in data;
 }
 
+function isProjectListData(data: DataEntry["data"]): data is {
+    projects: ProjectEntry[];
+} {
+    return "projects" in data;
+}
+
 function isTableData(data: DataEntry["data"]): data is {
     columns: TableColumn[];
     rows: Record<string, string | TerminalValue>[];
@@ -224,6 +322,10 @@ function normalizeTerminalValue(value: string | TerminalValue): TerminalValue {
     }
 
     return value;
+}
+
+function formatProjectLinkLabel(href: string) {
+    return href.replace(/^https:\/\//, "").replace(/\/$/, "");
 }
 
 async function getContentEntry<TCollection extends "data" | "text">(

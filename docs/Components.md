@@ -56,6 +56,17 @@ Datei: `src/components/TerminalDictionary.astro`
 - Values können `attributes: ["link"]` und `href` tragen und werden dann über `TerminalValue` als HTML-Link gerendert.
 - Labels bleiben reiner Text und übernehmen keine Value-Attribute.
 
+## TerminalProject
+
+Datei: `src/components/TerminalProject.astro`
+
+- Rendert ein strukturiertes Projekt als semantisches `dl`.
+- Props:
+  - `project`: vorbereiteter Projekt-Eintrag aus `getProjects()` oder `getFeaturedProject()`.
+- Lädt keinen Content selbst; die Projektloader in `src/utils/content.ts` liefern und sortieren die Daten.
+- Nutzt dieselben Output-Klassen und `TerminalValue` wie `TerminalDictionary`.
+- Dient als Übergangsschicht zwischen strukturiertem Projekt-Content und der bestehenden Terminal-Dictionary-Darstellung.
+
 ## TerminalTable
 
 Datei: `src/components/TerminalTable.astro`

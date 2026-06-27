@@ -1,12 +1,12 @@
 ---
 import TerminalCommand from "@components/TerminalCommand.astro";
-import TerminalDictionary from "@components/TerminalDictionary.astro";
 import TerminalHeading from "@components/TerminalHeading.astro";
+import TerminalProject from "@components/TerminalProject.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getDictionaryEntries } from "@/utils/content";
+import { getProjects } from "@/utils/content";
 
 const title = "Projects";
-const projects = await getDictionaryEntries("projects");
+const projects = await getProjects();
 ---
 
 <BaseLayout title={title}>
@@ -27,7 +27,7 @@ const projects = await getDictionaryEntries("projects");
                                 path="/projects"
                                 command={entry.command ?? "cat projects.yaml"}
                             />
-                            <TerminalDictionary src="projects" entry={entry.id} />
+                            <TerminalProject project={entry} />
                         </article>
                     ))
                 }
