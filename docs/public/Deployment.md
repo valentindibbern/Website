@@ -10,7 +10,7 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 
 ## Commands
 
-- `bun build`
+- `bun run build`
   - Erzeugt den Production Build.
 - `bun run encrypt:application-link`
   - Liest `APPLICATION_ACCESS_PASSWORD` und `APPLICATION_ACCESS_URL` aus der Umgebung oder lokal `.application-secrets.local.json`, verlangt ein starkes Passwort und eine HTTPS-URL und schreibt den verschlüsselten Payload nach `src/config/applicationAccess.ts`.
