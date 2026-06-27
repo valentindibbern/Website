@@ -5,8 +5,5 @@ export const navLists = {
         { href: "/projects", label: "projects" },
         { href: "/links", label: "links" },
     ],
-    footer: [
-        { href: "/impressum", label: "impressum" },
-        { href: "/links", label: "contact" },
-    ],
+    footer: [],
 } as const;

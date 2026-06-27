@@ -12,6 +12,14 @@ Diese Datei sammelt Auffaelligkeiten aus dem Codebase-Review vom 2026-06-27. Gep
 - Kritische Einordnung: Punkt 4 ist latent, aber nicht harmlos. Ein nicht gerenderter Footer erzeugt heute keinen kaputten Link auf der Website; trotzdem ist `navLists.footer` eine oeffentliche Konfiguration und kann spaeter ohne weitere Pruefung von `NavComponent` verwendet werden. Deshalb sollte die Entscheidung "Route anlegen" oder "Footer-Eintrag entfernen" vor einer Footer-Einfuehrung getroffen werden.
 - Kritische Einordnung: Punkt 7 sollte vor allem als Content-Qualitaetsproblem behandelt werden. Leere Tabellenzellen koennen absichtlich wirken, obwohl sie durch Tippfehler entstehen. Wenn optionale Spalten fachlich benoetigt werden, sollte diese Optionalitaet explizit modelliert werden; sonst sollten fehlende und unbekannte Keys hart fehlschlagen.
 
+## Umsetzungsstatus vom 2026-06-27
+
+- Punkte 1 und 2: Die statische GitHub-Pages-Loesung bleibt bestehen, wird aber klarer als bewusstes Risiko dokumentiert. Das Formular verwendet nun `zugangscode`, `name="application-access"` und `autocomplete="off"` auf Formular und Feld.
+- Punkt 3: `http:` ist aus der erlaubten Content-Link-Policy entfernt. Schema und Renderer erlauben fuer externe Weblinks nur noch `https:`, dazu weiterhin interne Pfade, Hashlinks, `mailto:` und `tel:`.
+- Punkt 4: Die Footer-Liste bleibt als leere Konfiguration bestehen. Der nicht existierende `/impressum`-Link wurde entfernt, ohne eine neue Route anzulegen.
+- Punkte 5 und 6: Die Dokumentation folgt der aktuellen Implementierung. `links.yaml` bleibt ein Dictionary, `education-previous.yaml` ist als derzeit nicht gerenderter Content dokumentiert, und die getrennten Praktika-Dateien bleiben bestehen.
+- Punkt 7: Das Content-Schema und `getTableContent()` validieren Tabellenzeilen gegen `columns`. Fehlende oder unbekannte Keys brechen mit einer klaren Fehlermeldung ab.
+
 ## 1. Statisches Bewerbungsgate kann offline angegriffen werden
 
 - Ort im Code: `src/pages/application.astro` Zeilen 67-182, `scripts/encrypt-application-link.mjs` Zeilen 6 und 25-70, `docs/Deployment.md` Zeilen 5-8 und 30-37.

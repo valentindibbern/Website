@@ -66,6 +66,7 @@ Datei: `src/components/TerminalTable.astro`
 - Erwartet `columns` und `rows`.
 - Tabellenzellen können als String oder als Objekt mit `value`, `href` und `attributes` gepflegt werden.
 - Zellen mit `attributes: ["link"]` werden über `TerminalValue` als HTML-Link gerendert.
+- Jede Tabellenzeile muss alle in `columns` definierten Keys enthalten und darf keine unbekannten Keys haben.
 - Tabellenzellen dürfen normal umbrechen; horizontaler Scroll bleibt nur ein Fallback.
 
 ## TerminalList
@@ -93,6 +94,7 @@ Datei: `src/components/TerminalValue.astro`
 - Unterstützt aktuell `attributes: ["link"]`.
 - Link-Values werden nur mit `attributes: ["link"]` und vorhandenem `href` als `<a>` ausgegeben.
 - Interne `href`-Werte mit `/` laufen durch `withBase()`.
+- Externe Weblinks müssen `https:` verwenden; `mailto:`, `tel:` und Hashlinks sind ebenfalls erlaubt.
 - Rendert keine Labels und zeigt `attributes` nicht sichtbar an.
 
 ## HeaderComponent
@@ -110,6 +112,7 @@ Datei: `src/components/NavComponent.astro`
 - Rendert Navigationslinks aus `src/config/navigation.ts`.
 - Markiert den aktuellen Link.
 - Nutzt `withBase()` für GitHub-Pages-kompatible URLs.
+- Aktuell wird die Header-Navigation genutzt; die Footer-Liste bleibt leer, bis alle Footer-Ziele echte Routen haben.
 
 ## BaseLayout
 

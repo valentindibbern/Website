@@ -40,7 +40,7 @@ function isAllowedHref(href: string) {
 
     try {
         const url = new URL(trimmedHref);
-        return ["https:", "http:", "mailto:", "tel:"].includes(url.protocol);
+        return ["https:", "mailto:", "tel:"].includes(url.protocol);
     } catch {
         return false;
     }
@@ -119,7 +119,35 @@ const tableSchema = z
         columns: z.array(tableColumnSchema),
         rows: z.array(tableRowSchema),
     })
-    .strict();
+    .strict()
+    .superRefine((table, context) => {
+        const expectedKeys = table.columns.map((column) => column.key);
+        const expectedKeySet = new Set(expectedKeys);
+
+        table.rows.forEach((row, index) => {
+            const rowKeys = Object.keys(row);
+            const rowKeySet = new Set(rowKeys);
+            const missingKeys = expectedKeys.filter((key) => !rowKeySet.has(key));
+            const unknownKeys = rowKeys.filter((key) => !expectedKeySet.has(key));
+
+            if (!missingKeys.length && !unknownKeys.length) {
+                return;
+            }
+
+            const details = [
+                missingKeys.length ? `missing keys: ${missingKeys.join(", ")}` : "",
+                unknownKeys.length ? `unknown keys: ${unknownKeys.join(", ")}` : "",
+            ]
+                .filter(Boolean)
+                .join("; ");
+
+            context.addIssue({
+                code: "custom",
+                message: `Table row ${index + 1} must match columns exactly: ${details}.`,
+                path: ["rows", index],
+            });
+        });
+    });
 
 const dataSchema = z.union([
     tableSchema,

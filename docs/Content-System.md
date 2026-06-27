@@ -87,7 +87,8 @@ rows:
 - Aktuell ist im Schema nur `"link"` erlaubt. Weitere Attribute wie `"important"` müssen zuerst in `src/content.config.ts` ergänzt und in den Komponenten implementiert werden.
 - `value` ist immer der sichtbare Text. `href` ist immer das technische Linkziel.
 - `"link"` rendert den sichtbaren `value` als HTML-Link und verlangt ein nicht leeres `href`.
-- Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; erlaubt sind außerdem `#`, `https:`, `http:`, `mailto:` und `tel:`.
+- Interne `href`-Werte mit `/` werden über die konfigurierte Base-URL gerendert; erlaubt sind außerdem `#`, `https:`, `mailto:` und `tel:`.
+- Externe Weblinks müssen HTTPS verwenden; `http:` wird vom Schema und Renderer abgewiesen.
 - Andere Schemes wie `javascript:` oder `data:` werden vom Schema abgewiesen.
 - Unbekannte Felder werden bei Dictionary-Zeilen durch das strikte Schema abgewiesen.
 - Sensible externe Ziele stehen nicht direkt in `links.yaml`. Solche Einträge verweisen auf lokale Gate-Routen wie `/application`.
@@ -98,9 +99,10 @@ rows:
 - `TerminalText src="abouttext"` liest `src/content/text/abouttext.md`.
 - `TerminalDictionary src="profile"` liest `src/content/data/profile.yaml`.
 - `TerminalTable src="skills"` liest `src/content/data/skills.yaml`.
-- `TerminalList src="links"` liest `src/content/data/links.yaml`.
+- `TerminalDictionary src="links"` liest `src/content/data/links.yaml`.
 - Seiten setzen die Reihenfolge und rendern `TerminalCommand` vor der passenden Output-Komponente.
-- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml` geladen. Ihre sichtbaren Terminal-Commands stehen direkt in der Seite.
+- Die Ausbildung- und Erfahrungseinträge auf `src/pages/about.astro` werden über einzelne Dictionary-Dateien wie `education-current.yaml`, `cobra-software.yaml` und `klixar-it.yaml` geladen. Ihre sichtbaren Terminal-Commands stehen direkt in der Seite.
+- `education-previous.yaml` ist derzeit Content-Inventar, wird aber auf keiner öffentlichen Seite gerendert.
 - `references.yaml` bleibt Content für den Entwurf `src/drafts/references.astro` und wird aktuell nicht auf einer öffentlichen Route gerendert.
 
 ## Current Inventory
@@ -126,6 +128,7 @@ rows:
 - Fließtexte in `src/content/text/*.md` bearbeiten.
 - Strukturierte Listen, Tabellen und Label-/Value-Daten in `src/content/data/*.yaml` bearbeiten.
 - Reihenfolge innerhalb einer YAML-Liste ist die sichtbare Reihenfolge.
+- Tabellenzeilen müssen exakt die Keys aus `columns` enthalten; fehlende oder unbekannte Keys brechen den Content-Check ab.
 - Manuelle Zeilenumbrüche in Content-Dateien sind editorfreundlich, erzwingen aber keinen sichtbaren Umbruch.
 - Neue Terminal-Ausgaben brauchen eine passende Output-Komponente oder eine bestehende Datenform.
 - Keine großen Inhaltsblöcke in Markdown-Frontmatter verschieben.

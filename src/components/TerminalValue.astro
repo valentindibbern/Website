@@ -22,7 +22,7 @@ function normalizeHref(href: string) {
     try {
         const url = new URL(trimmedHref);
 
-        if (["https:", "http:", "mailto:", "tel:"].includes(url.protocol)) {
+        if (["https:", "mailto:", "tel:"].includes(url.protocol)) {
             return url.href;
         }
     } catch {

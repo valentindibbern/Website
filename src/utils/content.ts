@@ -129,6 +129,8 @@ export async function getTableContent(src: string) {
         );
     }
 
+    validateTableRows(src, entry.data.columns, entry.data.rows);
+
     return {
         columns: entry.data.columns,
         rows: entry.data.rows.map((row) =>
@@ -140,6 +142,35 @@ export async function getTableContent(src: string) {
             ),
         ),
     };
+}
+
+function validateTableRows(
+    src: string,
+    columns: TableColumn[],
+    rows: Record<string, string | TerminalValue>[],
+) {
+    const expectedKeys = columns.map((column) => column.key);
+    const expectedKeySet = new Set(expectedKeys);
+
+    rows.forEach((row, index) => {
+        const rowKeys = Object.keys(row);
+        const rowKeySet = new Set(rowKeys);
+        const missingKeys = expectedKeys.filter((key) => !rowKeySet.has(key));
+        const unknownKeys = rowKeys.filter((key) => !expectedKeySet.has(key));
+
+        if (missingKeys.length || unknownKeys.length) {
+            const details = [
+                missingKeys.length ? `missing keys: ${missingKeys.join(", ")}` : "",
+                unknownKeys.length ? `unknown keys: ${unknownKeys.join(", ")}` : "",
+            ]
+                .filter(Boolean)
+                .join("; ");
+
+            throw new Error(
+                `Invalid table row ${index + 1} in src/content/data/${src}.yaml: ${details}.`,
+            );
+        }
+    });
 }
 
 function isDictionaryData(data: DataEntry["data"]): data is {
