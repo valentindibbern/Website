@@ -14,11 +14,11 @@ Diese Datei ist der öffentliche Einstieg für Agents und andere KI-Systeme, die
 
 - `README.md`
 - `AGENTS.md`
-- `docs/Stack.md`
-- `docs/Architecture.md`
-- `docs/Content-System.md`
-- `docs/Workflows.md`
-- `docs/Deployment.md`
+- `docs/public/Stack.md`
+- `docs/public/Architecture.md`
+- `docs/public/Content-System.md`
+- `docs/public/Workflows.md`
+- `docs/public/Deployment.md`
 - `src/content.config.ts`
 - `src/utils/content.ts`
 
@@ -62,7 +62,7 @@ Diese Datei ist der öffentliche Einstieg für Agents und andere KI-Systeme, die
   - dazugehörige Komponenten unter `src/components/*`
 - Dokumentation aktualisieren:
   - `README.md` für Einstieg und Navigationshinweise
-  - passende Datei unter `docs/*` für Details
+  - passende Datei unter `docs/public/*` für öffentliche Details
 
 ## Validation
 
@@ -83,4 +83,5 @@ Diese Datei ist der öffentliche Einstieg für Agents und andere KI-Systeme, die
 - Terminal-Ausgaben sind bewusst textbasiert.
 - Die Doku soll neue Entwickler schnell orientieren und Agents robuste Pfade geben.
 - Jede Projektänderung braucht eine passende Doku-Änderung.
-- README und `docs/*` werden als öffentliche Referenz behandelt.
+- README und `docs/public/*` werden als öffentliche Referenz behandelt.
+- `docs/private/` ist ein privates Submodule für Arbeitsnotizen, konkrete Pläne, Research und Risikoanalysen.

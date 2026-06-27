@@ -9,7 +9,8 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - Das Repository ist öffentlich.
 - Dokumentation muss für externe Leser verständlich sein.
 - Keine privaten Arbeitsnotizen, Zugangsdaten oder persönlichen Rohinformationen dokumentieren.
-- README erklärt den öffentlichen Einstieg; Detailwissen gehört in passende Dateien unter `docs/`.
+- README erklärt den öffentlichen Einstieg; öffentliches Detailwissen gehört in passende Dateien unter `docs/public/`.
+- Private Arbeitsnotizen, konkrete Pläne, Research und Risikoanalysen gehören in `docs/private/`.
 
 ## Add Or Change Content
 
@@ -20,7 +21,7 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - Schema in `src/content.config.ts` nur ändern, wenn eine neue strukturelle Datenform nötig ist.
 - Loader in `src/utils/content.ts` nur anpassen, wenn sich die Content-Auswahl oder Validierung ändert.
 - Betroffene Seite in `src/pages/*` prüfen.
-- Dokumentation in `docs/Content-System.md` aktualisieren.
+- Dokumentation in `docs/public/Content-System.md` aktualisieren.
 
 ## Update Projects
 
@@ -38,7 +39,7 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - `BaseLayout` verwenden, damit Header, Meta-Tags und globales Styling konsistent bleiben.
 - Navigation in `src/config/navigation.ts` ergänzen, wenn die Seite erreichbar sein soll.
 - Interne Links mit `withBase()` oder bestehender Navigation base-kompatibel halten.
-- `docs/Pages.md` und bei Bedarf `README.md` aktualisieren.
+- `docs/public/Pages.md` und bei Bedarf `README.md` aktualisieren.
 
 ## Add A Component
 
@@ -46,19 +47,19 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - Terminal-Output-Komponenten laden ihre Quelle per `src`.
 - Wiederverwendbare Content-Prüfung bleibt in `src/utils/content.ts`.
 - Props klein und explizit halten.
-- `docs/Components.md` um Zweck, Eingaben und typische Nutzung erweitern.
+- `docs/public/Components.md` um Zweck, Eingaben und typische Nutzung erweitern.
 
 ## Change Styling
 
 - Globale Design-Tokens in `src/styles/global.css` pflegen.
 - Bestehenden Terminal-Stil respektieren.
 - Neue Klassen nur einführen, wenn sie eine klare wiederverwendbare Rolle haben.
-- `docs/Architecture.md` oder `docs/Components.md` aktualisieren, wenn sich Layout- oder Komponentenverhalten ändert.
+- `docs/public/Architecture.md` oder `docs/public/Components.md` aktualisieren, wenn sich Layout- oder Komponentenverhalten ändert.
 
 ## Change Tooling
 
 - `package.json`, `astro.config.mjs`, `tsconfig.json`, `eslint.config.js`, `.prettierrc.mjs` und `bun.lock` als Source of Truth behandeln.
-- `docs/Stack.md` aktualisieren, wenn Dependencies, Integrationen oder Build-Tools geändert werden.
+- `docs/public/Stack.md` aktualisieren, wenn Dependencies, Integrationen oder Build-Tools geändert werden.
 - `README.md` aktualisieren, wenn sich Befehle oder Setup-Schritte ändern.
 
 ## Update Application Gate
