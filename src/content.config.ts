@@ -53,6 +53,10 @@ function requireSafeHref(value: { href?: string }, context: z.RefinementCtx) {
 function isAllowedHref(href: string) {
     const trimmedHref = href.trim();
 
+    if (trimmedHref.startsWith("//")) {
+        return false;
+    }
+
     if (trimmedHref.startsWith("/") || trimmedHref.startsWith("#")) {
         return true;
     }
@@ -164,7 +168,18 @@ const projectListSchema = z
     .object({
         projects: z.array(projectSchema),
     })
-    .strict();
+    .strict()
+    .superRefine(({ projects }, context) => {
+        const featuredProjects = projects.filter((project) => project.featured);
+
+        if (featuredProjects.length > 1) {
+            context.addIssue({
+                code: "custom",
+                message: "Only one project can be featured.",
+                path: ["projects"],
+            });
+        }
+    });
 
 const tableSchema = z
     .object({

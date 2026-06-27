@@ -27,7 +27,7 @@ Diese Datei beschreibt typische Änderungen am Projekt und welche Stellen dafür
 - In `src/content/data/projects.yaml` für jedes Projekt `id`, `repo`, `title`, `summary` und `source.href` setzen.
 - `repo` immer im Format `owner/name` pflegen; dieses Feld ist der spätere Merge-Key für GitHub-API-Daten.
 - `stack` als Liste pflegen. Die Terminal-Ausgabe verbindet die Einträge automatisch mit Kommas.
-- `featured: true` für das Projekt setzen, das auf Home erscheinen soll.
+- `featured: true` nur für ein Projekt setzen; das Schema bricht ab, wenn mehrere Projekte als Featured markiert sind.
 - `order` für die sichtbare Reihenfolge verwenden; Projekte ohne `order` folgen nach den sortierten Projekten in YAML-Reihenfolge.
 - `hidden: true` nutzen, wenn ein Projekt in der Datei bleiben, aber nicht auf Home oder `/projects` erscheinen soll.
 - GitHub-Descriptions, Homepages und Topics in den Repositories sauber halten, damit ein späterer GitHub-Actions-Sync diese Daten übernehmen kann.
