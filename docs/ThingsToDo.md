@@ -2,6 +2,16 @@
 
 Diese Datei sammelt Auffaelligkeiten aus dem Codebase-Review vom 2026-06-27. Geprueft wurden `bun astro check`, `bun run build`, eine lokale Preview unter `http://127.0.0.1:4321/Website/`, die Projektdokumentation und gezielte externe Referenzen. Die Hinweise wurden anschliessend gegen den aktuellen Code abgeglichen und nach Risiko praezisiert; sie sind keine bereits beschlossenen Fixes.
 
+## Nachpruefung vom 2026-06-27
+
+- Ergebnis: Die sieben Hinweise wurden erneut gegen Code, Dokumentation, `bun astro check`, `bun run build` und eine lokale Browserpruefung unter `http://127.0.0.1:4321/Website/` gegengeprueft. Es wurden keine vorgeschlagenen Fixes umgesetzt.
+- Ergebnis: `bun astro check` meldet 0 Fehler, 0 Warnungen und 0 Hinweise. `bun run build` baut 5 statische Seiten erfolgreich. Das bestaetigt, dass die Punkte derzeit vor allem Architektur-, Sicherheits-, UX- und Dokumentationsrisiken sind, keine aktuellen Build-Blocker.
+- Ergebnis: Die lokale Browserpruefung bestaetigt, dass Header- und Content-Links mit `/Website/`-Base gerendert werden, `/links` die Daten aus `links.yaml` als Dictionary zeigt und `/application` ein Passwortfeld mit `name="password"` und `autocomplete="current-password"` rendert.
+- Kritische Einordnung: Die Loesungsvorschlaege duerfen nicht als gleichwertig gelesen werden. Bei Punkt 1 ist nur eine serverseitige Authentifizierung eine echte Sicherheitsloesung; die statische GitHub-Pages-Variante ist nur eine akzeptierte Risikoreduktion. Bei Punkt 2 ist kein einzelner `autocomplete`-Wert garantiert korrekt, weil Browser und Passwortmanager Hints unterschiedlich behandeln. Bei Punkten 5 und 6 ist zuerst eine Inhaltsentscheidung noetig, damit nicht Dokumentation an zufaellige Implementierungsdetails angepasst wird.
+- Kritische Einordnung: Die Punkte 5 und 6 zeigen reale Dokumentationsdrift. `docs/Content-System.md` nennt fuer `links.yaml` noch `TerminalList src="links"`, waehrend Home und Links aktuell `TerminalDictionary src="links"` nutzen. `docs/Pages.md` nennt `education-previous.yaml` als About-Datenquelle, obwohl `/about` diese Datei nicht rendert.
+- Kritische Einordnung: Punkt 4 ist latent, aber nicht harmlos. Ein nicht gerenderter Footer erzeugt heute keinen kaputten Link auf der Website; trotzdem ist `navLists.footer` eine oeffentliche Konfiguration und kann spaeter ohne weitere Pruefung von `NavComponent` verwendet werden. Deshalb sollte die Entscheidung "Route anlegen" oder "Footer-Eintrag entfernen" vor einer Footer-Einfuehrung getroffen werden.
+- Kritische Einordnung: Punkt 7 sollte vor allem als Content-Qualitaetsproblem behandelt werden. Leere Tabellenzellen koennen absichtlich wirken, obwohl sie durch Tippfehler entstehen. Wenn optionale Spalten fachlich benoetigt werden, sollte diese Optionalitaet explizit modelliert werden; sonst sollten fehlende und unbekannte Keys hart fehlschlagen.
+
 ## 1. Statisches Bewerbungsgate kann offline angegriffen werden
 
 - Ort im Code: `src/pages/application.astro` Zeilen 67-182, `scripts/encrypt-application-link.mjs` Zeilen 6 und 25-70, `docs/Deployment.md` Zeilen 5-8 und 30-37.
