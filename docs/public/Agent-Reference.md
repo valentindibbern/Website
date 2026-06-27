@@ -67,15 +67,20 @@ Diese Datei ist der öffentliche Einstieg für Agents und andere KI-Systeme, die
 ## Validation
 
 - `bun astro check`
-- `bun build`
+- `bun run build`
 
 ## Git Behavior
 
-- Immer auf `agent-changes` arbeiten.
-- Falls der Branch fehlt, vor Änderungen erstellen.
-- Sinnvolle Zwischenschritte committen.
-- Am Ende einer Aufgabe committen und pushen.
-- Nie mergen.
+- `agent-main` ist der gemeinsame Integrationsbranch für Agent-Arbeit.
+- Agents arbeiten nicht direkt auf `main` und mergen nicht nach `main`.
+- Der User merged `agent-main` bei Bedarf manuell nach `main`.
+- Für jede Aufgabe einen eigenen `agent-*` Branch vom aktuellen `origin/agent-main` erstellen.
+- `agent-main` nicht als Task-Branch verwenden.
+- Sinnvolle Zwischenschritte committen und beschreibende Commit-Messages nutzen.
+- Am Ende der Aufgabe den Task-Branch pushen und einen Pull Request nach `agent-main` öffnen.
+- PR-Diff, geänderte Dateien, relevante Checks, Doku-Änderungen und Mergebarkeit prüfen.
+- Den Self-Review in der PR-Beschreibung oder als PR-Kommentar dokumentieren.
+- Konflikte oder fehlgeschlagene Checks auf dem Task-Branch beheben und den sauberen PR per Squash-Merge nach `agent-main` mergen.
 
 ## Behavioral Notes
 

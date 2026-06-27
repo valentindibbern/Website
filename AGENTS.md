@@ -1,7 +1,7 @@
 # AGENTS.md
 
 - Single Astro site, not a monorepo. Main entrypoints are `src/pages/*`, `src/layouts/BaseLayout.astro`, `src/components/*`, `src/content/*`, `src/utils/*`, and `src/styles/global.css`.
-- Use Bun from the repo root: `bun install`, `bun dev` (`localhost:4321`), `bun build`, `bun preview`, `bun astro check`.
+- Use Bun from the repo root: `bun install`, `bun dev` (`localhost:4321`), `bun run build`, `bun preview`, `bun astro check`.
 - Astro config enables Alpine; Tailwind v4 is wired through `@tailwindcss/vite` in `astro.config.mjs`.
 - Styling is centralized in `src/styles/global.css`; do not assume DaisyUI unless it is reintroduced in `package.json` and the CSS entrypoint.
 - TypeScript path aliases resolve `~/*` and `@/*` to `src/*`; also use `@components/*`, `@layouts/*`, `@/pages/*`, and `@/styles/*`.
@@ -21,13 +21,17 @@
 
 ## Git Rules
 
-- Work on a dedicated agent branch whose name begins with `agent`, for example `agent-main`, `agent-project-refactor`, or `agent-content-cleanup`.
-- Agent branches are independent working branches for agents; they do not need to mirror project branches or the rest of the project branch structure.
-- If the chosen agent branch does not exist, create it before making changes.
+- `agent-main` is the shared integration branch for agent work.
+- Agents must not work directly on `main`.
+- Agents must not merge into `main`; the user manually merges `agent-main` into `main` when desired.
+- For each task, work on a dedicated branch whose name begins with `agent-`, for example `agent-project-refactor` or `agent-content-cleanup`.
+- Do not use `agent-main` itself as a task branch.
+- Create task branches from the latest `origin/agent-main`.
 - Commit at sensible checkpoints, including during a larger task when the work is meaningfully split.
 - Use descriptive commit messages that explain the actual change.
-- Commit again at the end of a task before finishing work.
-- Do not ask the user whether committing to the current agent branch is allowed; it is expected for project work.
-- Push the current agent branch at the end of a task.
-- Do not ask the user whether pushing the current agent branch is allowed; it is expected at task completion.
-- Never merge branches.
+- Push the task branch at the end of the task.
+- Open a pull request from the task branch into `agent-main`.
+- Review the PR diff, changed files, relevant checks, documentation updates, and mergeability.
+- Document the self-review in the PR description or a PR comment.
+- Resolve conflicts or failed checks on the task branch, then squash-merge the PR into `agent-main` once everything is clean.
+- Do not ask the user whether committing, pushing, opening the PR, or merging into `agent-main` is allowed; it is expected for agent work.
