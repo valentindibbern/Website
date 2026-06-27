@@ -41,6 +41,68 @@ Geplante Erweiterungen:
 
 Cloudflare Pages ist die beste Gesamtoption, wenn die Website unter 1 CHF pro Monat bleiben soll und spaeter trotzdem Richtung Auth, Chat und SQL wachsen soll. GitHub Pages bleibt die einfachste und stabilste Nullkosten-Loesung fuer die aktuelle statische Site, blockiert aber fast alle geplanten dynamischen Features ohne externe Dienste. Vercel und Netlify sind sehr komfortabel, aber fuer dauerhaft gratis betriebene Fullstack-Funktionen riskanter, weil die sinnvollen Erweiterungen schnell an Plattformlimits, Usage-Kosten oder Plan-Grenzen stossen.
 
+## Preisszenarien
+
+Die meisten Anbieter rechnen in USD ab. CHF-Werte sind deshalb als Budget-Einschaetzung zu lesen, nicht als fixe Rechnung. Fuer das Projekt zaehlt praktisch: 0 USD liegt sicher unter 1 CHF; alles ab 2 USD/Monat verfehlt die harte Budgetgrenze.
+
+### Szenario A: aktueller Zustand
+
+Annahme: statische Astro-Site, eigener Domainname, Git-Deployment, kein Server zur Laufzeit, keine Datenbank, kein Authsystem, kein Chat, keine grossen Datei-Downloads.
+
+| Anbieter | Realistischer Monatsbetrag | Budget-Fit | Preisnotiz |
+| --- | --- | --- | --- |
+| Cloudflare Pages | 0 USD | Ja | Free-Plan reicht fuer Static Hosting; 500 Builds/Monat und 100 Custom Domains pro Projekt auf Free. |
+| GitHub Pages | 0 USD | Ja | GitHub Pages ist fuer public repositories im GitHub-Free-Plan verfuegbar und unterstuetzt eigene Domains. |
+| Vercel | 0 USD | Ja | Hobby ist "Free forever"; fuer statische Personal Sites meist ausreichend. |
+| Netlify | 0 USD | Ja | Free-Plan reicht typischerweise fuer kleine statische Sites; Limits fuer Bandbreite/Builds beachten. |
+| Deno Deploy | 0 USD | Ja | Free-Plan mit 1M Requests/Monat, 20 GB Egress und 50 Custom Domains pro Organisation. |
+| Firebase Hosting | 0 USD | Ja | Spark/Free bietet Hosting mit 10 GB Storage, 360 MB/Tag Transfer und Custom Domain/SSL. |
+| Render Static Sites | 0 USD | Ja | Static Sites kosten 0 USD und enthalten Custom Domains mit managed TLS. |
+| Koyeb | 0 USD moeglich | Ja, aber wacklig | Free-Kapazitaet ist eher App/Service-orientiert; fuer reine Static-Site nicht der sauberste Fit. |
+| Railway | 0 USD nur Trial, danach 1 USD/Monat | Grenzfall | Free startet mit 30-Tage-Trial und danach 1 USD/Monat; Custom Domains nach Trial eingeschraenkt. |
+| Fly.io | nutzungsabhaengig, nicht sauber 0 USD planbar | Nein | Fuer Static Hosting ueberdimensioniert; kleine VMs/Volumes koennen sehr billig sein, aber nicht sauber unter 1 CHF garantiert. |
+| Surge | 0 USD | Ja | Fuer einfache statische Sites gratis; keine sinnvolle Fullstack-Basis. |
+| Static.app | 0 USD ohne Custom Domain | Nein fuer Custom Domain | Free hat nur Subdomain; Custom Domains beginnen beim Starter-Plan fuer 5 USD/Monat. |
+| DigitalOcean App Platform | hoeher als 1 CHF, sobald sinnvoll genutzt | Nein | Eher bezahlte App-Plattform als Gratis-Static-Host. |
+
+Fazit fuer Szenario A: GitHub Pages, Cloudflare Pages, Vercel, Netlify und Render sind preislich alle bei 0 USD. Der Unterschied liegt nicht im heutigen Preis, sondern in der spaeteren Architektur.
+
+### Szenario B: Maximum
+
+Annahme: persoenliche Site plus Blog, echter Login, Zugriffsschutz fuer Dateien, Chatroom mit Rate-Limits/Moderation, SQL-Datenbank, kleine bis moderate Nutzung. Das ist bewusst kein "unbegrenztes" Maximum, sondern das groesste realistische Ziel innerhalb dieses Projekts.
+
+| Anbieter / Architektur | Realistischer Monatsbetrag | Budget-Fit | Was den Preis treibt |
+| --- | --- | --- | --- |
+| Cloudflare Pages + Workers Free + D1 + R2 | 0 USD moeglich | Ja, solange Limits reichen | Workers Free: 100k Requests/Tag; D1 Free: 5M gelesene Zeilen/Tag, 100k geschriebene Zeilen/Tag, 5 GB Storage; R2 Free: 10 GB-Monat, 1M Class-A- und 10M Class-B-Operationen. |
+| Cloudflare Pages + Workers Paid | 5 USD/Monat plus Usage | Nein | Sobald Workers Paid noetig wird: Standard-Plan mit 10M Requests/Monat inklusive, danach Usage; D1/R2 koennen zusaetzlich wachsen. |
+| GitHub Pages + Supabase Free | 0 USD moeglich | Ja, aber zweigeteilt | GitHub hostet statisch, Supabase uebernimmt Auth/Postgres/Realtime/Storage; Free-Limits und Projekt-Pausen/Quotas sind das Risiko. |
+| GitHub Pages + Supabase Pro | 25 USD/Monat | Nein | Sinnvoller Produktionspfad fuer Supabase, aber deutlich ausserhalb des 1-CHF-Ziels. |
+| GitHub Pages + Neon Free + separate Auth/Realtime | 0 USD moeglich | Ja, aber fragmentiert | SQL kann gratis starten, Auth/Chat/Storage muessen separat geloest werden; Architektur wird schnell komplex. |
+| GitHub Pages + Turso Free + separate Auth/Realtime | 0 USD moeglich | Ja, aber fragmentiert | Turso Free bietet 5 GB Storage, 500M Reads und 10M Writes/Monat; Auth/Dateien/Chat fehlen. |
+| Vercel Hobby + Free Add-ons | 0 USD moeglich | Ja, aber riskant | Hobby enthaelt viel, aber Functions, Blob, Edge Config, Data Transfer und Add-ons haben enge Frei-Kontingente. |
+| Vercel Pro | 20 USD/Monat plus Usage | Nein | Pro schaltet bessere Limits/Spend-Management frei, liegt aber weit ueber Budget. |
+| Netlify Free + externe DB/Auth | 0 USD moeglich | Ja, aber begrenzt | Hosting/Functions koennen klein gratis bleiben; SQL/Auth/Realtime kommen meist von Supabase/Neon/Firebase. |
+| Netlify Pro | typischerweise deutlich ueber 1 CHF | Nein | Sinnvollere Produktionslimits kosten; SQL bleibt trotzdem extern. |
+| Firebase Spark | 0 USD moeglich | Ja, aber kein SQL | Gut fuer Auth/Realtime/Storage-Prototypen, aber SQL passt schlecht; Firestore/Realtime Database sind NoSQL. |
+| Firebase Blaze + SQL Connect / Cloud SQL | mindestens ca. 9.37 USD/Monat nach Trial fuer Cloud SQL | Nein | Echter SQL-Pfad ueber Cloud SQL sprengt das Budget; Blaze ist nutzungsabhaengig. |
+| Render Free Services + Postgres | 0 USD moeglich fuer Experiment | Grenzfall | Free Compute/Postgres ist zum Testen gedacht; Produktionsbetrieb und Limits sind kritisch. |
+| Render bezahlte Services/Postgres | deutlich ueber 1 CHF | Nein | Web Service, persistente Storage- und DB-Kosten addieren sich. |
+| Deno Deploy Free + Deno KV | 0 USD moeglich | Ja, aber nicht ideal fuer SQL | Free enthaelt 1M Requests, 20 GB Egress, 1 GiB Volume, 1 GiB KV; SQL/Auth/Dateien brauchen Zusatzarchitektur. |
+| Deno Deploy Pro | 20 USD/Monat plus Usage | Nein | Bessere Limits, aber ausserhalb Budget. |
+| Koyeb Free 5h / kleine Services | 0 USD fuer sehr kleine Nutzung | Nein fuer dauerhaftes Maximum | Free-Postgres/Compute ist stark eingeschraenkt; dauerhaft aktive Dienste kosten schnell deutlich mehr. |
+| Railway | 1 USD/Monat nach Trial oder 5 USD Hobby | Nein | Schon das Free-Modell liegt nach Trial an der Budgetkante; Custom Domains und dauerhafte Services sprechen gegen das Ziel. |
+| Fly.io | nutzungsabhaengig, realistisch ueber 1 CHF | Nein | Eigene Services, Volumes, Postgres und Egress sind flexibel, aber nicht budgetstabil. |
+
+Fazit fuer Szenario B: Unter 1 CHF pro Monat ist nur ein kleines, streng limitiertes Fullstack-Projekt realistisch. Die besten Chancen haben Cloudflare Free-Tiers oder eine Kombination aus GitHub/Cloudflare Pages mit Supabase/Neon/Turso Free. Sobald es robust, dauerhaft, moderiert, sicher und speicherintensiv wird, ist das ehrliche Budget eher 5 bis 25 USD/Monat.
+
+### Preiskritische Risiken
+
+- Chat ist nicht nur Realtime-Technik, sondern auch Missbrauchsschutz. Spam, Bots und viele offene Verbindungen koennen Free-Tiers schnell treffen.
+- Datei-Zugriff ist teuer, wenn Dateien gross sind oder oft heruntergeladen werden. Dropbox-Weiterleitungen sparen Hosting-Speicher, ersetzen aber keine echte Zugriffskontrolle.
+- SQL-Kosten haengen stark von Schreiblast, Indexen, Query-Design und Datenaufbewahrung ab.
+- Free-Tiers koennen blockieren statt abrechnen. Das schuetzt das Budget, kann aber Features fuer Nutzer hart ausfallen lassen.
+- Pay-as-you-go schuetzt nicht automatisch vor Kosten. Ohne Budget-Limits, Rate-Limits und Monitoring ist "fast gratis" riskant.
+
 ## Top 10
 
 | Rang | Anbieter | Urteil | Monatlich unter 1 CHF | Eigene Domain gratis | Astro/Bun-Fit | Zukunft mit Auth/SQL/Chat |
