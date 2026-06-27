@@ -80,6 +80,7 @@ Lokale Vorschau:
 - [Workflows](./docs/Workflows.md): typische Änderungen und wo sie umgesetzt werden
 - [Deployment](./docs/Deployment.md): Build, Preview und Base-URL-Verhalten
 - [Hosting Research](./docs/Hosting-Research.md): kritischer Vergleich möglicher Hostingprovider
+- [Cloudflare Pages Migration](./docs/Cloudflare-Pages-Migration.md): Recherche und Ablauf für einen möglichen Umzug von GitHub Pages
 - [Agent Reference](./docs/Agent-Reference.md): öffentliche Arbeitskonventionen für Agents und KI-Systeme
 
 ## Source Of Truth
