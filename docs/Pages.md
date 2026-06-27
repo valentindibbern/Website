@@ -9,7 +9,7 @@ Datei: `src/pages/index.astro`
 - Nutzt:
   - `text/home-lede.md`
   - `data/profile.yaml`
-  - erster Eintrag aus `data/projects.yaml`
+  - Featured-Projekt aus `data/projects.yaml`
   - `data/links.yaml`
 
 ## About
@@ -37,7 +37,8 @@ Datei: `src/pages/projects.astro`
 
 - Listet alle Projekte aus `data/projects.yaml`.
 - Nutzt `TerminalHeading` mit `size="Small"` für `projects/`.
-- Jeder Eintrag rendert ein eigenes `TerminalCommand` und ein Dictionary.
+- `projects.yaml` nutzt das spezialisierte `projects`-Shape mit `repo`, `title`, `source`, `summary` und lokalen Kuratierungsfeldern.
+- Jeder sichtbare Eintrag rendert ein eigenes `TerminalCommand` und `TerminalProject`.
 
 ## Draft References
 

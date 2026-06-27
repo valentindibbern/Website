@@ -31,8 +31,31 @@ function requireHrefForLink(
     }
 }
 
+function requireSafeHref(value: { href?: string }, context: z.RefinementCtx) {
+    if (!value.href?.trim()) {
+        context.addIssue({
+            code: "custom",
+            message: "Project links require href.",
+            path: ["href"],
+        });
+        return;
+    }
+
+    if (!isAllowedHref(value.href)) {
+        context.addIssue({
+            code: "custom",
+            message: "Project links require a safe href scheme.",
+            path: ["href"],
+        });
+    }
+}
+
 function isAllowedHref(href: string) {
     const trimmedHref = href.trim();
+
+    if (trimmedHref.startsWith("//")) {
+        return false;
+    }
 
     if (trimmedHref.startsWith("/") || trimmedHref.startsWith("#")) {
         return true;
@@ -114,6 +137,50 @@ const listSchema = z
     })
     .strict();
 
+const projectLinkSchema = z
+    .object({
+        label: z.string().optional(),
+        href: z.string(),
+    })
+    .strict()
+    .superRefine(requireSafeHref);
+
+const projectSchema = z
+    .object({
+        id: z.string(),
+        repo: z.string().regex(/^[^/\s]+\/[^/\s]+$/, {
+            message: 'Project repo must use "owner/name".',
+        }),
+        title: z.string(),
+        command: z.string().optional(),
+        type: z.string().optional(),
+        stack: z.array(z.string()).optional(),
+        summary: z.string(),
+        source: projectLinkSchema,
+        demo: projectLinkSchema.optional(),
+        featured: z.boolean().optional(),
+        order: z.number().optional(),
+        hidden: z.boolean().optional(),
+    })
+    .strict();
+
+const projectListSchema = z
+    .object({
+        projects: z.array(projectSchema),
+    })
+    .strict()
+    .superRefine(({ projects }, context) => {
+        const featuredProjects = projects.filter((project) => project.featured);
+
+        if (featuredProjects.length > 1) {
+            context.addIssue({
+                code: "custom",
+                message: "Only one project can be featured.",
+                path: ["projects"],
+            });
+        }
+    });
+
 const tableSchema = z
     .object({
         columns: z.array(tableColumnSchema),
@@ -151,6 +218,7 @@ const tableSchema = z
 
 const dataSchema = z.union([
     tableSchema,
+    projectListSchema,
     entryListSchema,
     listSchema,
     dictionarySchema,

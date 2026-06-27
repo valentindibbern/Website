@@ -6,6 +6,10 @@ Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zu
 
 Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt. Der externe Dateilink liegt nur als verschlüsselter Payload im Build und wird im Browser per Web Crypto entschlüsselt. Dieser Payload ist öffentlich abrufbar; der Schutz hängt an einer langen zufälligen, nicht wiederverwendeten Passphrase und ersetzt keine serverseitige Autorisierung, kein Rate-Limit und keine Sperre für sensible Dateien.
 
+Eine kritische Bewertung möglicher Hosting-Alternativen steht in [Hosting Research](./Hosting-Research.md). Kurzfristig bleibt GitHub Pages für statische Inhalte passend; für spätere Auth-, Chat- und SQL-Funktionen ist Cloudflare Pages mit Workers/D1/R2 der stärkste kostenbewusste Kandidat.
+
+Eine konkrete Recherche zum möglichen Wechsel von GitHub Pages zu Cloudflare Pages steht in [Cloudflare Pages Migration](./Cloudflare-Pages-Migration.md).
+
 ## Commands
 
 - `bun build`

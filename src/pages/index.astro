@@ -3,11 +3,12 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TerminalCommand from "@components/TerminalCommand.astro";
 import TerminalDictionary from "@components/TerminalDictionary.astro";
 import TerminalHeading from "@components/TerminalHeading.astro";
+import TerminalProject from "@components/TerminalProject.astro";
 import TerminalText from "@components/TerminalText.astro";
-import { getDictionaryEntries } from "@/utils/content";
+import { getFeaturedProject } from "@/utils/content";
 
 const title = "Home";
-const [firstProject] = await getDictionaryEntries("projects");
+const featuredProject = await getFeaturedProject();
 ---
 
 <BaseLayout title={title}>
@@ -36,13 +37,13 @@ const [firstProject] = await getDictionaryEntries("projects");
             <TerminalCommand command="cd ../projects" />
             <div class="terminal-list">
                 {
-                    firstProject && (
+                    featuredProject && (
                         <article class="terminal-entry">
                             <TerminalCommand
                                 path="/projects"
-                                command={firstProject.command ?? "cat projects.yaml"}
+                                command={featuredProject.command ?? "cat projects.yaml"}
                             />
-                            <TerminalDictionary src="projects" entry={firstProject.id} />
+                            <TerminalProject project={featuredProject} />
                         </article>
                     )
                 }
