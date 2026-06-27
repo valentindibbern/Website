@@ -21,12 +21,13 @@
 
 ## Git Rules
 
-- Work on the separate branch `agent-changes`.
-- If `agent-changes` does not exist, create it before making changes.
+- Work on a dedicated agent branch whose name begins with `agent`, for example `agent-main`, `agent-project-refactor`, or `agent-content-cleanup`.
+- Agent branches are independent working branches for agents; they do not need to mirror project branches or the rest of the project branch structure.
+- If the chosen agent branch does not exist, create it before making changes.
 - Commit at sensible checkpoints, including during a larger task when the work is meaningfully split.
 - Use descriptive commit messages that explain the actual change.
 - Commit again at the end of a task before finishing work.
-- Do not ask the user whether committing to `agent-changes` is allowed; it is expected for project work.
-- Push the branch at the end of a task.
-- Do not ask the user whether pushing `agent-changes` is allowed; it is expected at task completion.
+- Do not ask the user whether committing to the current agent branch is allowed; it is expected for project work.
+- Push the current agent branch at the end of a task.
+- Do not ask the user whether pushing the current agent branch is allowed; it is expected at task completion.
 - Never merge branches.
