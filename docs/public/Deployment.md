@@ -4,6 +4,8 @@
 
 Die Website wird statisch gebaut. Astro erzeugt fertige Dateien für `dist/`; zur Laufzeit ist kein Node-Server nötig.
 
+GitHub Actions nutzt Bun explizit als Package Manager. Der Deploy-Workflow setzt `package-manager: bun` für `withastro/action`, damit die Installation nicht von Lockfile-Autodetection abhängt.
+
 Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt. Der externe Dateilink liegt als verschlüsselter Payload im Build und wird im Browser per Web Crypto entschlüsselt. Der Zugangscode muss deshalb lang, zufällig und nicht wiederverwendet sein. Konkrete Risikoanalysen zu diesem Modell gehören in die privaten Docs.
 
 Öffentlich dokumentiert ist der aktuelle Deployment-Zustand. Konkrete Hosting-Recherche, Migrationspläne und Risikoabwägungen gehören in das private Submodule unter `docs/private/`.
