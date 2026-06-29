@@ -1,7 +1,7 @@
 # AGENTS.md
 
 - Single Astro site, not a monorepo. Main entrypoints are `src/pages/*`, `src/layouts/BaseLayout.astro`, `src/components/*`, `src/content/*`, `src/utils/*`, and `src/styles/global.css`.
-- Use Bun from the repo root: `bun install`, `bun dev` (`localhost:4321`), `bun run build`, `bun preview`, `bun astro check`.
+- Bun is the standard package manager and runtime. Use it from the repo root: `bun install`, `bun dev` (`localhost:4321`), `bun run build`, `bun preview`, `bun astro check`.
 - Astro config enables Alpine; Tailwind v4 is wired through `@tailwindcss/vite` in `astro.config.mjs`.
 - Styling is centralized in `src/styles/global.css`; do not assume DaisyUI unless it is reintroduced in `package.json` and the CSS entrypoint.
 - TypeScript path aliases resolve `~/*` and `@/*` to `src/*`; also use `@components/*`, `@layouts/*`, `@/pages/*`, and `@/styles/*`.
