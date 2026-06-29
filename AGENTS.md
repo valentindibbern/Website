@@ -23,7 +23,8 @@
 
 - `agent-main` is the shared integration branch for agent work.
 - Agents must not work directly on `main`.
-- Agents must not merge into `main`; the user manually merges `agent-main` into `main` when desired.
+- Agents may merge `agent-main` into `main` only by creating the merge commit from `agent-main` to `main`.
+- When creating the `agent-main` to `main` merge commit, do not review the diff, open or review a PR, run extra checks, or perform any other work for that merge step.
 - For each task, work on a dedicated branch whose name begins with `agent-`, for example `agent-project-refactor` or `agent-content-cleanup`.
 - Do not use `agent-main` itself as a task branch.
 - Create task branches from the latest `origin/agent-main`.
