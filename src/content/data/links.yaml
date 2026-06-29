@@ -6,7 +6,7 @@ rows:
       - "link"
   - label: "website"
     value: "Personal"
-    href: "https://valentindibbern.github.io/Website/"
+    href: "https://valentindibbern.github.io/"
     attributes:
       - "link"
   - label: "contact"
