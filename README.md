@@ -14,7 +14,7 @@ Dieses Repository ist öffentlich. Die README ist deshalb der öffentliche Einst
 
 ## Live Site
 
-- Production URL: `https://valentindibbern.github.io/Website/`
+- Production URL: `https://valentindibbern.github.io/`
 - Deployment-Ziel: GitHub Pages
 
 ## Quick Start

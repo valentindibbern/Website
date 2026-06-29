@@ -57,7 +57,7 @@ Projektliste:
 ```yaml
 projects:
   - id: "website"
-    repo: "valentindibbern/Website"
+    repo: "valentindibbern/valentindibbern.github.io"
     title: "Website"
     command: "open project Website"
     type: "persönliche Website"
@@ -67,8 +67,8 @@ projects:
       - "Tailwind"
     summary: "statische Portfolio-Website im Terminal-/ASCII-Stil"
     source:
-      label: "github.com/valentindibbern/Website"
-      href: "https://github.com/valentindibbern/Website"
+      label: "github.com/valentindibbern/valentindibbern.github.io"
+      href: "https://github.com/valentindibbern/valentindibbern.github.io"
     featured: true
     order: 10
 ```
