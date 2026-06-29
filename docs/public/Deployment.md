@@ -24,10 +24,9 @@ Das Bewerbungsgate bleibt GitHub-Pages-kompatibel, weil es ohne Server auskommt.
 ## GitHub Pages Settings
 
 - `astro.config.mjs` setzt `site: "https://valentindibbern.github.io"`.
-- `astro.config.mjs` setzt `base: "/Website"`.
-- Die öffentliche Website liegt unter `https://valentindibbern.github.io/Website/`.
-- Interne Links müssen deshalb die Base-URL berücksichtigen.
-- Für manuelle Links im Code sollte `withBase()` aus `src/utils/url.ts` verwendet werden.
+- Die öffentliche Website liegt unter `https://valentindibbern.github.io/`.
+- Das Repository ist als GitHub-Pages-User-Site unter `valentindibbern.github.io` gedacht; deshalb wird keine Astro-`base` gesetzt.
+- Interne Links sollten weiterhin Root-Pfade oder `withBase()` aus `src/utils/url.ts` verwenden, damit ein späterer Hosting-Wechsel kontrolliert bleibt.
 
 ## Application Gate Secrets
 

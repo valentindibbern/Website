@@ -48,7 +48,7 @@ Dieses Projekt ist eine einzelne statische Astro-Site. Die Website ist content-d
 - `src/config/navigation.ts` definiert die sichtbaren Navigationslinks.
 - Nicht veröffentlichte Entwürfe werden nicht in der Navigation verlinkt.
 - `src/utils/url.ts` erzeugt Links mit `import.meta.env.BASE_URL`.
-- Das ist wichtig, weil `astro.config.mjs` aktuell `base: "/Website"` setzt.
+- Das bleibt wichtig, weil `withBase()` Hosting-Pfade zentral kapselt, falls später wieder eine Base-URL nötig wird.
 
 ## Design Principles
 
