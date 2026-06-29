@@ -5,7 +5,8 @@ Technische Übersicht der im Projekt tatsächlich verwendeten Werkzeuge, Librari
 ## Core Stack
 
 - Bun
-  - Package Manager und Runtime für `dev`, `run build`, `run preview` und `astro`-Befehle.
+  - Standard-Package-Manager und Runtime für `install`, `dev`, `run build`, `run preview` und `astro`-Befehle.
+  - `package.json` pinnt die erwartete Bun-Version über `packageManager`; `bun.lock` ist der Lockfile.
 - Astro
   - Framework für Seiten, Layouts, Content Collections und statisches Rendering.
 - TypeScript
